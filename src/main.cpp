@@ -11,7 +11,7 @@ int main() {
     Server customerServer;  // Your SLL backend
 
     // Serve all static files (HTML, etc.) from the current folder
-    svr.set_mount_point("/", "./www");
+    svr.set_mount_point("/", "./frontend");
 
     // API: Check if ID exists (for login)
     svr.Post("/api/login", [&](const httplib::Request& req, httplib::Response& res) {
