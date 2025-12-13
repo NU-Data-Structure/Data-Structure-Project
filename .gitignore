@@ -1,0 +1,14 @@
+# Ignore C++ compile files
+*.exe
+*.out
+*.o
+*.obj
+
+# Ignore build directories
+build/
+bin/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db

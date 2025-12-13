@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile</title>
+</head>
+<body>
+
+<h2>Customer Profile</h2>
+
+<p id="profile"></p>
+<button onclick="logout()">Logout</button>
+
+<script>
+window.onload = () => {
+    const id = localStorage.getItem('customerId');
+    
+    fetch(`/api/profile?id=${id}`)
+        .then(res => res.json())
+        .then(customer => {
+            if (customer) {
+                document.getElementById('profile').innerHTML = `
+                    <b>ID:</b> ${customer.id}<br>
+                    <b>Name:</b> ${customer.name}<br>
+                    <b>Phone:</b> ${customer.phone}<br>
+                    <b>Address:</b> ${customer.address}
+                `;
+            } else {
+                alert("Error loading profile");
+                window.location.href = 'login.html';
+            }
+        })
+        .catch(err => {
+            alert("Failed to load profile");
+            window.location.href = 'login.html';
+        });
+};
+
+function logout() {
+    localStorage.removeItem('customerId');
+    window.location.href = 'login.html';
+}
+</script>
+
+</body>
+</html>

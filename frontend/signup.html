@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+</head>
+<body>
+
+<h2>Create Account</h2>
+
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<input id="address" placeholder="Address"><br><br>
+
+<button onclick="signup()">Create Account</button>
+
+<script>
+async function signup() {
+    const id = localStorage.getItem('customerId');
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+
+    if (!name || !phone || !address) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    // Send to backend to register
+    const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id: parseInt(id), name, phone, address})
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        localStorage.setItem('customerId', id);
+        window.location.href = 'profile.html';
+    } else {
+        alert('Error creating account: ' + (result.message || 'Unknown error'));
+    }
+}
+</script>
+
+</body>
+</html>

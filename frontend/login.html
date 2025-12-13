@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+</head>
+<body>
+
+<h2>Customer Login</h2>
+
+<input id="id" placeholder="Customer ID" type="number"><br><br>
+<button onclick="login()">Login</button>
+
+<script>
+async function login() {
+    const id = document.getElementById('id').value;
+
+    if (!id) {
+        alert("Please enter Customer ID");
+        return;
+    }
+
+    // Send to backend to check if ID exists
+    const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id: parseInt(id)})
+    });
+
+    const result = await response.json();
+
+    if (result.exists) {
+        // Existing customer - go to profile
+        localStorage.setItem('customerId', id);
+        window.location.href = 'profile.html';
+    } else {
+        // New customer - go to signup
+        localStorage.setItem('customerId', id);
+        window.location.href = 'signup.html';
+    }
+}
+</script>
+
+</body>
+</html>
