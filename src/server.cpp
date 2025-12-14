@@ -19,7 +19,7 @@ customer Server::getProfile(int id) {
 }
 
 void Server::loadFile(){
-    rapidcsv::Document doc("Customer_List.csv");
+    rapidcsv::Document doc("../data/Customer_List.csv");
     
     vector<int> id_list= doc.GetColumn<int>("userID");
     vector<string> name_list= doc.GetColumn<string>("userName");
