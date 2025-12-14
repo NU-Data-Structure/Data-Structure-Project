@@ -9,6 +9,7 @@ using json = nlohmann::json;
 int main() {
     httplib::Server svr;
     Server customerServer;  // Your SLL backend
+    customerServer.loadFile();
 
     // Serve all static files (HTML, etc.) from the current folder
     svr.set_mount_point("/", "./frontend");
