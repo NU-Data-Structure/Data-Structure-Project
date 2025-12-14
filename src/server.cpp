@@ -1,5 +1,7 @@
 #include "../include/server.h"
 #include <iostream>
+#include <vector>
+#include "../include/rapidcsv.h"
 using namespace std;
 
 bool Server::login(int id) {
