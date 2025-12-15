@@ -11,7 +11,7 @@ bool Server::login(int id) {
 customer Server::registerCustomer(int id, string name, string phone, string address) {
     customer c(id, name, phone, address);
     accounts.addCustomer(c);
-    rapidcsv::Document doc("../data/Customer_List.csv");    
+    rapidcsv::Document doc("data/Customer_List.csv");    
 
     
     vector<string> row = {to_string(c.get_ID()),c.get_Name(),c.get_Phone(),c.get_Address()};
@@ -28,22 +28,37 @@ customer Server::getProfile(int id) {
     return accounts.getCustomer(id);
 }
 
-void Server::loadFile(){
-    rapidcsv::Document doc("../data/Customer_List.csv");
+// void Server::loadFile(){
+//     rapidcsv::Document doc("../data/Customer_List.csv");
     
-    vector<int> id_list= doc.GetColumn<int>("userID");
-    vector<string> name_list= doc.GetColumn<string>("userName");
-    vector<string> phone_list= doc.GetColumn<string>("userPhone");
-    vector<string> address_list= doc.GetColumn<string>("userAddress");
+//     vector<int> id_list= doc.GetColumn<int>("userID");
+//     vector<string> name_list= doc.GetColumn<string>("userName");
+//     vector<string> phone_list= doc.GetColumn<string>("userPhone");
+//     vector<string> address_list= doc.GetColumn<string>("userAddress");
+    
+//     int number_users = doc.GetRowCount();
+    
+//     for (int i = 0; i < number_users; i++)
+//     {
+//         customer c(id_list[i],name_list[i],phone_list[i],address_list[i]);
+//         accounts.addCustomer(c);
+
+//     }
+    
+    
+// }
+void Server::loadFile(){
+    rapidcsv::Document doc("data/Customer_List.csv");
+    
+    vector<int> id_list = doc.GetColumn<int>("userID");
+    vector<string> name_list = doc.GetColumn<string>("userName");
+    vector<string> phone_list = doc.GetColumn<string>("userPhone");
+    vector<string> address_list = doc.GetColumn<string>("userAddress");
     
     int number_users = doc.GetRowCount();
     
-    for (int i = 0; i < number_users; i++)
-    {
-        customer c(id_list[i],name_list[i],phone_list[i],address_list[i]);
+    for (int i = 0; i < number_users; i++) {
+        customer c(id_list[i], name_list[i], phone_list[i], address_list[i]);
         accounts.addCustomer(c);
-
     }
-    
-    
 }
