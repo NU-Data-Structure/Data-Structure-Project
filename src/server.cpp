@@ -11,7 +11,7 @@ bool Server::login(int id) {
 customer Server::registerCustomer(int id, string name, string phone, string address) {
     customer c(id, name, phone, address);
     accounts.addCustomer(c);
-    rapidcsv::Document doc("Customer_List.csv");    
+    rapidcsv::Document doc("../data/Customer_List.csv");    
 
     
     vector<string> row = {to_string(c.get_ID()),c.get_Name(),c.get_Phone(),c.get_Address()};
