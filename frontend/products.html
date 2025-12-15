@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Products</title>
+</head>
+<body>
+
+<h2>Enter product you're searching for</h2>
+
+
+<input id="prod_name" placeholder="product name"><br><br>
+<button onclick="FindItem()">Search</button>
+<button onclick="goBack()">Back to Profile</button>
+
+
+
+<script>
+async function FindItem() {
+    const prod_name = document.getElementById("prod_name").value;
+    
+    if(!prod_name){
+        alert("You didn't enter a product name");
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/product', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({prod_name: prod_name})
+        });
+
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+            // Show the result on the page
+            document.body.innerHTML += `
+                <div style="margin-top: 20px; padding: 10px; background: #f0f0f0;">
+                    <h3>Search Result:</h3>
+                    <p>You searched for: <strong>${data.product_name}</strong></p>
+                    <p>${data.message}</p>
+                </div>
+            `;
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to search for product');
+    }
+}
+</script>
+
+
+
+<script>
+function goBack() {
+    window.location.href = 'profile.html';
+}
+</script>
+</body>
+</html>

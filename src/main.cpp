@@ -3,6 +3,7 @@
 #include "../include/server.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using json = nlohmann::json;
 
@@ -10,6 +11,9 @@ int main() {
     httplib::Server svr;
     Server customerServer;  // Your SLL backend
     customerServer.loadFile();
+
+    vector<string> test_prod_list = {"banana","berracotta","pie"};
+
 
     // Serve all static files (HTML, etc.) from the current folder
     svr.set_mount_point("/", "./frontend");
@@ -38,28 +42,55 @@ int main() {
             std::string name = j["name"];
             std::string phone = j["phone"];
             std::string address = j["address"];
-
+            
             if (customerServer.login(id)) {
                 res.status = 400;
                 json err = { {"success", false}, {"message", "ID already exists"} };
                 res.set_content(err.dump(), "application/json");
                 return;
             }
-
+            
             customer newCust = customerServer.registerCustomer(id, name, phone, address);
-
+            
             json custJson;
             custJson["id"] = newCust.get_ID();
             custJson["name"] = newCust.get_Name();
             custJson["phone"] = newCust.get_Phone();
             custJson["address"] = newCust.get_Address();
-
+            
             json response = { {"success", true}, {"customer", custJson} };
             res.set_content(response.dump(), "application/json");
         } catch (...) {
             res.status = 400;
             res.set_content("Invalid JSON", "text/plain");
         }
+    });
+    
+    svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+    try {
+        json j = json::parse(req.body);
+        string product_name = j["prod_name"];
+
+        // Convert to lowercase
+        for(char& letter : product_name){
+            if(letter >= 'A' && letter <= 'Z'){
+                letter += 32;
+            }
+        }
+
+        // Just echo back what was entered
+        json response = {
+            {"success", true},
+            {"product_name", product_name},
+            {"message", "Product search not implemented yet"}
+        };
+        
+        res.set_content(response.dump(), "application/json");
+    } catch (...) {
+        res.status = 400;
+        json response = {{"success", false}, {"message", "Invalid JSON"}};
+        res.set_content(response.dump(), "application/json");
+    }
     });
 
     // API: Get profile

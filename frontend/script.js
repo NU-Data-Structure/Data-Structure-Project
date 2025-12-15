@@ -92,3 +92,4 @@ async function loadProfile() {
         alert('An error occurred while loading the profile.');
     }
 }
+

@@ -8,6 +8,10 @@
 <h2>Customer Profile</h2>
 
 <p id="profile"></p>
+
+
+
+<button onclick="goToProducts()">Search Products</button>
 <button onclick="logout()">Logout</button>
 
 <script>
@@ -38,6 +42,12 @@ window.onload = () => {
 function logout() {
     localStorage.removeItem('customerId');
     window.location.href = 'login.html';
+}
+</script>
+
+<script>
+function goToProducts() {
+    window.location.href = 'products.html';
 }
 </script>
 
