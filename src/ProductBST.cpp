@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
+using namespace std;
 
 ProductBST::ProductBST() {
     root = nullptr;
@@ -108,14 +109,14 @@ void ProductBST::loadFromFile(string filename) {
     try {
         rapidcsv::Document doc(filename);
 
-        std::vector<int> ids = doc.GetColumn<int>("ID");
-        std::vector<string> names = doc.GetColumn<string>("Name");
-        std::vector<double> prices = doc.GetColumn<double>("Price");
-        std::vector<string> categories = doc.GetColumn<string>("Category");
+        vector<int> ids = doc.GetColumn<int>("ID");
+        vector<string> names = doc.GetColumn<string>("Name");
+        vector<double> prices = doc.GetColumn<double>("Price");
+        vector<string> categories = doc.GetColumn<string>("Category");
         
         // Optional columns (wrapped in try-catch in case CSV is old)
-        std::vector<string> subcategories;
-        std::vector<int> stocks;
+        vector<string> subcategories;
+        vector<int> stocks;
         try { subcategories = doc.GetColumn<string>("Subcategory"); } catch (...) {}
         try { stocks = doc.GetColumn<int>("Stock"); } catch (...) {}
 
@@ -132,9 +133,9 @@ void ProductBST::loadFromFile(string filename) {
             
             addProduct(p);
         }
-        std::cout << "Loaded " << ids.size() << " products into BST." << std::endl;
+        cout << "Loaded " << ids.size() << " products into BST." << std::endl;
     } catch (const std::exception& e) {
-        std::cerr << "Error loading products from " << filename << ": " << e.what() << std::endl;
+        cerr << "Error loading products from " << filename << ": " << e.what() << std::endl;
     }
 }
 

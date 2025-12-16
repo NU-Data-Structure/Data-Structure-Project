@@ -4,7 +4,9 @@ const API_ENDPOINTS = {
     LOGIN: '/api/login',
     REGISTER: '/api/register',
     PROFILE: '/api/profile',
-    PRODUCT: '/api/product'
+    PRODUCT: '/api/product',
+    ADMIN_QUEUE: '/api/admin/deliveryQueue',
+    ADMIN_PROCESS: '/api/admin/processOrder'
 };
 
 // Login / Sign up function
@@ -58,7 +60,7 @@ async function login() {
             const data = await response.json();
 
             if (response.ok && data.exists) {
-                localStorage.setItem("currentCustomerId", id);
+                localStorage.setItem("customerId", id);
                 window.location.href = "profile.html";
             } else {
                 alert("Login failed: Customer ID not found. Please fill in all fields to register.");
@@ -100,7 +102,6 @@ async function loadProfile() {
     }
 }
 
-// Search for a product
 // Search for a product
 async function searchProduct() {
     const productName = document.getElementById("productName").value;
@@ -184,6 +185,55 @@ async function loadProducts() {
         }
     } catch (error) {
         console.error('Error loading products:', error);
+    }
+}
+
+// ==================Admin page functions ==================
+async function loadQueue() {
+    const queueDiv = document.getElementById('deliveryQueue');   
+    if (!queueDiv) return;
+
+    try {
+        const response = await fetch(API_ENDPOINTS.ADMIN_QUEUE);
+        const data = await response.json();
+
+        if (data.success) {
+            if (data.orders.length === 0) {
+                queueDiv.innerHTML = '<p class="empty-msg">No pending orders in the queue.</p>';
+                return;
+            }
+
+            let html = '<table><thead><tr><th>Order ID</th><th>Customer ID</th><th>Products</th><th>Total</th><th>Status</th></tr></thead><tbody>';
+            
+            data.orders.forEach(o => {
+                html += `<tr>
+                    <td><strong>#${o.orderId}</strong></td>
+                    <td>${o.customerId}</td>
+                    <td>${o.productIds}</td>
+                    <td>$${o.totalAmount.toFixed(2)}</td>
+                    <td><span class="status-badge">${o.status}</span></td>
+                </tr>`;
+            });
+            html += '</tbody></table>';
+            queueDiv.innerHTML = html;
+        }
+    } catch (error) {
+        console.error('Error loading queue:', error);
+        queueDiv.innerHTML = '<p style="color:red">Error connecting to server.</p>';
+    }
+}
+
+async function processNextOrder() {
+    try {
+        const response = await fetch(API_ENDPOINTS.ADMIN_PROCESS, { method: 'POST' });
+        const data = await response.json();
+        alert(data.message);
+        if (data.success) {
+            loadQueue(); // Refresh the table
+        }
+    } catch (error) {
+        console.error('Error processing order:', error);
+        alert('Failed to process order.');
     }
 }
 

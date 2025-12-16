@@ -2,11 +2,11 @@
 #include "../include/json.hpp"
 #include "../include/server.h"
 #include "../include/ProductBST.h"
+#include "../include/DeliveryQueue.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>  // For std::remove_if
-
 
 
 using json = nlohmann::json;
@@ -30,6 +30,10 @@ int main() {
 
     ProductBST productServer;
     productServer.loadFromFile("data/Products.csv");
+
+    DeliveryQueue deliveryQueue;
+    deliveryQueue.loadFromFile("data/Orders.csv");
+    int globalOrderID = 5000;
 
 
     // vector<string> test_prod_list = {"banana","berracotta","pie"};
@@ -86,6 +90,7 @@ int main() {
         }
     });
     
+    // search product API
 svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
         try {
             json j = json::parse(req.body);
@@ -330,7 +335,63 @@ svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res)
         }
     });
 
-    std::cout << "Server started! Open http://localhost:9090/login.html in your browser\n";
+// ---------------------------------------------------------
+    // ADMIN API (Fixed to match your DeliveryQueue.h)
+    // ---------------------------------------------------------
 
-    svr.listen("0.0.0.0", 9090);
+    // API: Get Delivery Queue (for admin)
+    svr.Get("/api/admin/deliveryQueue", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            vector<Order> orders = deliveryQueue.getAllOrders();
+
+            json orderArray = json::array();
+            for (const auto& o : orders) {
+                orderArray.push_back({
+                    {"orderId", o.orderId},          // MATCHES YOUR CLASS
+                    {"customerId", o.customerId},    // MATCHES YOUR CLASS
+                    {"productIds", o.productIds},    // MATCHES YOUR CLASS
+                    {"totalAmount", o.totalAmount},  // MATCHES YOUR CLASS
+                    {"status", o.status}
+                });
+            }
+
+            json response = { {"success", true}, {"orders", orderArray} };
+            res.set_content(response.dump(), "application/json");
+
+        } catch (...) {
+            res.status = 500;
+            res.set_content("Error loading delivery queue", "text/plain");
+        }
+    });
+
+    // API: Process Next Order (Dequeue) - For Admin
+    svr.Post("/api/admin/processOrder", [&](const httplib::Request& req, httplib::Response& res) {
+        if (deliveryQueue.isEmpty()) {
+            json response = {{"success", false}, {"message", "Queue is empty! No orders to process."}};
+            res.set_content(response.dump(), "application/json");
+            return;
+        }
+
+        // Dequeue returns the Order object directly in your implementation
+        Order processedOrder = deliveryQueue.dequeue();
+
+        // Mark it as shipped in the response
+        json orderJson = {
+            {"orderId", processedOrder.orderId},
+            {"customerId", processedOrder.customerId},
+            {"totalAmount", processedOrder.totalAmount},
+            {"status", "Shipped"} // We just shipped it
+        };
+
+        json response = {
+            {"success", true},
+            {"message", "Successfully processed Order #" + std::to_string(processedOrder.orderId)},
+            {"processedOrder", orderJson}
+        };
+        res.set_content(response.dump(), "application/json");
+    });
+
+    std::cout << "Server started! Open http://localhost:9090/login.html in your browser\n";
+    
+    return 0;
 }

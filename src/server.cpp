@@ -28,19 +28,43 @@ customer Server::getProfile(int id) {
     return accounts.getCustomer(id);
 }
 
+// void Server::loadFile(){
+//     rapidcsv::Document doc("../data/Customer_List.csv");
+    
+//     vector<int> id_list= doc.GetColumn<int>("userID");
+//     vector<string> name_list= doc.GetColumn<string>("userName");
+//     vector<string> phone_list= doc.GetColumn<string>("userPhone");
+//     vector<string> address_list= doc.GetColumn<string>("userAddress");
+    
+//     int number_users = doc.GetRowCount();
+    
+//     for (int i = 0; i < number_users; i++)
+//     {
+//         customer c(id_list[i],name_list[i],phone_list[i],address_list[i]);
+//         accounts.addCustomer(c);
 
+//     }
+    
+    
+// }
 void Server::loadFile(){
-    rapidcsv::Document doc("data/Customer_List.csv");
-    
-    vector<int> id_list = doc.GetColumn<int>("userID");
-    vector<string> name_list = doc.GetColumn<string>("userName");
-    vector<string> phone_list = doc.GetColumn<string>("userPhone");
-    vector<string> address_list = doc.GetColumn<string>("userAddress");
-    
-    int number_users = doc.GetRowCount();
-    
-    for (int i = 0; i < number_users; i++) {
-        customer c(id_list[i], name_list[i], phone_list[i], address_list[i]);
-        accounts.addCustomer(c);
+    try {
+        rapidcsv::Document doc("data/Customer_List.csv");
+        
+        vector<int> id_list = doc.GetColumn<int>("userID");
+        vector<string> name_list = doc.GetColumn<string>("userName");
+        vector<string> phone_list = doc.GetColumn<string>("userPhone");
+        vector<string> address_list = doc.GetColumn<string>("userAddress");
+        
+        int number_users = doc.GetRowCount();
+        
+        for (int i = 0; i < number_users; i++) {
+            customer c(id_list[i], name_list[i], phone_list[i], address_list[i]);
+            accounts.addCustomer(c);
+        }
+        cout << "Loaded " << number_users << " customers." << endl;
+    } catch (const std::exception& e) {
+        cerr << "Error loading customers from data/Customer_List.csv: " << e.what() << endl;
+        cerr << "Please ensure the file exists and has the correct headers (userID, userName, userPhone, userAddress)." << endl;
     }
 }
