@@ -1,24 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Search</title>
     <script src="script.js" defer></script>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
-        input { padding: 8px; width: 70%; margin-right: 5px; }
-        button { padding: 8px 15px; cursor: pointer; background-color: #007BFF; color: white; border: none; border-radius: 4px; }
-        button:hover { background-color: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 60%;
+            margin-right: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin: 2px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-button {
+            background-color: #28a745;
+            margin-top: 10px;
+        }
+
+        .cart-button:hover {
+            background-color: #218838;
+        }
+
+        .view-cart-btn {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .view-cart-btn:hover {
+            background-color: #e0a800;
+        }
+
+        #cartItems {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: none;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .back-btn {
+            background-color: #6c757d;
+            margin-bottom: 15px;
+        }
+
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+
+        /* Added for cart display */
+        .cart-items {
+            margin: 15px 0;
+        }
+
+        .cart-item div {
+            flex-grow: 1;
+        }
     </style>
 </head>
-<body onload="loadProducts()">
-    <h1>Search Products</h1>
+
+<body>
+    <!-- Back Button -->
+    <button class="back-btn" onclick="goBack()">← Back to Profile</button>
+
+    <!-- Header with title and cart button -->
+    <div class="header">
+        <h1>🛍️ Product Search</h1>
+        <button class="view-cart-btn" onclick="toggleCart()">
+            🛒 View Cart (<span id="cartCount">0</span>)
+        </button>
+    </div>
+
+    <!-- Search Section -->
     <div>
         <input type="text" id="productName" placeholder="Enter product name (e.g. Apple)">
-        <button onclick="searchProduct()">Search</button>
+        <button onclick="searchProduct()">Search Product</button>
     </div>
+
+    <!-- Search Result -->
     <div id="productResult"></div>
+
+    <!-- All Products Table -->
     <div id="productList"></div>
+
+    <!-- Cart Section (Hidden by default) -->
+    <div id="cartItems">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;">🛒 Your Shopping Cart</h3>
+            <button onclick="toggleCart()" style="background: #6c757d;">✕ Close</button>
+        </div>
+        <p><em>Cart managed by C++ backend</em></p>
+        <div id="cartContents" style="margin: 20px 0;">
+            <p>Loading cart from C++ backend...</p>
+        </div>
+        
+        <!-- Added cart total and buttons section -->
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 2px solid #ddd;">
+            <div>
+                <strong id="cartTotal">Total: $0.00</strong>
+                <p style="font-size: 12px; color: #666;">
+                    Items stored in C++ vector: <span id="cartBackendCount">0</span>
+                </p>
+            </div>
+            <div>
+                <button onclick="clearCart()" style="background: #6c757d; margin-right: 10px;">
+                    Clear Cart
+                </button>
+                <button onclick="checkout()" style="background: #dc3545; padding: 10px 20px;">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        function goBack() {
+            window.location.href = 'profile.html';
+        }
+
+        // Cart visibility
+        function toggleCart() {
+            const cartDiv = document.getElementById('cartItems');
+            if (cartDiv.style.display === 'none' || cartDiv.style.display === '') {
+                cartDiv.style.display = 'block';
+                // This calls the function from script.js
+                if (typeof updateCartDisplay === 'function') {
+                    updateCartDisplay();
+                }
+            } else {
+                cartDiv.style.display = 'none';
+            }
+        }
+        
+        // Load all products on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Call the function from script.js
+            if (typeof loadProducts === 'function') {
+                loadProducts();
+            }
+            // Update cart count
+            if (typeof updateCartDisplay === 'function') {
+                updateCartDisplay();
+            }
+        });
+    </script>
 </body>
+
 </html>
