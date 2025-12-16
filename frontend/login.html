@@ -1,44 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System - Login</title>
+    <style>
+        :root {
+            --primary-blue: #1976D2;
+            --light-blue: #E3F2FD;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .welcome-message {
+            margin-bottom: 2rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .welcome-message p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .welcome-message .subtext {
+            color: #666;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .login-container {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+        }
+
+        .btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #1565C0;
+        }
+
+        .footer-text {
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+            .logo {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="login-container">
+     
+        <div class="logo">NUH2H</div>
+        <h2>Customer Login</h2>
+        <div class="welcome-message">
+            <p>Welcome to NUH2H Application</p>
+            <p class="subtext">Start to make your order</p>
+        </div>
+        
+        <div class="form-group">
+            <label for="id">Customer ID</label>
+            <input id="id" type="number" placeholder="Enter your customer ID">
+        </div>
+        
+        <button class="btn" onclick="login()">Login</button>
+        
+        <p class="footer-text">New customer? Just enter your ID to get started.</p>
+    </div>
 
-<h2>Customer Login</h2>
+    <script>
+    async function login() {
+        const id = document.getElementById('id').value;
 
-<input id="id" placeholder="Customer ID" type="number"><br><br>
-<button onclick="login()">Login</button>
+        if (!id) {
+            alert("Please enter Customer ID");
+            return;
+        }
 
-<script>
-async function login() {
-    const id = document.getElementById('id').value;
+        try {
+            // Send to backend to check if ID exists
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({id: parseInt(id)})
+            });
 
-    if (!id) {
-        alert("Please enter Customer ID");
-        return;
+            const result = await response.json();
+
+            if (result.exists) {
+                // Existing customer - go to profile
+                localStorage.setItem('customerId', id);
+                window.location.href = 'profile.html';
+            } else {
+                // New customer - go to signup
+                localStorage.setItem('customerId', id);
+                window.location.href = 'signup.html';
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred. Please try again.');
+        }
     }
-
-    // Send to backend to check if ID exists
-    const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({id: parseInt(id)})
-    });
-
-    const result = await response.json();
-
-    if (result.exists) {
-        // Existing customer - go to profile
-        localStorage.setItem('customerId', id);
-        window.location.href = 'profile.html';
-    } else {
-        // New customer - go to signup
-        localStorage.setItem('customerId', id);
-        window.location.href = 'signup.html';
-    }
-}
-</script>
-
+    </script>
 </body>
 </html>
