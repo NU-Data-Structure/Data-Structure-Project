@@ -72,7 +72,7 @@ async function login() {
 
 // Load profile data
 async function loadProfile() {
-    const customerId = localStorage.getItem("currentCustomerId");
+    const customerId = localStorage.getItem("customerId");
 
     if (!customerId) {
         window.location.href = "login.html";
@@ -101,6 +101,7 @@ async function loadProfile() {
 }
 
 // Search for a product
+// Search for a product
 async function searchProduct() {
     const productName = document.getElementById("productName").value;
     const resultDiv = document.getElementById("productResult");
@@ -125,12 +126,17 @@ async function searchProduct() {
         if (response.ok && data.success) {
             const p = data.product;
             resultDiv.innerHTML = `
-                <div style="border: 1px solid #ddd; padding: 15px; margin-top: 10px; border-radius: 5px; background-color: #f9f9f9;">
-                    <h3>${p.name}</h3>
+                <div class="product-card">
+                    <h2>${p.name}</h2>
                     <p><strong>ID:</strong> ${p.id}</p>
                     <p><strong>Price:</strong> $${p.price}</p>
                     <p><strong>Category:</strong> ${p.category} &gt; ${p.subcategory}</p>
                     <p><strong>Stock:</strong> ${p.stock}</p>
+                    <div style="margin-top: 15px;">
+                        <button class="cart-button" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, 1)">
+                            🛒 Add to Cart
+                        </button>
+                    </div>
                 </div>
             `;
         } else {
@@ -180,3 +186,198 @@ async function loadProducts() {
         console.error('Error loading products:', error);
     }
 }
+
+
+// ================ CART FUNCTIONS ================
+
+async function addToCart(productId, productName, price, quantity) {
+    const customerId = localStorage.getItem("customerId");
+    if (!customerId) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/cart/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customerId: parseInt(customerId),
+                productId: productId,
+                productName: productName,
+                price: price,
+                quantity: quantity
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            alert(`✓ Added ${quantity} x ${productName} to cart!`);
+            updateCartDisplay();
+        } else {
+            alert("Failed to add to cart: " + data.message);
+        }
+    } catch (error) {
+        console.error('Error adding to cart:', error);
+        alert('Failed to add item to cart');
+    }
+}
+
+async function updateCartDisplay() {
+    const customerId = localStorage.getItem("customerId");
+    const cartContents = document.getElementById('cartContents');
+    const cartDiv = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartBackendCount = document.getElementById('cartBackendCount');
+    
+    if (!customerId) return;
+    
+    try {
+        const response = await fetch(`/api/cart?customerId=${customerId}`);
+        const data = await response.json();
+        
+        if (data.success) {
+            // Update cart count badge
+            if (cartCount) cartCount.textContent = data.itemCount;
+            if (cartBackendCount) cartBackendCount.textContent = data.backendTotalItems;
+            
+            if (data.itemCount === 0) {
+                if (cartContents) cartContents.innerHTML = '<p>Your cart is empty.</p>';
+                if (cartTotal) cartTotal.textContent = 'Total: $0.00';
+                if (cartDiv) cartDiv.style.display = 'none';
+            } else {
+                // Display cart items
+                let html = '<div class="cart-items">';
+                data.items.forEach(item => {
+                    html += `
+                        <div class="cart-item">
+                            <div>
+                                <strong>${item.productName}</strong><br>
+                                ${item.quantity} x $${item.price.toFixed(2)} = 
+                                <strong>$${item.itemTotal.toFixed(2)}</strong>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${item.productId})">
+                                Remove
+                            </button>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                
+                if (cartContents) cartContents.innerHTML = html;
+                if (cartTotal) cartTotal.textContent = `Total: $${data.total.toFixed(2)}`;
+                if (cartDiv) cartDiv.style.display = 'block';
+            }
+        }
+    } catch (error) {
+        console.error('Error loading cart:', error);
+        if (cartContents) cartContents.innerHTML = '<p style="color: red;">Error loading cart</p>';
+    }
+}
+
+async function removeFromCart(productId) {
+    const customerId = localStorage.getItem("customerId");
+    if (!customerId) return;
+    
+    if (!confirm("Remove this item from cart?")) return;
+    
+    try {
+        const response = await fetch('/api/cart/remove', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                customerId: parseInt(customerId),
+                productId: productId
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            updateCartDisplay();
+        }
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+        alert('Failed to remove item');
+    }
+}
+
+async function clearCart() {
+    const customerId = localStorage.getItem("customerId");
+    if (!customerId) return;
+    
+    if (!confirm("Clear all items from your cart?")) return;
+    
+    try {
+        const response = await fetch('/api/cart/clear', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ customerId: parseInt(customerId) })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            alert(`Cleared ${data.removedCount} items from cart`);
+            updateCartDisplay();
+        }
+    } catch (error) {
+        console.error('Error clearing cart:', error);
+        alert('Failed to clear cart');
+    }
+}
+
+async function checkout() {
+    const customerId = localStorage.getItem("customerId");
+    if (!customerId) return;
+    
+    try {
+        const response = await fetch('/api/cart?customerId=' + customerId);
+        const data = await response.json();
+        
+        if (!data.success || data.itemCount === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+        
+        // Show order summary
+        let summary = "Order Summary:\n\n";
+        data.items.forEach(item => {
+            summary += `${item.quantity} x ${item.productName} - $${item.itemTotal.toFixed(2)}\n`;
+        });
+        summary += `\nTotal: $${data.total.toFixed(2)}\n\n`;
+        
+        if (confirm(summary + "Proceed with checkout?")) {
+            // Clear cart after successful checkout
+            const clearResponse = await fetch('/api/cart/clear', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ customerId: parseInt(customerId) })
+            });
+            
+            const clearData = await clearResponse.json();
+            if (clearData.success) {
+                alert(`✅ Checkout complete!\n\n` +
+                      `Order saved to C++ backend vector.\n` +
+                      `${clearData.removedCount} items purchased.\n` +
+                      `Total: $${data.total.toFixed(2)}\n\n` +
+                      `Friend will implement:\n` +
+                      `• Database storage\n` +
+                      `• Payment processing\n` +
+                      `• Order history`);
+                updateCartDisplay();
+            }
+        }
+    } catch (error) {
+        console.error('Error during checkout:', error);
+        alert('Checkout failed');
+    }
+}
+
+// Initialize cart display on product page load
+if (window.location.pathname.includes('product.html')) {
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartDisplay();
+    });
+}
+// ================ END CART FUNCTIONS ================

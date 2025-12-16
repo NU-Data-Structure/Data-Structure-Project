@@ -5,12 +5,27 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>  // For std::remove_if
+
+
 
 using json = nlohmann::json;
 
+
+// Add this GLOBAL cart storage (after includes, before main())
+struct CartItem {
+    int productId;
+    std::string productName;
+    double price;
+    int quantity;
+    int customerId;
+};
+
+std::vector<CartItem> shoppingCart;  // Global cart storage
+
 int main() {
     httplib::Server svr;
-    Server customerServer;  // Your SLL backend
+    Server customerServer;
     customerServer.loadFile();
 
     ProductBST productServer;
@@ -157,6 +172,162 @@ svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res)
         custJson["address"] = cust.get_Address();
 
         res.set_content(custJson.dump(), "application/json");
+    });
+
+    // API 1: Add item to cart
+    svr.Post("/api/cart/add", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            
+            int customerId = j["customerId"];
+            int productId = j["productId"];
+            std::string productName = j["productName"];
+            double price = j["price"];
+            int quantity = j["quantity"];
+            
+            // Check if item already exists for this customer
+            bool found = false;
+            for (auto& item : shoppingCart) {
+                if (item.customerId == customerId && item.productId == productId) {
+                    item.quantity += quantity;
+                    found = true;
+                    break;
+                }
+            }
+            
+            // If not found, add new item
+            if (!found) {
+                CartItem newItem;
+                newItem.customerId = customerId;
+                newItem.productId = productId;
+                newItem.productName = productName;
+                newItem.price = price;
+                newItem.quantity = quantity;
+                shoppingCart.push_back(newItem);
+            }
+            
+            json response = {
+                {"success", true},
+                {"message", "Item added to cart"},
+                {"cartCount", (int)shoppingCart.size()}
+            };
+            res.set_content(response.dump(), "application/json");
+            
+        } catch (...) {
+            res.status = 400;
+            json response = {{"success", false}, {"message", "Invalid request"}};
+            res.set_content(response.dump(), "application/json");
+        }
+    });
+
+    // API 2: Get cart items for a customer
+    svr.Get("/api/cart", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            if (!req.has_param("customerId")) {
+                res.status = 400;
+                res.set_content("Missing customerId", "text/plain");
+                return;
+            }
+            
+            int customerId = std::stoi(req.get_param_value("customerId"));
+            
+            // Filter cart items for this customer
+            json items = json::array();
+            double total = 0.0;
+            int itemCount = 0;
+            
+            for (const auto& item : shoppingCart) {
+                if (item.customerId == customerId) {
+                    json itemJson = {
+                        {"productId", item.productId},
+                        {"productName", item.productName},
+                        {"price", item.price},
+                        {"quantity", item.quantity},
+                        {"itemTotal", item.price * item.quantity}
+                    };
+                    items.push_back(itemJson);
+                    total += item.price * item.quantity;
+                    itemCount++;
+                }
+            }
+            
+            json response = {
+                {"success", true},
+                {"items", items},
+                {"total", total},
+                {"itemCount", itemCount},
+                {"backendTotalItems", (int)shoppingCart.size()}
+            };
+            
+            res.set_content(response.dump(), "application/json");
+            
+        } catch (...) {
+            res.status = 500;
+            json response = {{"success", false}, {"message", "Server error"}};
+            res.set_content(response.dump(), "application/json");
+        }
+    });
+
+    // API 3: Remove item from cart
+    svr.Post("/api/cart/remove", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            int customerId = j["customerId"];
+            int productId = j["productId"];
+            
+            // Remove item from vector
+            auto it = std::remove_if(shoppingCart.begin(), shoppingCart.end(),
+                [customerId, productId](const CartItem& item) {
+                    return item.customerId == customerId && item.productId == productId;
+                });
+            
+            bool removed = (it != shoppingCart.end());
+            if (removed) {
+                shoppingCart.erase(it, shoppingCart.end());
+            }
+            
+            json response = {
+                {"success", removed},
+                {"message", removed ? "Item removed" : "Item not found"},
+                {"remainingItems", (int)shoppingCart.size()}
+            };
+            res.set_content(response.dump(), "application/json");
+            
+        } catch (...) {
+            res.status = 400;
+            json response = {{"success", false}, {"message", "Invalid request"}};
+            res.set_content(response.dump(), "application/json");
+        }
+    });
+
+    // API 4: Clear cart for a customer
+    svr.Post("/api/cart/clear", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            int customerId = j["customerId"];
+            
+            // Remove all items for this customer
+            auto it = std::remove_if(shoppingCart.begin(), shoppingCart.end(),
+                [customerId](const CartItem& item) {
+                    return item.customerId == customerId;
+                });
+            
+            int removedCount = std::distance(it, shoppingCart.end());
+            shoppingCart.erase(it, shoppingCart.end());
+            
+            json response = {
+                {"success", true},
+                {"message", "Cart cleared"},
+                {"removedCount", removedCount},
+                {"remainingInBackend", (int)shoppingCart.size()}
+            };
+            res.set_content(response.dump(), "application/json");
+            
+        } catch (...) {
+            res.status = 400;
+            json response = {{"success", false}, {"message", "Invalid request"}};
+            res.set_content(response.dump(), "application/json");
+        }
     });
 
     std::cout << "Server started! Open http://localhost:9090/login.html in your browser\n";
