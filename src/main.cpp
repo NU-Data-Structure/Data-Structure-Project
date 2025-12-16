@@ -1,6 +1,7 @@
 #include "../include/httplib.h"
 #include "../include/json.hpp"
 #include "../include/server.h"
+#include "../include/ProductBST.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -12,7 +13,11 @@ int main() {
     Server customerServer;  // Your SLL backend
     customerServer.loadFile();
 
-    vector<string> test_prod_list = {"banana","berracotta","pie"};
+    ProductBST productServer;
+    productServer.loadFromFile("data/Products.csv");
+
+
+    // vector<string> test_prod_list = {"banana","berracotta","pie"};
 
 
     // Serve all static files (HTML, etc.) from the current folder
@@ -66,31 +71,65 @@ int main() {
         }
     });
     
-    svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
-    try {
-        json j = json::parse(req.body);
-        string product_name = j["prod_name"];
+svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            string search_query = j["prod_name"]; 
 
-        // Convert to lowercase
-        for(char& letter : product_name){
-            if(letter >= 'A' && letter <= 'Z'){
-                letter += 32;
+            Product* p = productServer.searchProduct(search_query);
+
+            if (p != nullptr) {
+                json response = {
+                    {"success", true},
+                    {"product", {
+                        {"id", p->id},
+                        {"name", p->name},
+                        {"price", p->price},
+                        {"category", p->category},
+                        {"subcategory", p->subcategory},
+                        {"stock", p->stock}
+                    }}
+                };
+                res.set_content(response.dump(), "application/json");
+            } else {
+                json response = {{"success", false}, {"message", "Product not found"}};
+                res.set_content(response.dump(), "application/json");
             }
+        } catch (...) {
+            res.status = 500;
+            json response = {{"success", false}, {"message", "Server Error"}};
+            res.set_content(response.dump(), "application/json");
         }
+    });
 
-        // Just echo back what was entered
-        json response = {
-            {"success", true},
-            {"product_name", product_name},
-            {"message", "Product search not implemented yet"}
-        };
-        
-        res.set_content(response.dump(), "application/json");
-    } catch (...) {
-        res.status = 400;
-        json response = {{"success", false}, {"message", "Invalid JSON"}};
-        res.set_content(response.dump(), "application/json");
-    }
+    // API: Get all products
+svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            // 1. Get Vector from BST using your new function
+            vector<Product> allProds; 
+            productServer.getAllProducts(allProds);
+
+            // 2. Convert to JSON Array
+            json prodArray = json::array();
+            for(const auto& p : allProds) {
+                prodArray.push_back({
+                    {"id", p.id},
+                    {"name", p.name},
+                    {"price", p.price},
+                    {"category", p.category},
+                    {"subcategory", p.subcategory},
+                    {"stock", p.stock}
+                });
+            }
+
+            // 3. Send back exactly what script.js expects ("products" key)
+            json response = { {"success", true}, {"products", prodArray} };
+            res.set_content(response.dump(), "application/json");
+
+        } catch (...) {
+            res.status = 500;
+            res.set_content("Error loading products", "text/plain");
+        }
     });
 
     // API: Get profile
@@ -120,7 +159,7 @@ int main() {
         res.set_content(custJson.dump(), "application/json");
     });
 
-    std::cout << "Server started! Open http://localhost:8080/login.html in your browser\n";
+    std::cout << "Server started! Open http://localhost:9090/login.html in your browser\n";
 
-    svr.listen("0.0.0.0", 8080);
+    svr.listen("0.0.0.0", 9090);
 }

@@ -1,0 +1,6 @@
+ID,Name,Price,Category,Subcategory,Stock
+101,Apple,1.50,Fruit,Fresh,50
+102,Banana,0.80,Fruit,Fresh,100
+103,Laptop,999.99,Electronics,Computers,10
+104,Headphones,199.99,Electronics,Audio,20
+105,T-Shirt,15.00,Clothing,Tops,30
