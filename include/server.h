@@ -11,6 +11,7 @@ public:
     bool login(int id);
     customer registerCustomer(int id, string name, string phone, string address);
     customer getProfile(int id);
+    void loadFile();
 };
 
 #endif

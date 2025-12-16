@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <script src="script.js" defer></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        input { padding: 8px; width: 70%; margin-right: 5px; }
+        button { padding: 8px 15px; cursor: pointer; background-color: #007BFF; color: white; border: none; border-radius: 4px; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body onload="loadProducts()">
+    <h1>Search Products</h1>
+    <div>
+        <input type="text" id="productName" placeholder="Enter product name (e.g. Apple)">
+        <button onclick="searchProduct()">Search</button>
+    </div>
+    <div id="productResult"></div>
+    <div id="productList"></div>
+</body>
+</html>

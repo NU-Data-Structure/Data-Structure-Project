@@ -1,14 +1,24 @@
 #include "../include/httplib.h"
 #include "../include/json.hpp"
 #include "../include/server.h"
+#include "../include/ProductBST.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using json = nlohmann::json;
 
 int main() {
     httplib::Server svr;
     Server customerServer;  // Your SLL backend
+    customerServer.loadFile();
+
+    ProductBST productServer;
+    productServer.loadFromFile("data/Products.csv");
+
+
+    // vector<string> test_prod_list = {"banana","berracotta","pie"};
+
 
     // Serve all static files (HTML, etc.) from the current folder
     svr.set_mount_point("/", "./frontend");
@@ -37,27 +47,88 @@ int main() {
             std::string name = j["name"];
             std::string phone = j["phone"];
             std::string address = j["address"];
-
+            
             if (customerServer.login(id)) {
                 res.status = 400;
                 json err = { {"success", false}, {"message", "ID already exists"} };
                 res.set_content(err.dump(), "application/json");
                 return;
             }
-
+            
             customer newCust = customerServer.registerCustomer(id, name, phone, address);
-
+            
             json custJson;
             custJson["id"] = newCust.get_ID();
             custJson["name"] = newCust.get_Name();
             custJson["phone"] = newCust.get_Phone();
             custJson["address"] = newCust.get_Address();
-
+            
             json response = { {"success", true}, {"customer", custJson} };
             res.set_content(response.dump(), "application/json");
         } catch (...) {
             res.status = 400;
             res.set_content("Invalid JSON", "text/plain");
+        }
+    });
+    
+svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            string search_query = j["prod_name"]; 
+
+            Product* p = productServer.searchProduct(search_query);
+
+            if (p != nullptr) {
+                json response = {
+                    {"success", true},
+                    {"product", {
+                        {"id", p->id},
+                        {"name", p->name},
+                        {"price", p->price},
+                        {"category", p->category},
+                        {"subcategory", p->subcategory},
+                        {"stock", p->stock}
+                    }}
+                };
+                res.set_content(response.dump(), "application/json");
+            } else {
+                json response = {{"success", false}, {"message", "Product not found"}};
+                res.set_content(response.dump(), "application/json");
+            }
+        } catch (...) {
+            res.status = 500;
+            json response = {{"success", false}, {"message", "Server Error"}};
+            res.set_content(response.dump(), "application/json");
+        }
+    });
+
+    // API: Get all products
+svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            // 1. Get Vector from BST using your new function
+            vector<Product> allProds; 
+            productServer.getAllProducts(allProds);
+
+            // 2. Convert to JSON Array
+            json prodArray = json::array();
+            for(const auto& p : allProds) {
+                prodArray.push_back({
+                    {"id", p.id},
+                    {"name", p.name},
+                    {"price", p.price},
+                    {"category", p.category},
+                    {"subcategory", p.subcategory},
+                    {"stock", p.stock}
+                });
+            }
+
+            // 3. Send back exactly what script.js expects ("products" key)
+            json response = { {"success", true}, {"products", prodArray} };
+            res.set_content(response.dump(), "application/json");
+
+        } catch (...) {
+            res.status = 500;
+            res.set_content("Error loading products", "text/plain");
         }
     });
 
@@ -88,7 +159,7 @@ int main() {
         res.set_content(custJson.dump(), "application/json");
     });
 
-    std::cout << "Server started! Open http://localhost:8080/login.html in your browser\n";
+    std::cout << "Server started! Open http://localhost:9090/login.html in your browser\n";
 
-    svr.listen("0.0.0.0", 8080);
+    svr.listen("0.0.0.0", 9090);
 }
