@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(-45deg, #42a5f5, #90caf9, #bbdefb, #e3f2fd);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 20px; 
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .payment-container {
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #1565c0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #1565c0;
+        }
+
+        .card-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 15px;
+            background: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn-pay:hover {
+            background: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .btn-cancel:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-container">
+        <h2>Enter Card Details</h2>
+        
+        <div class="form-group">
+            <label>Cardholder Name</label>
+            <input type="text" placeholder="Abdullah Hegazy">
+        </div>
+
+        <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+        </div>
+
+        <div class="card-row">
+            <div class="form-group" style="flex: 1;">
+                <label>Expiry Date</label>
+                <input type="text" placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label>CVV</label>
+                <input type="text" placeholder="123" maxlength="3">
+            </div>
+        </div>
+
+        <button class="btn-pay" onclick="processPayment()">Pay Now</button>
+        <a href="product.html" class="btn-cancel">Cancel Payment</a>
+    </div>
+
+    <script>
+        async function processPayment() {
+            const customerId = localStorage.getItem('customerId');
+            if (!customerId) {
+                alert("Please login first.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const btn = document.querySelector('.btn-pay');
+            btn.textContent = "Processing...";
+            btn.disabled = true;
+
+            // Simulate slight delay for effect
+            await new Promise(r => setTimeout(r, 1000));
+
+            try {
+                const response = await fetch('/api/cart/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        customerId: parseInt(customerId),
+                        paymentMethod: "Visa" 
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    let msg = `Payment Successful!\n`;
+                    msg += `Order ID: ${data.orderId}\n`;
+                    msg += `Total Paid: $${data.total}\n`;
+                    msg += `Provider(s): ${data.provider}`;
+                    alert(msg);
+                    window.location.href = 'product.html'; // Go back to shop
+                } else {
+                    alert('Payment Failed: ' + (data.message || 'Unknown error'));
+                    btn.textContent = "Pay Now";
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Connection error.");
+                btn.textContent = "Pay Now";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

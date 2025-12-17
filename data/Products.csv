@@ -1,0 +1,25 @@
+ID,Name,Price,Category,Subcategory,Stock,Provider
+113,Arduino Uno,450,Electronics,Microcontrollers,97,Lampatronics
+115,ASUS Laptop,5000,Electronics,TV,5,B Tech
+104,Basbousa,80,Food,Dessert,23,El Abd
+109,Batates,25,Food,Breakfast,95,My Corner
+101,Big Mac,85,Food,Burgers,50,Bazooka
+110,Cheeseburger,110,Food,Burgers,49,Buffalo Burger
+102,Chicken Ranch,95,Food,Pizza,39,Bazooka
+106,Chicken Shawerma,65,Food,Sandwiches,70,Karam El Sham
+107,Crepe,250,Food,Grill,17,Friends
+112,English Breakfast,150,Food,Breakfast,25,Pottery Cafe
+118,Future machine,500000,Electronics,Tools,48,Future Electronics
+111,Hamborgar,130,Food,Burgers,38,Buffalo Burger
+121,Head and shoulders,120,Pharmacy,Skincare,99,Elezaby
+116,IPhone 2077,150000,Electronics,Mobile,9,B Tech
+105,Meat Shawerma,75,Food,Sandwiches,60,Karam El Sham
+103,Omak Ali,120,Food,Dessert,29,El Abd
+119,Panadol Extra gedan,45,Pharmacy,Tablets,485,Elezaby
+108,Pasta Negresco,90,Food,Pasta,35,Rosto
+114,Raspberry Pi 4,2500,Electronics,Microcontrollers,29,Lampatronics
+117,Resistor Kit,150,Electronics,Components,200,Circuits Electronics
+120,Vitamin C,90,Pharmacy,Vitamins,298,Elezaby
+121,Water,10,Food,Beverages,1000,My Corner
+122,Father beans,18,Food,Breakfast,1000,My Corner
+123,Electricity,1000,Food,Microcontrollers,1000,Circuits Electronics

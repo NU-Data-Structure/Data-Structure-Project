@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUH2H - Login</title>
+    <style>
+        :root {
+            --primary-blue: #1976D2;
+            --light-blue: #E3F2FD;
+            --white: #FFFFFF;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-blue);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .welcome-message {
+            margin-bottom: 1.5rem;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .welcome-message p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .welcome-message .subtext {
+            color: #666;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        .login-container {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            color: var(--primary-blue);
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Toggle Switch Styles */
+        .user-type-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-blue);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+        }
+
+        .btn {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #1565C0;
+        }
+
+        .footer-text {
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Utility to hide elements */
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+            .logo {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+     
+        <div class="logo">NUH2H</div>
+        <h2 id="formTitle">Customer Login</h2>
+        <div class="welcome-message">
+            <p>Welcome to NUH2H Application</p>
+            <p class="subtext">Please log in to continue</p>
+        </div>
+
+        <div class="user-type-toggle">
+            <span class="toggle-label" style="color: var(--primary-blue)">Customer</span>
+            <label class="switch">
+                <input type="checkbox" id="isAdminCheckbox" onchange="toggleUserType()">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label">Provider</span>
+        </div>
+        
+        <div id="customerFields">
+            <div class="form-group">
+                <label for="customerId">Customer ID</label>
+                <input id="customerId" type="number" placeholder="Enter your customer ID">
+            </div>
+            <div class="form-group">
+                <label for="customerPassword">Password</label>
+                <input id="customerPassword" type="password" placeholder="Enter your password">
+            </div>
+        </div>
+
+        <div id="adminFields" class="hidden">
+            <div class="form-group">
+                <label for="providerName">Provider Name</label>
+                <input id="providerName" type="text" placeholder="Enter provider name">
+            </div>
+            <div class="form-group">
+                <label for="providerPassword">Password</label>
+                <input id="providerPassword" type="password" placeholder="Enter admin password">
+            </div>
+        </div>
+        
+        <button class="btn" onclick="login()">Login</button>
+        
+        <p class="footer-text" id="footerText">New customer? <a href="signup.html">Sign up here</a></p>
+    </div>
+
+    <script>
+    // Function to handle the UI toggle between Customer and Admin
+    function toggleUserType() {
+        const isAdmin = document.getElementById('isAdminCheckbox').checked;
+        const customerFields = document.getElementById('customerFields');
+        const adminFields = document.getElementById('adminFields');
+        const formTitle = document.getElementById('formTitle');
+        const footerText = document.getElementById('footerText');
+
+        if (isAdmin) {
+            // Show Admin Fields
+            customerFields.classList.add('hidden');
+            adminFields.classList.remove('hidden');
+            formTitle.innerText = "Provider Login";
+            footerText.classList.add('hidden'); // Hide footer for admins
+        } else {
+            // Show Customer Fields
+            adminFields.classList.add('hidden');
+            customerFields.classList.remove('hidden');
+            formTitle.innerText = "Customer Login";
+            footerText.classList.remove('hidden');
+        }
+    }
+
+    async function login() {
+        const isAdmin = document.getElementById('isAdminCheckbox').checked;
+
+        if (isAdmin) {
+            // --- ADMIN / PROVIDER LOGIN LOGIC ---
+            const providerName = document.getElementById('providerName').value;
+            const password = document.getElementById('providerPassword').value;
+
+            if (!providerName || !password) {
+                alert("Please enter Provider Name and Password");
+                return;
+            }
+
+            try {
+                // Example Admin API Endpoint
+                const response = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ 
+                        username: providerName, 
+                        password: password 
+                    })
+                });
+                
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = 'admin.html';
+                } else {
+                    // If login fails (name/password doesn't exist), go to sign up like customer login
+                    alert('Provider not found or invalid credentials. Redirecting to sign up.');
+                    // Note: You may need to adapt signup.html to handle provider registration if needed
+                    window.location.href = 'signup.html';
+                }
+            } catch (error) {
+                console.error('Admin login error:', error);
+                alert('Admin login failed. Check console.');
+            }
+
+        } else {
+            // --- CUSTOMER LOGIN LOGIC ---
+            const id = document.getElementById('customerId').value;
+            const password = document.getElementById('customerPassword').value;
+
+            if (!id || !password) {
+                alert("Please enter Customer ID and Password");
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        id: parseInt(id),
+                        password: password // Sending password now as well
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.exists) {
+                    localStorage.setItem('customerId', id);
+                    localStorage.setItem('customerPassword', password);
+                    window.location.href = 'home.html';
+                } else {
+                    alert("Login failed: Customer ID not found or password incorrect.");
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+    }
+    </script>
+</body>
+</html>

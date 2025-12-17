@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Shopping App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #1976D2;
+            --light-blue: #E3F2FD;
+            --dark-blue: #0D47A1;
+            --white: #FFFFFF;
+            --shadow: 0 4px 15px rgba(25, 118, 210, 0.1);
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f9ff 0%, #e1f0ff 100%);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(13, 71, 161, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+        
+        header h1 {
+            font-weight: 600;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .profile-icon {
+            color: white;
+            font-size: 1.8rem;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-icon:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .welcome-message {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            position: relative;
+        }
+        
+        .welcome-message h2 {
+            font-size: 2.2rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        
+        .welcome-message p {
+            color: #546E7A;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem 2rem 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        .category {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(25, 118, 210, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), #64B5F6);
+            transition: height 0.3s ease;
+        }
+        
+        .category:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(25, 118, 210, 0.15);
+        }
+        
+        .category:hover::before {
+            height: 8px;
+        }
+        
+        .category i {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), #64B5F6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .category:hover i {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .category h2 {
+            margin-bottom: 1.2rem;
+            color: #2C3E50;
+            font-size: 1.6rem;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .category h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), #64B5F6);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .category:hover h2::after {
+            width: 80px;
+        }
+        .category p {
+        margin-bottom: 2rem; 
+        color: #666;
+        min-height: 3rem; 
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), #1976D2);
+            color: white;
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1E88E5, #0D47A1);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 50px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .categories {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1rem 1.5rem;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-message h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome, <span id="customerName">Customer</span></h1>
+        <a href="profile.html" class="profile-icon" title="View Profile">
+            <i class="fas fa-user"></i>
+        </a>
+    </header>
+    
+    <div class="welcome-message">
+        <h2>Shop by Category</h2>
+        <p>Discover our wide range of products and services tailored just for you</p>
+    </div>
+    
+    <div class="categories">
+        <div class="category">
+            <i class="fas fa-utensils"></i>
+            <h2>Food</h2>
+            <p class="category-desc">Fresh and delicious meals</p>
+            <a href="providers.html?category=Food" class="btn">Browse Food</a>
+        </div>
+        
+        <div class="category">
+            <i class="fas fa-pills"></i>
+            <h2>Pharmacy</h2>
+            <p class="category-desc">Healthcare and wellness products</p>
+            <a href="providers.html?category=Pharmacy" class="btn">Browse Pharmacy</a>
+        </div>
+        
+        <div class="category">
+            <i class="fas fa-laptop"></i>
+            <h2>Electronics</h2>
+            <p class="category-desc">Latest tech and gadgets</p>
+            <a href="providers.html?category=Electronics" class="btn">Browse Electronics</a>
+        </div>
+        
+        <div class="category">
+            <i class="fas fa-pencil-alt"></i>
+            <h2>Stationary</h2>
+            <p class="category-desc">Office and school supplies</p>
+            <a href="providers.html?category=Stationary" class="btn">Browse Stationary</a>
+        </div>
+    </div>
+
+    <script>
+        // Get customer name from localStorage if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const customerName = localStorage.getItem('customerName');
+            if (customerName) {
+                document.getElementById('customerName').textContent = customerName;
+            }
+        });
+    </script>
+
+    <!-- Add this script before the closing </body> tag -->
+<script>
+    // Fetch and display customer name when the page loads
+    document.addEventListener('DOMContentLoaded', async function() {
+        const customerId = localStorage.getItem('customerId');
+        const password = localStorage.getItem('customerPassword');
+        const customerNameElement = document.getElementById('customerName');
+        
+        if (!customerId) {
+            // If no customer ID is found, redirect to login
+            window.location.href = 'login.html';
+            return;
+        }
+
+        try {
+            // Fetch customer data from the profile API
+            const response = await fetch(`/api/profile?id=${customerId}&password=${password}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch profile');
+            }
+            
+            const customer = await response.json();
+            if (customer && customer.name) {
+                // Display the customer's name
+                customerNameElement.textContent = customer.name;
+            } else {
+                customerNameElement.textContent = 'Valued Customer';
+            }
+        } catch (error) {
+            console.error('Error fetching customer data:', error);
+            customerNameElement.textContent = 'Valued Customer';
+        }
+    });
+</script>
+</body>
+</html>

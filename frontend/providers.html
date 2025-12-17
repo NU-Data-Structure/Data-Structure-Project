@@ -1,0 +1,303 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Providers</title>
+    <script src="script.js" defer></script>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); 
+            padding: 20px; 
+            min-height: 100vh;
+        }
+        h1 { 
+            text-align: center; 
+            color: #1565c0; 
+            margin-bottom: 30px; 
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(21, 101, 192, 0.1);
+        }
+        .providers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .provider-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(21, 101, 192, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #bbdefb;
+        }
+        .provider-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 35px rgba(21, 101, 192, 0.25);
+            border-color: #42a5f5;
+        }
+        .provider-img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+        .provider-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1976d2;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 12px 28px;
+            background: linear-gradient(to right, #42a5f5, #1e88e5);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { 
+            background: linear-gradient(to right, #1e88e5, #1565c0);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);
+        }
+        /* Optional subtle animation on load */
+        .provider-card {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="home.html" class="back-btn">← Back to Home</a>
+    <h1 id="pageTitle">Providers</h1>
+
+    <div id="providersList" class="providers-container">
+        <p>Loading providers...</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            
+            if (!category) {
+                document.getElementById('providersList').innerHTML = '<p>No category specified.</p>';
+                return;
+            }
+
+            document.getElementById('pageTitle').textContent = category.charAt(0).toUpperCase() + category.slice(1) + " Providers";
+
+            try {
+                const response = await fetch(`${API_ENDPOINTS.PROVIDERS}?category=${category}`);
+                const data = await response.json();
+
+                if (data.success && data.providers.length > 0) {
+                    let html = '';
+                    data.providers.forEach(p => {
+                        html += `
+                            <div class="provider-card" onclick="window.location.href='product.html?category=${category}&provider=${p.name}'">
+                                <img src="${p.image}" alt="${p.name}" class="provider-img">
+                                <div class="provider-name">${p.name}</div>
+                            </div>
+                        `;
+                    });
+                    document.getElementById('providersList').innerHTML = html;
+                } else {
+                    document.getElementById('providersList').innerHTML = '<p>No providers found for this category.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading providers:', error);
+                document.getElementById('providersList').innerHTML = '<p>Error loading providers.</p>';
+            }
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Providers</title>
+    <script src="script.js" defer></script>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(-45deg, #0d47a1, #1976d2, #42a5f5, #bbdefb);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 20px; 
+            min-height: 100vh;
+            color: white;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        h1 { 
+            text-align: center; 
+            color: white; 
+            margin-bottom: 40px; 
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+        .providers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .provider-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            color: #1565c0;
+        }
+        .provider-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .provider-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 50px rgba(66, 165, 245, 0.4);
+            border-color: rgba(66, 165, 245, 0.6);
+        }
+        .provider-card:hover::before {
+            opacity: 1;
+        }
+        .provider-img {
+            width: 160px;
+            height: 160px;
+            object-fit: contain;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+            transition: transform 0.4s ease;
+        }
+        .provider-card:hover .provider-img {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .provider-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #0d47a1;
+            text-shadow: none;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        .back-btn:hover { 
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(66, 165, 245, 0.4);
+        }
+        /* Enhanced fade-in for cards */
+        .provider-card {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="home.html" class="back-btn">← Back to Home</a>
+    <h1 id="pageTitle">Providers</h1>
+
+    <div id="providersList" class="providers-container">
+        <p>Loading providers...</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            
+            if (!category) {
+                document.getElementById('providersList').innerHTML = '<p style="color: white;">No category specified.</p>';
+                return;
+            }
+
+            document.getElementById('pageTitle').textContent = category.charAt(0).toUpperCase() + category.slice(1) + " Providers";
+
+            try {
+                const response = await fetch(`${API_ENDPOINTS.PROVIDERS}?category=${category}`);
+                const data = await response.json();
+
+                if (data.success && data.providers.length > 0) {
+                    let html = '';
+                    data.providers.forEach((p, i) => {
+                        html += `
+                            <div class="provider-card" style="--i: ${i};" onclick="window.location.href='product.html?category=${category}&provider=${p.name}'">
+                                <img src="${p.image}" alt="${p.name}" class="provider-img">
+                                <div class="provider-name">${p.name}</div>
+                            </div>
+                        `;
+                    });
+                    document.getElementById('providersList').innerHTML = html;
+                } else {
+                    document.getElementById('providersList').innerHTML = '<p style="color: white;">No providers found for this category.</p>';
+                }
+            } catch (error) {
+                console.error('Error loading providers:', error);
+                document.getElementById('providersList').innerHTML = '<p style="color: white;">Error loading providers.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
+
+ 

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <script src="script.js" defer></script>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(-45deg, #42a5f5, #90caf9, #bbdefb, #e3f2fd);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            padding: 20px; 
+            min-height: 100vh;
+            color: white;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header & Nav */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 16px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 { margin: 0; font-size: 1.8rem; color: #1565c0; text-shadow: none; }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: white;
+            color: #1565c0;
+            text-decoration: none;
+            border-radius: 50px;
+            border: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-weight: 600;
+        }
+        .back-btn:hover { transform: translateX(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+
+        .view-cart-btn {
+            background: #ffca28;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .view-cart-btn:hover { transform: scale(1.05); background: #ffc107; }
+
+        /* Search Box */
+        .search-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 16px;
+            display: flex;
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        input[type="text"] {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-size: 1rem;
+            color: #333;
+        }
+        .search-btn {
+            padding: 12px 25px;
+            background: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .search-btn:hover { background: #0d47a1; }
+
+        /* Cards & Results */
+        .product-card {
+            background: white;
+            color: #333;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .cart-button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .cart-button:hover { background: #388e3c; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin-top: 10px;
+        }
+        th {
+            text-align: left;
+            padding: 15px;
+            color: #1565c0;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+        }
+        tr {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            transition: transform 0.2s;
+        }
+        tr:hover { transform: scale(1.01); }
+        td { padding: 15px; }
+        
+        tr td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
+        tr td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
+
+        /* Cart Overlay */
+        #cartItems {
+            background: white;
+            color: #333;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            margin-top: 20px;
+            border: none;
+            display: none; /* Controlled by JS */
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .cart-item {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remove-btn {
+            background: #ff5252;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-btn" onclick="goBack()">← Back to Categories</button>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🛍️ Browse Products</h1>
+            <button class="view-cart-btn" onclick="toggleCart()">
+                🛒 Cart (<span id="cartCount">0</span>)
+            </button>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-box">
+            <input type="text" id="productName" placeholder="Search for products (e.g., Apple)...">
+            <button class="search-btn" onclick="searchProduct()">Search</button>
+        </div>
+
+        <!-- Search Result Container -->
+        <div id="productResult"></div>
+
+        <!-- All Products List -->
+        <div id="productList"></div>
+
+        <!-- Cart Section -->
+        <div id="cartItems">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #1565c0;">🛒 Your Shopping Cart</h3>
+                <button onclick="toggleCart()" style="background: transparent; border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px; cursor: pointer;">✕ Close</button>
+            </div>
+            
+            <p style="color: #666; font-size: 0.9rem;"><em>Your cart is managed securely by our C++ backend.</em></p>
+            
+            <div id="cartContents" style="margin: 20px 0; max-height: 300px; overflow-y: auto;">
+                <p>Loading cart...</p>
+            </div>
+            
+            <!-- Payment Method Selection -->
+            <div style="margin: 15px 0;">
+                <label style="font-weight: 600; margin-right: 10px;">Payment Method:</label>
+                <input type="radio" id="payCash" name="payment" value="Cash" checked>
+                <label for="payCash" style="margin-right: 15px;">Cash 💵</label>
+                <input type="radio" id="payVisa" name="payment" value="Visa">
+                <label for="payVisa">Visa 💳</label>
+            </div>
+
+            <!-- Cart Footer -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                <div>
+                    <strong id="cartTotal" style="font-size: 1.2rem;">Total: $0.00</strong>
+                    <p style="font-size: 11px; color: #999; margin-top: 4px;">
+                        Synced items: <span id="cartBackendCount">0</span>
+                    </p>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button onclick="clearCart()" style="background: #90a4ae; color: white; padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer;">
+                        Clear
+                    </button>
+                    <button onclick="checkout()" style="background: #2e7d32; color: white; padding: 10px 25px; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);">
+                        Checkout ➔
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Logic
+        function goBack() {
+            window.location.href = 'home.html';
+        }
+
+        // Cart Toggle Logic
+        function toggleCart() {
+            const cartDiv = document.getElementById('cartItems');
+            if (cartDiv.style.display === 'none' || cartDiv.style.display === '') {
+                cartDiv.style.display = 'block';
+                // Trigger script.js update function if available
+                if (typeof updateCartDisplay === 'function') {
+                    updateCartDisplay();
+                }
+            } else {
+                cartDiv.style.display = 'none';
+            }
+        }
+        
+        // Init
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load products via script.js
+            if (typeof loadProducts === 'function') {
+                loadProducts();
+            }
+            // Init cart badge
+            if (typeof updateCartDisplay === 'function') {
+                updateCartDisplay();
+            }
+        });
+    </script>
+</body>
+</html>

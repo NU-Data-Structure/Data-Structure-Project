@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <script src="script.js" defer></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #E3F2FD; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px; }
+        h2 { text-align: center; color: #333; }
+        .input-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 5px; color: #555; }
+        input[type="text"], input[type="password"], input[type="number"] { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color:#1976D2; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #1565C0; }
+        .login-link { text-align: center; margin-top: 1rem; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Create Account</h2>
+
+    <div class="input-group">
+        <label for="id">Customer ID</label>
+        <input type="number" id="id" placeholder="Choose a numeric ID" autocomplete="off">
+    </div>
+    <div class="input-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter your name" autocomplete="off">
+    </div>
+    <div class="input-group">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" placeholder="Enter your phone number" autocomplete="off">
+    </div>
+    <div class="input-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" placeholder="Enter your address" autocomplete="off">
+    </div>
+    <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password" autocomplete="new-password">
+    </div>
+    <div class="input-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" placeholder="Confirm Password" autocomplete="new-password">
+    </div>
+
+    <button onclick="signup()">Create Account</button>
+    <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+</div>
+
+<script>
+async function signup() {
+    const id = document.getElementById('id').value;
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm_password').value;
+
+
+    if (!id || !name || !phone || !address || !password || !confirmPassword) {
+        alert("Please fill all fields");
+        return;
+    }
+
+    // Send to backend to register
+    const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id: parseInt(id), name, phone, address, password, confirmPassword})
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+        alert("Account created successfully! Please login.");
+        window.location.href = 'login.html';
+    } else {
+        alert('Error creating account: ' + (result.message || 'Unknown error'));
+    }
+}
+</script>
+
+</body>
+</html>

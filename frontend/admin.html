@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Delivery Queue</title>
+    <script src="script.js" defer></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #333; }
+        
+        .controls { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd; }
+        
+        button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 4px; font-size: 14px; margin-right: 10px; }
+        .btn-refresh { background-color: #007BFF; color: white; }
+        .btn-refresh:hover { background-color: #0056b3; }
+        .btn-process { background-color: #28a745; color: white; }
+        .btn-process:hover { background-color: #218838; }
+        .btn-back { background-color: #6c757d; color: white; }
+        .btn-back:hover { background-color: #5a6268; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #343a40; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        tr:hover { background-color: #e9ecef; }
+        
+        .status-badge {
+            background: #ffc107; color: #000; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;
+        }
+        .empty-msg { text-align: center; color: #666; margin-top: 30px; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h1>📦 Admin Delivery Management</h1>
+    
+    <div class="controls">
+        <button class="btn-process" onclick="processNextOrder()">✅ Process Next Order</button>
+        <button class="btn-refresh" onclick="loadQueue()">🔄 Refresh Queue</button>
+        <button class="btn-back" onclick="window.location.href='profile.html'">⬅️ Back to Profile</button>
+    </div>
+
+    <div id="deliveryQueue">
+        <p>Loading queue...</p>
+    </div>
+
+    <script>
+        // Load queue immediately when page opens
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQueue();
+        });
+    </script>
+</body>
+</html>
