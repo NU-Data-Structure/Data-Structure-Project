@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Shopping App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
     <style>
         * {
             margin: 0;
@@ -239,9 +240,15 @@
 <body>
     <header>
         <h1>Welcome, <span id="customerName">Customer</span></h1>
-        <a href="profile.html" class="profile-icon" title="View Profile">
-            <i class="fas fa-user"></i>
-        </a>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="cart.html" class="profile-icon" title="View Cart" style="position: relative;">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cartCount" style="position: absolute; top: -5px; right: -5px; background: #ff4081; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%;">0</span>
+            </a>
+            <a href="profile.html" class="profile-icon" title="View Profile">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
     </header>
     
     <div class="welcome-message">

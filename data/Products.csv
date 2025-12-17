@@ -1,25 +1,290 @@
 ID,Name,Price,Category,Subcategory,Stock,Provider
-113,Arduino Uno,450,Electronics,Microcontrollers,97,Lampatronics
-115,ASUS Laptop,5000,Electronics,TV,5,B Tech
-104,Basbousa,80,Food,Dessert,23,El Abd
+133,1TB External HDD,1100,Electronics,Storage,40,Future Electronics
+261,3 Pcs Chicken Meal,110,Food,Meals,100,Bazooka
+211,3D Printer Filament PLA,450,Electronics,3D Printing,30,Future Electronics
+262,5 Pcs Chicken Meal,160,Food,Meals,80,Bazooka
+208,9V Battery,25,Electronics,Power,100,Circuits Electronics
+171,9V Battery Clip,10,Electronics,Power,500,Lampatronics
+155,A4 Paper Ream (500 sheets),120,Stationary,Paper,100,Samir & Aly
+150,Advil 200mg,45,Pharmacy,Medicine,100,Elezaby
+148,Alcohol Spray 70%,35,Pharmacy,Health,150,Elezaby
+209,Alligator Clips (10pcs),40,Electronics,Cables,90,Circuits Electronics
+328,American Coffee,35,Food,Beverages,90,Pottery Cafe
+279,Animal Style Burger,160,Food,Burgers,40,Buffalo Burger
+191,Anker Power Bank 20k,1500,Electronics,Accessories,60,B Tech
+131,Apple Watch Series 7,9000,Electronics,Wearables,8,Future Electronics
+214,Arduino Mega 2560,450,Electronics,Microcontrollers,35,Future Electronics
+175,Arduino Nano,180,Electronics,Microcontrollers,90,Lampatronics
+113,Arduino Uno,450,Electronics,Microcontrollers,86,Lampatronics
+113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
+113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
+113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
+113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
+115,ASUS Laptop,5000,Electronics,Laptops,5,B Tech
+366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,99,Elezaby
+277,Bacon Mushroom Jack,150,Food,Burgers,50,Buffalo Burger
+156,Ballpoint Pens Blue (Box),40,Stationary,Writing,200,Samir & Aly
+313,Banana Chocolate Crepe,65,Food,Dessert,70,Friends
+372,Band-Aid Box,30,Pharmacy,Health,200,Elezaby
+104,Basbousa,80,Food,Dessert,22,El Abd
 109,Batates,25,Food,Breakfast,95,My Corner
+286,BBQ Wings (6pcs),80,Food,Chicken,50,Buffalo Burger
 101,Big Mac,85,Food,Burgers,50,Bazooka
+385,Binder 2-Ring,45,Stationary,Office Supplies,60,Samir & Aly
+231,Biscuits Ammonia 1kg,140,Food,Bakery,60,El Abd
+182,Braun Hand Blender,1200,Electronics,Kitchen,25,B Tech
+166,Breadboard 830pts,60,Electronics,Prototyping,80,Lampatronics
+217,Brushless Motor,350,Electronics,Motors,25,Future Electronics
+285,Buffalo Wings (12pcs),150,Food,Chicken,30,Buffalo Burger
+284,Buffalo Wings (6pcs),80,Food,Chicken,50,Buffalo Burger
+318,Burger Crepe,85,Food,Savory,50,Friends
+250,Caesar Salad,45,Food,Salads,40,My Corner
+369,Calcium Magnesium Zinc,250,Pharmacy,Vitamins,50,Elezaby
+189,Canon DSLR Camera,18000,Electronics,Cameras,7,B Tech
+194,Capacitor Kit,120,Electronics,Components,50,Circuits Electronics
+141,Cappuccino,45,Food,Beverages,100,Pottery Cafe
+341,Carrot Cake,55,Food,Dessert,30,Pottery Cafe
+160,Casio Scientific Calculator,450,Stationary,Electronics,30,Samir & Aly
+367,Centrum Multivitamin,450,Pharmacy,Vitamins,30,Elezaby
+140,Cheese Croissant,35,Food,Bakery,40,Pottery Cafe
+244,Cheese Sandwich,15,Food,Breakfast,100,My Corner
 110,Cheeseburger,110,Food,Burgers,49,Buffalo Burger
+339,Cheesecake Blueberry,65,Food,Dessert,40,Pottery Cafe
+338,Cheesecake Strawberry,65,Food,Dessert,40,Pottery Cafe
+270,Cheesy Fries,45,Food,Sides,100,Bazooka
+287,Cheesy Fries with Bacon,60,Food,Sides,80,Buffalo Burger
+143,Chicken Alfredo Pasta,110,Food,Pasta,25,Rosto
+317,Chicken Crispy Crepe,80,Food,Savory,60,Friends
+281,Chicken Ditch Burger,120,Food,Burgers,50,Buffalo Burger
+316,Chicken Fajita Crepe,85,Food,Savory,55,Friends
+315,Chicken Pane Crepe,80,Food,Savory,60,Friends
+349,Chicken Pane Meal,120,Food,Meals,40,Rosto
+247,Chicken Panne Sandwich,35,Food,Sandwiches,60,My Corner
 102,Chicken Ranch,95,Food,Pizza,39,Bazooka
 106,Chicken Shawerma,65,Food,Sandwiches,70,Karam El Sham
+292,Chicken Shawerma Fatteh,90,Food,Meals,80,Karam El Sham
+271,Chicken Wrap,60,Food,Sandwiches,80,Bazooka
+280,Chili Chicken Burger,110,Food,Burgers,60,Buffalo Burger
+340,Chocolate Cake,60,Food,Dessert,45,Pottery Cafe
+233,Chocolate Gateaux (Piece),25,Food,Dessert,100,El Abd
+146,Chocolate Waffle,50,Food,Dessert,35,Friends
+248,Club Sandwich,45,Food,Sandwiches,50,My Corner
+342,Club Sandwich Platter,90,Food,Meals,25,Pottery Cafe
+137,Coleslaw,20,Food,Sides,100,Karam El Sham
+267,Coleslaw Large,25,Food,Sides,150,Bazooka
+373,Correction Fluid,15,Stationary,Writing,150,Samir & Aly
+371,Cough Syrup Ivy,45,Pharmacy,Medicine,80,Elezaby
+357,Cream Chicken Soup,35,Food,Soup,60,Rosto
 107,Crepe,250,Food,Grill,17,Friends
+297,Crispy Chicken Sandwich,60,Food,Sandwiches,100,Karam El Sham
+173,DC Motor 3-6V,15,Electronics,Motors,150,Lampatronics
+126,Dell Monitor 24inch,3200,Electronics,Monitors,15,B Tech
+204,Desoldering Pump,45,Electronics,Tools,50,Circuits Electronics
+364,Dettol Antiseptic 500ml,110,Pharmacy,Health,60,Elezaby
+178,DHT11 Temp Sensor,40,Electronics,Sensors,100,Lampatronics
+288,Diablo Fries,50,Food,Sides,90,Buffalo Burger
+170,Digital Multimeter,250,Electronics,Tools,30,Lampatronics
+149,Digital Thermometer,120,Pharmacy,Devices,60,Elezaby
+238,Donut Chocolate,18,Food,Dessert,150,El Abd
+144,Double Beef Burger,160,Food,Burgers,40,Buffalo Burger
+362,Dove Soap Bar,20,Pharmacy,Personal Care,150,Elezaby
+216,Drone Frame Kit,850,Electronics,Robotics,15,Future Electronics
+237,Eclair Chocolate,20,Food,Dessert,120,El Abd
+123,Electricity,1000,Electronics,Components,1000,Circuits Electronics
+212,Ender 3 V2 Printer,9500,Electronics,3D Printing,5,Future Electronics
 112,English Breakfast,150,Food,Breakfast,25,Pottery Cafe
-118,Future machine,500000,Electronics,Tools,48,Future Electronics
-111,Hamborgar,130,Food,Burgers,38,Buffalo Burger
-121,Head and shoulders,120,Pharmacy,Skincare,99,Elezaby
-116,IPhone 2077,150000,Electronics,Mobile,9,B Tech
-105,Meat Shawerma,75,Food,Sandwiches,60,Karam El Sham
-103,Omak Ali,120,Food,Dessert,29,El Abd
-119,Panadol Extra gedan,45,Pharmacy,Tablets,485,Elezaby
-108,Pasta Negresco,90,Food,Pasta,35,Rosto
-114,Raspberry Pi 4,2500,Electronics,Microcontrollers,29,Lampatronics
-117,Resistor Kit,150,Electronics,Components,200,Circuits Electronics
-120,Vitamin C,90,Pharmacy,Vitamins,298,Elezaby
-121,Water,10,Food,Beverages,1000,My Corner
+376,Eraser Large,10,Stationary,Writing,300,Samir & Aly
+218,ESC 30A Speed Controller,200,Electronics,Modules,30,Future Electronics
+176,ESP8266 WiFi Module,95,Electronics,Modules,85,Lampatronics
+327,Espresso Double,35,Food,Beverages,100,Pottery Cafe
+326,Espresso Single,25,Food,Beverages,100,Pottery Cafe
+145,Family Meal Box,350,Food,Meals,15,Bazooka
 122,Father beans,18,Food,Breakfast,1000,My Corner
-123,Electricity,1000,Food,Microcontrollers,1000,Circuits Electronics
+384,File Folder A4,10,Stationary,Office Supplies,300,Samir & Aly
+154,First Aid Kit,250,Pharmacy,Health,20,Elezaby
+331,Flat White,50,Food,Beverages,70,Pottery Cafe
+219,Flight Controller,1200,Electronics,Robotics,10,Future Electronics
+203,Flux Paste,35,Electronics,Tools,80,Circuits Electronics
+220,FPV Camera,600,Electronics,Cameras,20,Future Electronics
+334,Frappuccino Caramel,60,Food,Beverages,50,Pottery Cafe
+335,Frappuccino Mocha,60,Food,Beverages,50,Pottery Cafe
+269,French Fries Large,30,Food,Sides,150,Bazooka
+268,French Fries Medium,20,Food,Sides,200,Bazooka
+142,Fresh Orange Juice,30,Food,Beverages,80,My Corner
+234,Fruit Gateaux (Piece),25,Food,Dessert,100,El Abd
+252,Fruit Salad,35,Food,Dessert,50,My Corner
+118,Future machine,500000,Electronics,Tools,48,Future Electronics
+138,Garlic Dip,15,Food,Sides,150,Karam El Sham
+378,Geometry Set,45,Stationary,School Supplies,80,Samir & Aly
+232,Ghorayeba 1kg,180,Food,Bakery,50,El Abd
+382,Glue Stick 20g,15,Stationary,Office Supplies,150,Samir & Aly
+249,Greek Salad,40,Food,Salads,40,My Corner
+358,Green Salad,20,Food,Salads,100,Rosto
+350,Grilled Chicken Meal,130,Food,Meals,35,Rosto
+300,Half Grilled Chicken,120,Food,Grill,40,Karam El Sham
+111,Hamborgar,130,Food,Burgers,38,Buffalo Burger
+129,HDMI Cable 2m,75,Electronics,Cables,100,Circuits Electronics
+121,Head and shoulders,120,Pharmacy,Skincare,98,Elezaby
+206,Heat Shrink Tube Kit,60,Electronics,Components,70,Circuits Electronics
+157,Highlighter Set (4 colors),35,Stationary,Writing,150,Samir & Aly
+257,Hot Chocolate,30,Food,Beverages,80,My Corner
+319,Hot Dog Crepe,75,Food,Savory,65,Friends
+188,HP Pavilion Laptop,25000,Electronics,Laptops,10,B Tech
+240,Ice Cream Chocolate Scoop,15,Food,Dessert,200,El Abd
+241,Ice Cream Mango Scoop,15,Food,Dessert,200,El Abd
+242,Ice Cream Strawberry Scoop,15,Food,Dessert,200,El Abd
+239,Ice Cream Vanilla Scoop,15,Food,Dessert,200,El Abd
+333,Iced Coffee,45,Food,Beverages,80,Pottery Cafe
+258,Iced Tea Peach,25,Food,Beverages,90,My Corner
+225,Industrial PLC Module,5000,Electronics,Industrial,5,Future Electronics
+224,IoT Gateway LoRa,3500,Electronics,Networking,10,Future Electronics
+185,iPhone 14 Pro Case,500,Electronics,Accessories,50,B Tech
+116,IPhone 2077,150000,Electronics,Mobile,9,B Tech
+274,Jalapeno Cheese Bites,40,Food,Sides,120,Bazooka
+132,JBL Bluetooth Speaker,1800,Electronics,Audio,25,B Tech
+153,Johnson Baby Powder,55,Pharmacy,Baby Care,40,Elezaby
+168,Jumper Wires M-F,25,Electronics,Cables,200,Lampatronics
+167,Jumper Wires M-M,25,Electronics,Cables,200,Lampatronics
+283,Keto Lettuce Wrap Burger,140,Food,Burgers,40,Buffalo Burger
+303,Kobeba (3pcs),40,Food,Sides,50,Karam El Sham
+351,Kofta Meal,140,Food,Meals,30,Rosto
+296,Kofta Sandwich,70,Food,Sandwiches,85,Karam El Sham
+174,L298N Motor Driver,55,Electronics,Modules,70,Lampatronics
+347,Lasagna Chicken,90,Food,Pasta,40,Rosto
+346,Lasagna Meat,95,Food,Pasta,40,Rosto
+329,Latte,45,Food,Beverages,80,Pottery Cafe
+172,LCD 16x2 Display,85,Electronics,Displays,60,Lampatronics
+375,Lead Refills 0.5mm,10,Stationary,Writing,200,Samir & Aly
+198,LED Blue (50pcs),25,Electronics,Components,300,Circuits Electronics
+197,LED Green (50pcs),25,Electronics,Components,300,Circuits Electronics
+196,LED Red (50pcs),25,Electronics,Components,300,Circuits Electronics
+259,Lemon Mint Juice,25,Food,Beverages,80,My Corner
+179,LG Washing Machine 7kg,8500,Electronics,Appliances,10,B Tech
+215,LiPo Battery 3.7V,150,Electronics,Power,60,Future Electronics
+152,Listerine Mouthwash,85,Pharmacy,Personal Care,50,Elezaby
+134,Logitech Webcam,850,Electronics,Accessories,20,Lampatronics
+127,Logitech Wireless Mouse,450,Electronics,Accessories,50,Lampatronics
+310,Lotus Crepe,70,Food,Dessert,60,Friends
+355,Mahshi Mix Plate,50,Food,Sides,40,Rosto
+228,Malban Kahk 1kg,190,Food,Bakery,50,El Abd
+307,Manakeesh Cheese,35,Food,Bakery,90,Karam El Sham
+306,Manakeesh Zaatar,25,Food,Bakery,100,Karam El Sham
+298,Maria Chicken Sandwich,70,Food,Sandwiches,60,Karam El Sham
+299,Maria Meat Sandwich,80,Food,Sandwiches,50,Karam El Sham
+105,Meat Shawerma,75,Food,Sandwiches,60,Karam El Sham
+293,Meat Shawerma Fatteh,110,Food,Meals,70,Karam El Sham
+128,Mechanical Keyboard,1200,Electronics,Accessories,30,Lampatronics
+374,Mechanical Pencil 0.5mm,25,Stationary,Writing,100,Samir & Aly
+289,Milkshake Chocolate,45,Food,Beverages,60,Buffalo Burger
+291,Milkshake Strawberry,45,Food,Beverages,60,Buffalo Burger
+290,Milkshake Vanilla,45,Food,Beverages,60,Buffalo Burger
+320,Mix Cheese Crepe,70,Food,Savory,70,Friends
+312,Mix Chocolate Crepe,75,Food,Dessert,50,Friends
+353,Mix Grill Meal,180,Food,Meals,20,Rosto
+294,Mix Shawerma Fatteh,100,Food,Meals,75,Karam El Sham
+330,Mocha,50,Food,Beverages,70,Pottery Cafe
+139,Molten Cake,60,Food,Dessert,30,El Abd
+354,Mombar Plate,60,Food,Sides,30,Rosto
+136,Mozzarella Sticks,55,Food,Sides,50,Bazooka
+276,Mushroom Jack Burger,140,Food,Burgers,60,Buffalo Burger
+256,Nescafe,25,Food,Beverages,100,My Corner
+361,Nivea Creme 150ml,65,Pharmacy,Skincare,80,Elezaby
+308,Nutella Crepe,60,Food,Dessert,80,Friends
+229,Nuts Kahk 1kg,250,Food,Bakery,40,El Abd
+278,Old School Burger,120,Food,Burgers,70,Buffalo Burger
+103,Omak Ali,120,Food,Dessert,29,El Abd
+368,Omega 3 Fish Oil,300,Pharmacy,Vitamins,40,Elezaby
+135,Onion Rings,45,Food,Sides,60,Buffalo Burger
+151,Oral-B Toothbrush,30,Pharmacy,Personal Care,80,Elezaby
+309,Oreo Crepe,65,Food,Dessert,70,Friends
+243,Oriental Sweets Mix 1kg,200,Food,Dessert,40,El Abd
+356,Orzo Soup,25,Food,Soup,80,Rosto
+226,Oscilloscope Handheld,4500,Electronics,Tools,7,Future Electronics
+381,Paint Brushes Set,55,Stationary,Art Supplies,60,Samir & Aly
+365,Pampers Size 3 (64pcs),350,Pharmacy,Baby Care,40,Elezaby
+119,Panadol Extra gedan,45,Pharmacy,Tablets,482,Elezaby
+325,Pancake Honey,40,Food,Dessert,70,Friends
+324,Pancake Nutella,50,Food,Dessert,60,Friends
+370,Paracetamol Syrup,25,Pharmacy,Medicine,100,Elezaby
+343,Pasta Bechamel,80,Food,Pasta,50,Rosto
+108,Pasta Negresco,90,Food,Pasta,35,Rosto
+344,Pasta Red Sauce,60,Food,Pasta,60,Rosto
+345,Pasta White Sauce,70,Food,Pasta,60,Rosto
+201,PCB Board 5x7cm,10,Electronics,Prototyping,150,Circuits Electronics
+162,Pencil Case,25,Stationary,School Supplies,80,Samir & Aly
+230,Petit Four Mix 1kg,220,Food,Bakery,45,El Abd
+183,Philips Air Fryer,4500,Electronics,Kitchen,20,B Tech
+227,Plain Kahk 1kg,180,Food,Bakery,50,El Abd
+187,PS5 Controller,3500,Electronics,Gaming,30,B Tech
+114,Raspberry Pi 4,2500,Electronics,Microcontrollers,29,Lampatronics
+210,Raspberry Pi 5 8GB,4500,Electronics,Microcontrollers,20,Future Electronics
+177,Relay Module 1-Ch,30,Electronics,Modules,120,Lampatronics
+200,Resistor 10k Ohm (100pcs),20,Electronics,Components,500,Circuits Electronics
+199,Resistor 1k Ohm (100pcs),20,Electronics,Components,500,Circuits Electronics
+117,Resistor Kit,150,Electronics,Components,200,Circuits Electronics
+130,RGB LED Strip,150,Electronics,Lighting,80,Circuits Electronics
+360,Rice Pudding,25,Food,Dessert,70,Rosto
+266,Rizo Plain,25,Food,Rice,100,Bazooka
+265,Rizo with Chicken,45,Food,Rice,150,Bazooka
+246,Roast Beef Sandwich,30,Food,Breakfast,70,My Corner
+377,Ruler 30cm,15,Stationary,School Supplies,200,Samir & Aly
+304,Sambousek Cheese (3pcs),30,Food,Sides,60,Karam El Sham
+305,Sambousek Meat (3pcs),35,Food,Sides,60,Karam El Sham
+184,Samsung Galaxy S23,35000,Electronics,Mobile,12,B Tech
+125,Samsung Smart TV,8500,Electronics,TV,10,B Tech
+383,Scissors Office,35,Stationary,Office Supplies,80,Samir & Aly
+165,Servo Motor SG90,35,Electronics,Motors,100,Lampatronics
+180,Sharp Refrigerator 18ft,12000,Electronics,Appliances,8,B Tech
+352,Shish Tawook Meal,130,Food,Meals,35,Rosto
+295,Shish Tawook Sandwich,65,Food,Sandwiches,90,Karam El Sham
+363,Signal Toothpaste,25,Pharmacy,Personal Care,120,Elezaby
+260,Single Chicken Piece,35,Food,Chicken,200,Bazooka
+379,Sketchbook A3,60,Stationary,Art Supplies,50,Samir & Aly
+223,Smart Home Hub,2500,Electronics,Smart Home,12,Future Electronics
+193,Smart LED Bulb,250,Electronics,Smart Home,80,B Tech
+336,Smoothie Mango,50,Food,Beverages,60,Pottery Cafe
+337,Smoothie Strawberry,50,Food,Beverages,60,Pottery Cafe
+275,Soft Drink Can,15,Food,Beverages,300,Bazooka
+169,Soldering Iron 60W,120,Electronics,Tools,40,Lampatronics
+202,Soldering Wire Reel,80,Electronics,Tools,60,Circuits Electronics
+186,Sony PlayStation 5,28000,Electronics,Gaming,5,B Tech
+348,Spaghetti Bolognese,85,Food,Pasta,50,Rosto
+332,Spanish Latte,55,Food,Beverages,60,Pottery Cafe
+263,Spicy Chicken Strips (3pcs),55,Food,Chicken,120,Bazooka
+264,Spicy Chicken Strips (5pcs),85,Food,Chicken,100,Bazooka
+158,Spiral Notebook A4,45,Stationary,Notebooks,120,Samir & Aly
+159,Stapler with Pins,55,Stationary,Office Supplies,60,Samir & Aly
+213,Stepper Motor NEMA17,250,Electronics,Motors,40,Future Electronics
+161,Sticky Notes Pad,15,Stationary,Office Supplies,300,Samir & Aly
+314,Strawberry Chocolate Crepe,65,Food,Dessert,70,Friends
+147,Surgical Face Mask (50pcs),75,Pharmacy,Health,200,Elezaby
+235,Swiss Roll Chocolate,30,Food,Dessert,80,El Abd
+236,Swiss Roll Vanilla,30,Food,Dessert,80,El Abd
+207,Tactile Switch (20pcs),30,Electronics,Components,200,Circuits Electronics
+359,Tahina Salad,15,Food,Salads,120,Rosto
+254,Tea with Milk,15,Food,Beverages,150,My Corner
+181,Tornado Microwave 25L,3500,Electronics,Appliances,15,B Tech
+273,Tower Sandwich,95,Food,Sandwiches,70,Bazooka
+195,Transistor BC547 (10pcs),15,Electronics,Components,200,Circuits Electronics
+190,Tripod Stand,450,Electronics,Accessories,40,B Tech
+251,Tuna Salad,50,Food,Salads,35,My Corner
+245,Turkey Sandwich,25,Food,Breakfast,80,My Corner
+255,Turkish Coffee,20,Food,Beverages,120,My Corner
+164,Ultrasonic Sensor,45,Electronics,Sensors,50,Lampatronics
+192,USB-C Cable 1m,150,Electronics,Cables,100,B Tech
+282,Vegan Burger,130,Food,Burgers,30,Buffalo Burger
+221,Video Transmitter,500,Electronics,Modules,20,Future Electronics
+302,Vine Leaves (Plate),35,Food,Sides,60,Karam El Sham
+120,Vitamin C,90,Pharmacy,Vitamins,297,Elezaby
+222,VR Headset,15000,Electronics,Gaming,8,Future Electronics
+323,Waffle Fruits,60,Food,Dessert,55,Friends
+322,Waffle Lotus,65,Food,Dessert,50,Friends
+321,Waffle Nutella,55,Food,Dessert,60,Friends
+124,Water,10,Food,Beverages,1000,My Corner
+380,Watercolor Set 12 Colors,85,Stationary,Art Supplies,40,Samir & Aly
+311,White Chocolate Crepe,60,Food,Dessert,80,Friends
+163,Whiteboard Marker (Black),12,Stationary,Writing,500,Samir & Aly
+301,Whole Grilled Chicken,220,Food,Grill,30,Karam El Sham
+205,Wire Stripper,75,Electronics,Tools,40,Circuits Electronics
+253,Yogurt with Honey,20,Food,Breakfast,60,My Corner
+272,Zinger Sandwich,75,Food,Sandwiches,90,Bazooka

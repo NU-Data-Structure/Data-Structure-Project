@@ -17,3 +17,12 @@ OrderID,CustomerID,ProductIDs,TotalAmount,Status,Provider,PaymentMethod
 5025,1939,103;104;110;118,500310,Pending,Lampatronics;Bazooka,Cash
 5027,1939,120;104;107,920,Pending,"Friends;El Abd;Elezaby",Visa
 5029,1939,115;116,620000,Pending,"B Tech",Cash
+5031,12,"104",80,Pending,El Abd,Cash
+5032,12,"119;120",180,Pending,Elezaby,Cash
+5034,12,"121;119",165,Pending,Elezaby,Visa
+5036,12,"113",3150,Pending,Lampatronics,Cash
+5038,12,"113",450,Pending,Lampatronics,Cash
+5040,12,"113",2250,Pending,Lampatronics,Cash
+5041,12,"113",900,Pending,Lampatronics,Cash
+5042,12,"113",900,Pending,Lampatronics,Cash
+5043,12,"366;113",495,Pending,Lampatronics;Elezaby,Cash

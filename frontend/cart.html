@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        :root {
+            --primary-blue: #1976D2;
+            --dark-blue: #0D47A1;
+            --light-blue: #E3F2FD;
+            --white: #FFFFFF;
+            --shadow: 0 4px 15px rgba(25, 118, 210, 0.1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #f5f9ff 0%, #e1f0ff 100%);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 15px rgba(13, 71, 161, 0.2);
+        }
+
+        header h1 { font-size: 1.5rem; font-weight: 600; }
+        
+        .nav-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        .cart-section {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(25, 118, 210, 0.1);
+        }
+
+        h2 { color: var(--dark-blue); margin-bottom: 20px; border-bottom: 2px solid var(--light-blue); padding-bottom: 10px; }
+
+        .cart-items { display: flex; flex-direction: column; gap: 15px; }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8fbff;
+            border-radius: 10px;
+            border: 1px solid #e1f0ff;
+            transition: transform 0.2s;
+        }
+        .cart-item:hover { transform: translateX(5px); border-color: var(--primary-blue); }
+
+        .remove-btn {
+            background: #ffcdd2; color: #c62828; border: none; padding: 8px 12px;
+            border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem;
+        }
+        .remove-btn:hover { background: #ef9a9a; }
+
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1rem; color: #555; }
+        .summary-total { font-size: 1.4rem; font-weight: 700; color: var(--dark-blue); border-top: 2px solid #eee; padding-top: 15px; margin-top: 10px; }
+
+        .checkout-btn {
+            width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; margin-top: 20px; transition: all 0.3s; box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+        }
+        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(25, 118, 210, 0.4); }
+
+        .clear-btn {
+            width: 100%; padding: 10px; background: transparent; color: #757575; border: 1px solid #bdbdbd;
+            border-radius: 10px; margin-top: 10px; cursor: pointer; transition: all 0.3s;
+        }
+        .clear-btn:hover { background: #f5f5f5; color: #d32f2f; border-color: #d32f2f; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Shopping Cart</h1>
+        <a href="home.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+    </header>
+
+    <div class="container" id="cartItems">
+        <div class="cart-section">
+            <h2>Items in Cart</h2>
+            <div id="cartContents"></div>
+        </div>
+        <div class="cart-section" style="height: fit-content;">
+            <h2>Order Summary</h2>
+            <div class="summary-row summary-total">
+                <span>Total</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <div style="margin: 20px 0; padding: 15px; background: #f8fbff; border-radius: 8px; border: 1px solid #e1f0ff;">
+                <label style="font-weight: 600; display: block; margin-bottom: 10px; color: #0D47A1;">Payment Method:</label>
+                <div style="display: flex; gap: 15px;">
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <input type="radio" id="payCash" name="payment" value="Cash" checked> Cash 💵
+                    </label>
+                    <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <input type="radio" id="payVisa" name="payment" value="Visa"> Visa 💳
+                    </label>
+                </div>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout <i class="fas fa-check-circle"></i></button>
+            <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
+        </div>
+    </div>
+    
+    <div id="emptyState" class="container" style="display: none; text-align: center;">
+         <div class="cart-section" style="padding: 50px;"><i class="fas fa-shopping-basket" style="font-size: 4rem; color: #e0e0e0; margin-bottom: 20px;"></i><h3 style="color: #666;">Your cart is currently empty</h3><a href="home.html" class="checkout-btn" style="display: inline-block; width: auto; margin-top: 20px; text-decoration: none;">Start Shopping</a></div>
+    </div>
+</body>
+</html>

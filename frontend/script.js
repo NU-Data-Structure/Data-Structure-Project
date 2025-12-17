@@ -1,4 +1,5 @@
 // This file now communicates with the C++ backend via API calls.
+console.log("script.js loaded successfully");
 
 const API_ENDPOINTS = {
     LOGIN: '/api/login',
@@ -178,17 +179,27 @@ async function searchProduct() {
 
         if (response.ok && data.success) {
             const p = data.product;
+            const rawCategory = p.category ? p.category.trim() : 'default';
+            const rawProvider = p.provider ? p.provider.trim() : 'default';
+            const rawName = p.name ? p.name.trim() : 'unknown';
+            const imgSrc = `/images/${rawCategory}/${rawProvider}/${rawName}.png`;
+
             resultDiv.innerHTML = `
-                <div class="product-card">
-                    <h2>${p.name}</h2>
-                    <p><strong>ID:</strong> ${p.id}</p>
-                    <p><strong>Price:</strong> $${p.price}</p>
-                    <p><strong>Category:</strong> ${p.category} &gt; ${p.subcategory}</p>
-                    <p><strong>Stock:</strong> ${p.stock}</p>
-                    <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
-                        <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" style="width: 60px; padding: 5px;">
-                        <button class="cart-button" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
-                            🛒 Add to Cart
+                <div class="product-card" style="max-width: 350px; margin: 0 auto;">
+                    <div class="product-image-container">
+                        <img src="${imgSrc}" alt="${p.name}" class="product-image" onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-subcategory">${p.subcategory}</div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <div class="product-meta">
+                            <span class="stock-badge">${p.stock} in stock</span>
+                            <div class="price-tag">$${p.price}</div>
+                        </div>
+                        <div class="card-actions">
+                            <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
+                            <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
                         </button>
                     </div>
                 </div>
@@ -204,8 +215,13 @@ async function searchProduct() {
 
 // Load all products
 async function loadProducts() {
+    console.log("loadProducts function started");
     const productList = document.getElementById("productList");
     if (!productList) return;
+    if (!productList) {
+        console.log("productList element not found on this page - stopping.");
+        return;
+    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const provider = urlParams.get('provider');
@@ -218,47 +234,83 @@ async function loadProducts() {
         title = `Products from ${provider}`;
     }
 
+    console.log("Fetching products from URL:", url);
+
     try {
         const response = await fetch(url);
+        console.log("Response status:", response.status);
         const data = await response.json();
+        console.log("Data received:", data);
 
         if (response.ok && data.success) {
-            let html = `<h2 style="margin-top: 30px;">${title}</h2>`;
-            html += '<table style="width:100%; border-collapse: collapse; margin-top: 10px;">';
-            html += '<tr style="background-color: #f2f2f2; text-align: left;">';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">ID</th>';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">Name</th>';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">Price</th>';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">Category</th>';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">Subcategory</th>';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">Stock</th>';
-            html += '<th style="padding: 10px; border: 1px solid #ddd;">Action</th>';
-            html += '</tr>';
+            let html = `<h2 style="margin-top: 10px; margin-bottom: 20px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">${title}</h2>`;
+            html += '<div class="products-grid">';
 
             data.products.forEach(p => {
-                html += `<tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${p.id}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${p.name}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">$${p.price}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${p.category}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${p.subcategory}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${p.stock}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">
-                        <div style="display: flex; align-items: center; gap: 5px;">
-                            <input type="number" id="tbl-qty-${p.id}" value="1" min="1" max="${p.stock}" style="width: 50px; padding: 5px;">
-                            <button class="cart-button" style="margin: 0; padding: 5px 10px; font-size: 12px;" 
-                                onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('tbl-qty-${p.id}').value))">
-                                Add
+                // Construct image path based on provider and product name
+                // Assuming structure: /data/<ProviderName>/<ProductName>.jpg
+                // Added .trim() to remove any invisible CSV characters like \r
+                // const safeProvider = p.provider ? encodeURIComponent(p.provider.trim()) : 'default';
+                // const safeName = p.name ? encodeURIComponent(p.name.trim()) : 'unknown';
+                // const imgSrc = `/images/${safeProvider}/${safeName}.jpg`;
+                const rawCategory = p.category ? p.category.trim() : 'default';
+                const rawProvider = p.provider ? p.provider.trim() : 'default';
+                const rawName = p.name ? p.name.trim() : 'unknown';
+                const imgSrc = `/images/${rawCategory}/${rawProvider}/${rawName}.jpg`;
+                
+
+            html += `
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="${imgSrc}" 
+                            alt="${p.name}" 
+                            class="product-image" 
+                            onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')"> 
+                    </div>
+                    <div class="product-info">
+                        <div class="product-subcategory">${p.subcategory}</div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <div class="product-meta">
+                            <span class="stock-badge">${p.stock} in stock</span>
+                            <div class="price-tag">$${p.price.toFixed(2)}</div>
+                        </div>
+                        <div class="card-actions">
+                            <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
+                            <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
                             </button>
                         </div>
-                    </td>
-                </tr>`;
+                    </div>
+                </div>`;
             });
-            html += '</table>';
+            html += '</div>';
             productList.innerHTML = html;
+        } else {
+            console.error("Failed to load products. Success flag is false or response not OK.", data);
         }
     } catch (error) {
         console.error('Error loading products:', error);
+    }
+}
+
+// Image error handler to attempt PNG if JPG fails, then placeholder
+function handleImageError(img, category, provider, name) {
+    // Prevent infinite loops if the placeholder itself fails
+    img.onerror = null;
+
+    // 1. If it failed on JPG, try PNG
+    if (img.src.endsWith('.jpg')) {
+        console.warn(`JPG failed for ${name}, trying PNG...`);
+        img.src = `/images/${category}/${provider}/${name}.png`;
+        // Re-attach error handler specifically for the PNG attempt
+        img.onerror = function() {
+            console.warn(`PNG also failed for ${name}, using placeholder.`);
+            this.src = 'https://placehold.co/300x200?text=No+Image';
+        };
+    } 
+    // 2. If it wasn't a JPG (or logic fell through), show placeholder
+    else {
+        img.src = 'https://placehold.co/300x200?text=No+Image';
     }
 }
 
@@ -355,6 +407,7 @@ async function updateCartDisplay() {
     const cartCount = document.getElementById('cartCount');
     const cartTotal = document.getElementById('cartTotal');
     const cartBackendCount = document.getElementById('cartBackendCount');
+    const emptyState = document.getElementById('emptyState');
     
     if (!customerId) return;
     
@@ -369,9 +422,11 @@ async function updateCartDisplay() {
             
             if (data.itemCount === 0) {
                 if (cartContents) cartContents.innerHTML = '<p>Your cart is empty.</p>';
-                if (cartTotal) cartTotal.textContent = 'Total: $0.00';
+                if (cartTotal) cartTotal.textContent = '$0.00';
                 if (cartDiv) cartDiv.style.display = 'none';
+                if (emptyState) emptyState.style.display = 'block';
             } else {
+                if (emptyState) emptyState.style.display = 'none';
                 // Display cart items
                 let html = '<div class="cart-items">';
                 data.items.forEach(item => {
@@ -379,20 +434,22 @@ async function updateCartDisplay() {
                         <div class="cart-item">
                             <div>
                                 <strong>${item.productName}</strong><br>
-                                ${item.quantity} x $${item.price.toFixed(2)} = 
-                                <strong>$${item.itemTotal.toFixed(2)}</strong>
+                                <span style="color: #666;">${item.quantity} x $${item.price.toFixed(2)}</span>
                             </div>
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <strong style="color: #1976D2; font-size: 1.1rem;">$${item.itemTotal.toFixed(2)}</strong>
                             <button class="remove-btn" onclick="removeFromCart(${item.productId})">
-                                Remove
+                                <i class="fas fa-trash"></i>
                             </button>
+                            </div>
                         </div>
                     `;
                 });
                 html += '</div>';
                 
                 if (cartContents) cartContents.innerHTML = html;
-                if (cartTotal) cartTotal.textContent = `Total: $${data.total.toFixed(2)}`;
-                if (cartDiv) cartDiv.style.display = 'block';
+                if (cartTotal) cartTotal.textContent = `$${data.total.toFixed(2)}`;
+                if (cartDiv) cartDiv.style.display = window.location.pathname.includes('cart.html') ? 'grid' : 'block';
             }
         }
     } catch (error) {
@@ -515,7 +572,7 @@ async function checkout() {
 }
 
 // Initialize cart display on product page load
-if (window.location.pathname.includes('product.html')) {
+if (window.location.pathname.includes('product.html') || window.location.pathname.includes('cart.html') || window.location.pathname.includes('home.html')) {
     document.addEventListener('DOMContentLoaded', function() {
         updateCartDisplay();
     });

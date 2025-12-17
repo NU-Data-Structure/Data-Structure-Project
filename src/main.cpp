@@ -161,7 +161,8 @@ svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res
                         {"price", p->price},
                         {"category", p->category},
                         {"subcategory", p->subcategory},
-                        {"stock", p->stock}
+                        {"stock", p->stock},
+                        {"provider", p->provider}
                     }}
                 };
                 res.set_content(response.dump(), "application/json");
