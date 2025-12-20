@@ -7,11 +7,11 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 171,9V Battery Clip,10,Electronics,Power,500,Lampatronics
 155,A4 Paper Ream (500 sheets),120,Stationary,Paper,100,Samir & Aly
 150,Advil 200mg,45,Pharmacy,Medicine,100,Elezaby
-148,Alcohol Spray 70%,35,Pharmacy,Health,150,Elezaby
+148,Alcohol Spray 70%,35,Pharmacy,Health,149,Elezaby
 209,Alligator Clips (10pcs),40,Electronics,Cables,90,Circuits Electronics
 328,American Coffee,35,Food,Beverages,90,Pottery Cafe
 279,Animal Style Burger,160,Food,Burgers,40,Buffalo Burger
-191,Anker Power Bank 20k,1500,Electronics,Accessories,60,B Tech
+191,Anker Power Bank 20k,1500,Electronics,Accessories,59,B Tech
 131,Apple Watch Series 7,9000,Electronics,Wearables,8,Future Electronics
 214,Arduino Mega 2560,450,Electronics,Microcontrollers,35,Future Electronics
 175,Arduino Nano,180,Electronics,Microcontrollers,90,Lampatronics
@@ -20,8 +20,8 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
-115,ASUS Laptop,5000,Electronics,Laptops,5,B Tech
-366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,99,Elezaby
+115,ASUS Laptop,5000,Electronics,Laptops,4,B Tech
+366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,97,Elezaby
 277,Bacon Mushroom Jack,150,Food,Burgers,50,Buffalo Burger
 156,Ballpoint Pens Blue (Box),40,Stationary,Writing,200,Samir & Aly
 313,Banana Chocolate Crepe,65,Food,Dessert,70,Friends
