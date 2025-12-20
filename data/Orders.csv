@@ -26,3 +26,6 @@ OrderID,CustomerID,ProductIDs,TotalAmount,Status,Provider,PaymentMethod
 5041,12,"113",900,Pending,Lampatronics,Cash
 5042,12,"113",900,Pending,Lampatronics,Cash
 5043,12,"366;113",495,Pending,Lampatronics;Elezaby,Cash
+5045,241000934,"148;366",125,Pending,Elezaby,Cash
+5047,241000934,"191;115",6500,Pending,B Tech,Cash
+5049,1111,"148",70,Pending,Elezaby,Visa
