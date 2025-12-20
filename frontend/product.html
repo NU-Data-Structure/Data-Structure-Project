@@ -1,231 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Search</title>
+    <title>Browse Products - NUH2H</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="script.js" defer></script>
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(-45deg, #42a5f5, #90caf9, #bbdefb, #e3f2fd);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
-            padding: 20px; 
-            min-height: 100vh;
-            color: white;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0a1628 20%, #0c2445 40%, #0e3460 60%, #1e40af 80%, #1e3a8a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 2rem;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Header & Nav */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            color: #e2e8f0;
+            text-decoration: none;
+            border-radius: 14px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .back-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateX(-5px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            background: rgba(255,255,255,0.9);
-            padding: 20px;
-            border-radius: 16px;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
-        h1 { margin: 0; font-size: 1.8rem; color: #1565c0; text-shadow: none; }
 
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            background: white;
-            color: #1565c0;
-            text-decoration: none;
-            border-radius: 50px;
-            border: none;
-            transition: all 0.3s;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            font-weight: 600;
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .back-btn:hover { transform: translateX(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
 
         .view-cart-btn {
-            display: inline-block;
-            text-decoration: none;
-            background: #ffca28;
-            color: #333;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.2s;
-        }
-        .view-cart-btn:hover { transform: scale(1.05); background: #ffc107; }
-
-        /* Search Box */
-        .search-box {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 16px;
-            display: flex;
+            display: inline-flex;
+            align-items: center;
             gap: 10px;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2);
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%);
+            color: #1e293b;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
         }
-        input[type="text"] {
+
+        .view-cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
+        }
+
+        .search-box {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            padding: 1.25rem;
+            border-radius: 18px;
+            display: flex;
+            gap: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box input[type="text"] {
             flex-grow: 1;
-            padding: 12px 20px;
-            border-radius: 50px;
-            border: 1px solid #ddd;
-            outline: none;
+            padding: 14px 20px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 14px;
             font-size: 1rem;
-            color: #333;
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+            font-family: inherit;
         }
+
+        .search-box input::placeholder {
+            color: #64748b;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
         .search-btn {
-            padding: 12px 25px;
-            background: #1565c0;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
             color: white;
             border: none;
-            border-radius: 50px;
+            border-radius: 14px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
-        .search-btn:hover { background: #0d47a1; }
 
-        /* Cards & Results */
-        .product-card {
-            background: white;
-            color: #333;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
-        
-        .cart-button {
-            background: #4caf50;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .cart-button:hover { background: #388e3c; }
 
-        /* Product Grid */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 25px;
-            padding: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.75rem;
+            padding: 1rem 0;
         }
-        
+
         .product-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(5px);
         }
-        
+
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transform: translateY(-10px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.25);
         }
-        
+
         .product-image-container {
             height: 200px;
             width: 100%;
-            background: white;
+            background: rgba(248, 250, 252, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
+            padding: 1rem;
         }
-        
+
         .product-image {
             max-height: 100%;
             max-width: 100%;
             object-fit: contain;
-            transition: transform 0.3s;
+            transition: transform 0.4s ease;
         }
-        
-        .product-card:hover .product-image { transform: scale(1.05); }
-        
-        .product-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
-        
+
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
         .product-subcategory {
-            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
-            color: #1976D2; font-weight: 700; margin-bottom: 5px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #38bdf8;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
-        
-        .product-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; color: #333; line-height: 1.4; }
-        
-        .product-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        
-        .stock-badge { background: #E8F5E9; color: #2E7D32; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
-        
-        .price-tag { font-size: 1.3rem; font-weight: 800; color: #1565C0; }
-        
-        .card-actions { display: flex; gap: 10px; margin-top: auto; }
-        
-        .qty-input { width: 60px; padding: 10px; border: 1px solid #ddd; border-radius: 8px; text-align: center; font-weight: 600; }
-        
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #f1f5f9;
+            line-height: 1.4;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stock-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .price-tag {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .qty-input {
+            width: 65px;
+            padding: 12px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            color: #e2e8f0;
+            font-family: inherit;
+        }
+
+        .qty-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
         .add-btn {
-            flex-grow: 1; background: linear-gradient(135deg, #1976D2, #1565C0);
-            color: white; border: none; padding: 10px; border-radius: 8px;
-            font-weight: 600; cursor: pointer; transition: all 0.2s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            flex-grow: 1;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
-        .add-btn:hover { background: linear-gradient(135deg, #1565C0, #0D47A1); transform: translateY(-2px); }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- Back Button -->
-        <button class="back-btn" onclick="goBack()">← Back to Categories</button>
-        <button id="providerBackBtn" class="back-btn" style="display:none; margin-left: 10px;" onclick="goBackToProviders()">← Back to Providers</button>
+        <div class="nav-buttons">
+            <a href="profile.html" class="back-btn"><i class="fas fa-user"></i> Profile</a>
+            <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back to Home</button>
+            <button id="providerBackBtn" class="back-btn" style="display:none;" onclick="goBackToProviders()"><i
+                    class="fas fa-store"></i> Back to Providers</button>
+        </div>
 
-        <!-- Header -->
         <div class="header">
-            <h1>🛍️ Browse Products</h1>
+            <h1><i class="fas fa-shopping-bag"></i> Browse Products</h1>
             <a href="cart.html" class="view-cart-btn">
-                🛒 Cart (<span id="cartCount">0</span>)
+                <i class="fas fa-shopping-cart"></i> Cart (<span id="cartCount">0</span>)
             </a>
         </div>
 
-        <!-- Search Section -->
         <div class="search-box">
             <input type="text" id="productName" placeholder="Search for products (e.g., Apple)...">
-            <button class="search-btn" onclick="searchProduct()">Search</button>
+            <button class="search-btn" onclick="searchProduct()"><i class="fas fa-search"></i> Search</button>
         </div>
 
-        <!-- Search Result Container -->
         <div id="productResult"></div>
-
-        <!-- All Products List -->
         <div id="productList"></div>
     </div>
 
     <script>
-        // Navigation Logic
         function goBack() {
             window.location.href = 'home.html';
         }
@@ -238,23 +373,20 @@
             }
         }
 
-        
-        // Init
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('category')) {
-                document.getElementById('providerBackBtn').style.display = 'inline-block';
+                document.getElementById('providerBackBtn').style.display = 'inline-flex';
             }
 
-            // Load products via script.js
             if (typeof loadProducts === 'function') {
                 loadProducts();
             }
-            // Init cart badge
             if (typeof updateCartDisplay === 'function') {
                 updateCartDisplay();
             }
         });
     </script>
 </body>
+
 </html>

@@ -1,54 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Delivery Queue</title>
+    <title>Admin Dashboard - NUH2H</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="script.js" defer></script>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
-        h1 { color: #333; }
-        
-        .controls { margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd; }
-        
-        button { padding: 10px 20px; cursor: pointer; border: none; border-radius: 4px; font-size: 14px; margin-right: 10px; }
-        .btn-refresh { background-color: #007BFF; color: white; }
-        .btn-refresh:hover { background-color: #0056b3; }
-        .btn-process { background-color: #28a745; color: white; }
-        .btn-process:hover { background-color: #218838; }
-        .btn-back { background-color: #6c757d; color: white; }
-        .btn-back:hover { background-color: #5a6268; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #343a40; color: white; }
-        tr:nth-child(even) { background-color: #f2f2f2; }
-        tr:hover { background-color: #e9ecef; }
-        
-        .status-badge {
-            background: #ffc107; color: #000; padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .empty-msg { text-align: center; color: #666; margin-top: 30px; font-style: italic; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0c2445 40%, #1e40af 80%, #1e3a8a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #38bdf8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .controls {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-process {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-process:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-refresh {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-refresh:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-back {
+            background: rgba(100, 116, 139, 0.3);
+            color: #cbd5e1;
+            border: 1px solid rgba(100, 116, 139, 0.4);
+        }
+
+        .btn-back:hover {
+            background: rgba(100, 116, 139, 0.5);
+        }
+
+        .queue-section {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+        }
+
+        th {
+            background: rgba(30, 58, 138, 0.5);
+            color: #93c5fd;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .status-badge {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.2));
+            color: #fbbf24;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .empty-msg {
+            text-align: center;
+            color: #64748b;
+            padding: 3rem;
+            font-style: italic;
+        }
     </style>
 </head>
+
 <body>
-    <h1>📦 Admin Delivery Management</h1>
-    
-    <div class="controls">
-        <button class="btn-process" onclick="processNextOrder()">✅ Process Next Order</button>
-        <button class="btn-refresh" onclick="loadQueue()">🔄 Refresh Queue</button>
-        <button class="btn-back" onclick="window.location.href='profile.html'">⬅️ Back to Profile</button>
+    <div class="container">
+        <h1><i class="fas fa-boxes"></i> Admin Delivery Management</h1>
+        <div class="controls">
+            <button class="btn-process" onclick="processNextOrder()"><i class="fas fa-check"></i> Process Next
+                Order</button>
+            <button class="btn-refresh" onclick="loadQueue()"><i class="fas fa-sync-alt"></i> Refresh Queue</button>
+            <button class="btn-back" onclick="window.location.href='profile.html'"><i class="fas fa-arrow-left"></i>
+                Back to Profile</button>
+        </div>
+        <div class="queue-section" id="deliveryQueue">
+            <p class="empty-msg">Loading queue...</p>
+        </div>
     </div>
-
-    <div id="deliveryQueue">
-        <p>Loading queue...</p>
-    </div>
-
     <script>
-        // Load queue immediately when page opens
-        document.addEventListener('DOMContentLoaded', function() {
-            loadQueue();
-        });
+        document.addEventListener('DOMContentLoaded', function () { loadQueue(); });
     </script>
 </body>
+
 </html>

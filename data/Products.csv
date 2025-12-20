@@ -7,7 +7,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 171,9V Battery Clip,10,Electronics,Power,500,Lampatronics
 155,A4 Paper Ream (500 sheets),120,Stationary,Paper,100,Samir & Aly
 150,Advil 200mg,45,Pharmacy,Medicine,100,Elezaby
-148,Alcohol Spray 70%,35,Pharmacy,Health,150,Elezaby
+148,Alcohol Spray 70%,35,Pharmacy,Health,149,Elezaby
 209,Alligator Clips (10pcs),40,Electronics,Cables,90,Circuits Electronics
 328,American Coffee,35,Food,Beverages,90,Pottery Cafe
 279,Animal Style Burger,160,Food,Burgers,40,Buffalo Burger
@@ -20,8 +20,8 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
-115,ASUS Laptop,5000,Electronics,Laptops,5,B Tech
-366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,99,Elezaby
+115,ASUS Laptop,5000,Electronics,Laptops,4,B Tech
+366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,95,Elezaby
 277,Bacon Mushroom Jack,150,Food,Burgers,50,Buffalo Burger
 156,Ballpoint Pens Blue (Box),40,Stationary,Writing,200,Samir & Aly
 313,Banana Chocolate Crepe,65,Food,Dessert,70,Friends
@@ -31,7 +31,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 286,BBQ Wings (6pcs),80,Food,Chicken,50,Buffalo Burger
 101,Big Mac,85,Food,Burgers,50,Bazooka
 385,Binder 2-Ring,45,Stationary,Office Supplies,60,Samir & Aly
-231,Biscuits Ammonia 1kg,140,Food,Bakery,60,El Abd
+231,Biscuits Ammonia 1kg,140,Food,Bakery,59,El Abd
 182,Braun Hand Blender,1200,Electronics,Kitchen,25,B Tech
 166,Breadboard 830pts,60,Electronics,Prototyping,80,Lampatronics
 217,Brushless Motor,350,Electronics,Motors,25,Future Electronics
@@ -78,7 +78,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 107,Crepe,250,Food,Grill,17,Friends
 297,Crispy Chicken Sandwich,60,Food,Sandwiches,100,Karam El Sham
 173,DC Motor 3-6V,15,Electronics,Motors,150,Lampatronics
-126,Dell Monitor 24inch,3200,Electronics,Monitors,15,B Tech
+126,Dell Monitor 24inch,3200,Electronics,Monitors,14,B Tech
 204,Desoldering Pump,45,Electronics,Tools,50,Circuits Electronics
 364,Dettol Antiseptic 500ml,110,Pharmacy,Health,60,Elezaby
 178,DHT11 Temp Sensor,40,Electronics,Sensors,100,Lampatronics
