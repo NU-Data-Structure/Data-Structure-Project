@@ -4,7 +4,7 @@
 #include "../include/ProductBST.h"
 #include "../include/DeliveryQueue.h"
 #define CARTSHARED_IMPORTS
-#include "../include/Cart.h"
+#include "../include/cart.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,12 +17,13 @@ using json = nlohmann::json;
 using namespace std;
 
 // Global cart instance as a unique_ptr
-unique_ptr<Cart> shoppingCart;
+Cart* shoppingCart;
 int globalOrderID = 5000;
 
 int main() {
     // Initialize the cart
-    shoppingCart = make_unique<Cart>();
+    shoppingCart = new Cart();
+    shoppingCart->loadFromFile("data/Carts.csv");
     
     httplib::Server svr;
     Server customerServer;
@@ -245,6 +246,7 @@ int main() {
             int quantity = j["quantity"];
             
             bool success = shoppingCart->addItem(customerId, productId, productName, price, quantity);
+            if (success) shoppingCart->saveToFile("data/Carts.csv");
             
             json response = {
                 {"success", success},
@@ -276,12 +278,12 @@ int main() {
             double total = 0.0;
             
             for (const auto& item : items) {
-                double itemTotal = item->price * item->quantity;
+                double itemTotal = item.price * item.quantity;
                 itemsJson.push_back({
-                    {"productId", item->productId},
-                    {"productName", item->productName},
-                    {"price", item->price},
-                    {"quantity", item->quantity},
+                    {"productId", item.productId},
+                    {"productName", item.productName},
+                    {"price", item.price},
+                    {"quantity", item.quantity},
                     {"itemTotal", itemTotal}
                 });
                 total += itemTotal;
@@ -312,6 +314,7 @@ int main() {
             int productId = j["productId"];
             
             bool removed = shoppingCart->removeItem(customerId, productId);
+            if (removed) shoppingCart->saveToFile("data/Carts.csv");
             
             json response = {
                 {"success", removed},
@@ -334,6 +337,7 @@ int main() {
             int customerId = j["customerId"];
             
             int removedCount = shoppingCart->clearCustomerCart(customerId);
+            shoppingCart->saveToFile("data/Carts.csv");
             
             json response = {
                 {"success", true},
@@ -358,6 +362,7 @@ int main() {
             
             // Checkout the customer's cart
             std::vector<CartItem> purchasedItems = shoppingCart->checkoutCustomer(customerId);
+            shoppingCart->saveToFile("data/Carts.csv");
             
             if (purchasedItems.empty()) {
                 json response = {{"success", false}, {"message", "Cart is empty"}};
