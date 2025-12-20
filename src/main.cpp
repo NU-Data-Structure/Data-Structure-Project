@@ -4,31 +4,28 @@
 #include "../include/ProductBST.h"
 #include "../include/DeliveryQueue.h"
 #include "../include/orderhistory.h"
+#define CARTSHARED_IMPORTS
+#include "../include/cart.h"
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>  // For std::remove_if
+#include <algorithm>
+#include <memory>
+#include <unordered_set>
 #include "../include/rapidcsv.h"
 
-
 using json = nlohmann::json;
+using namespace std;
 
-
-// Add this GLOBAL cart storage (after includes, before main())
-struct CartItem {
-    int productId;
-    std::string productName;
-    double price;
-    int quantity;
-    int customerId;
-};
-
-std::vector<CartItem> shoppingCart;  // Global cart storage
-
-
+// Global cart instance as a unique_ptr
+Cart* shoppingCart;
 int globalOrderID = 5000;
 
 int main() {
+    // Initialize the cart
+    shoppingCart = new Cart();
+    shoppingCart->loadFromFile("data/Carts.csv");
+    
     httplib::Server svr;
     Server customerServer;
     customerServer.loadFile();
@@ -46,11 +43,6 @@ int main() {
             globalOrderID = o.orderId + 1; // Start from next available
         }
     }
-
-
-
-    // vector<string> test_prod_list = {"banana","berracotta","pie"};
-
 
     // Serve all static files (HTML, etc.) from the current folder
     svr.set_mount_point("/", "./frontend");
@@ -145,8 +137,8 @@ int main() {
         }
     });
     
-    // search product API
-svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+    // Search product API
+    svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
         try {
             json j = json::parse(req.body);
             string search_query = j["prod_name"]; 
@@ -179,23 +171,18 @@ svr.Post("/api/product", [&](const httplib::Request& req, httplib::Response& res
     });
 
     // API: Get all products
-svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
+    svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res) {
         try {
-            // 1. Get Vector from BST using your new function
             vector<Product> allProds; 
             productServer.getAllProducts(allProds);
 
             string providerFilter = "";
             if (req.has_param("provider")) {
                 providerFilter = req.get_param_value("provider");
-                // Simple URL decode if needed, though httplib usually handles basic params. 
-                // For space (%20) usually it works, but keeping it simple.
             }
 
-            // 2. Convert to JSON Array
             json prodArray = json::array();
             for(const auto& p : allProds) {
-                // Filter by provider if specified
                 if (!providerFilter.empty() && p.provider != providerFilter) {
                     continue;
                 }
@@ -211,7 +198,6 @@ svr.Get("/api/product", [&](const httplib::Request& req, httplib::Response& res)
                 });
             }
 
-            // 3. Send back exactly what script.js expects ("products" key)
             json response = { {"success", true}, {"products", prodArray} };
             res.set_content(response.dump(), "application/json");
 
@@ -328,31 +314,13 @@ json response = {
             double price = j["price"];
             int quantity = j["quantity"];
             
-            // Check if item already exists for this customer
-            bool found = false;
-            for (auto& item : shoppingCart) {
-                if (item.customerId == customerId && item.productId == productId) {
-                    item.quantity += quantity;
-                    found = true;
-                    break;
-                }
-            }
-            
-            // If not found, add new item
-            if (!found) {
-                CartItem newItem;
-                newItem.customerId = customerId;
-                newItem.productId = productId;
-                newItem.productName = productName;
-                newItem.price = price;
-                newItem.quantity = quantity;
-                shoppingCart.push_back(newItem);
-            }
+            bool success = shoppingCart->addItem(customerId, productId, productName, price, quantity);
+            if (success) shoppingCart->saveToFile("data/Carts.csv");
             
             json response = {
-                {"success", true},
-                {"message", "Item added to cart"},
-                {"cartCount", (int)shoppingCart.size()}
+                {"success", success},
+                {"message", success ? "Item added to cart" : "Failed to add item"},
+                {"cartCount", shoppingCart->getCustomerItemCount(customerId)}
             };
             res.set_content(response.dump(), "application/json");
             
@@ -373,33 +341,29 @@ json response = {
             }
             
             int customerId = std::stoi(req.get_param_value("customerId"));
+            auto items = shoppingCart->getCustomerCart(customerId);
             
-            // Filter cart items for this customer
-            json items = json::array();
+            json itemsJson = json::array();
             double total = 0.0;
-            int itemCount = 0;
             
-            for (const auto& item : shoppingCart) {
-                if (item.customerId == customerId) {
-                    json itemJson = {
-                        {"productId", item.productId},
-                        {"productName", item.productName},
-                        {"price", item.price},
-                        {"quantity", item.quantity},
-                        {"itemTotal", item.price * item.quantity}
-                    };
-                    items.push_back(itemJson);
-                    total += item.price * item.quantity;
-                    itemCount++;
-                }
+            for (const auto& item : items) {
+                double itemTotal = item.price * item.quantity;
+                itemsJson.push_back({
+                    {"productId", item.productId},
+                    {"productName", item.productName},
+                    {"price", item.price},
+                    {"quantity", item.quantity},
+                    {"itemTotal", itemTotal}
+                });
+                total += itemTotal;
             }
             
             json response = {
                 {"success", true},
-                {"items", items},
+                {"items", itemsJson},
                 {"total", total},
-                {"itemCount", itemCount},
-                {"backendTotalItems", (int)shoppingCart.size()}
+                {"itemCount", (int)items.size()},
+                {"backendTotalItems", shoppingCart->getTotalItemCount()}
             };
             
             res.set_content(response.dump(), "application/json");
@@ -418,21 +382,13 @@ json response = {
             int customerId = j["customerId"];
             int productId = j["productId"];
             
-            // Remove item from vector
-            auto it = std::remove_if(shoppingCart.begin(), shoppingCart.end(),
-                [customerId, productId](const CartItem& item) {
-                    return item.customerId == customerId && item.productId == productId;
-                });
-            
-            bool removed = (it != shoppingCart.end());
-            if (removed) {
-                shoppingCart.erase(it, shoppingCart.end());
-            }
+            bool removed = shoppingCart->removeItem(customerId, productId);
+            if (removed) shoppingCart->saveToFile("data/Carts.csv");
             
             json response = {
                 {"success", removed},
                 {"message", removed ? "Item removed" : "Item not found"},
-                {"remainingItems", (int)shoppingCart.size()}
+                {"remainingItems", shoppingCart->getTotalItemCount()}
             };
             res.set_content(response.dump(), "application/json");
             
@@ -449,20 +405,14 @@ json response = {
             json j = json::parse(req.body);
             int customerId = j["customerId"];
             
-            // Remove all items for this customer
-            auto it = std::remove_if(shoppingCart.begin(), shoppingCart.end(),
-                [customerId](const CartItem& item) {
-                    return item.customerId == customerId;
-                });
-            
-            int removedCount = std::distance(it, shoppingCart.end());
-            shoppingCart.erase(it, shoppingCart.end());
+            int removedCount = shoppingCart->clearCustomerCart(customerId);
+            shoppingCart->saveToFile("data/Carts.csv");
             
             json response = {
                 {"success", true},
                 {"message", "Cart cleared"},
                 {"removedCount", removedCount},
-                {"remainingInBackend", (int)shoppingCart.size()}
+                {"remainingInBackend", shoppingCart->getTotalItemCount()}
             };
             res.set_content(response.dump(), "application/json");
             
@@ -479,37 +429,27 @@ json response = {
             json j = json::parse(req.body);
             int customerId = j["customerId"];
             
-            // 1. Identify items to purchase
-            vector<CartItem*> userItems;
-            for (auto& item : shoppingCart) {
-                if (item.customerId == customerId) {
-                    userItems.push_back(&item);
-                }
-            }
+            // Checkout the customer's cart
+            std::vector<CartItem> purchasedItems = shoppingCart->checkoutCustomer(customerId);
+            shoppingCart->saveToFile("data/Carts.csv");
             
-            if (userItems.empty()) {
+            if (purchasedItems.empty()) {
                 json response = {{"success", false}, {"message", "Cart is empty"}};
                 res.set_content(response.dump(), "application/json");
                 return;
             }
 
-            // 2. Process items (Deduct stock, calculate total)
+            // Process the purchased items
             string productIdsStr = "";
             double totalAmount = 0.0;
             vector<int> purchasedProductIds;
             
-            for (auto* item : userItems) {
-                // Attempt to update stock
-                if (productServer.updateStock(item->productId, item->quantity)) {
-                    // Success
-                    if (!productIdsStr.empty()) productIdsStr += ";"; // Semicolon separated
-                    productIdsStr += std::to_string(item->productId);
-                    
-                    totalAmount += (item->price * item->quantity);
-                    purchasedProductIds.push_back(item->productId);
-                } else {
-                    // Failed (Out of stock) - effectively skipped from this order
-                    // We could log this or inform user
+            for (const auto& item : purchasedItems) {
+                if (productServer.updateStock(item.productId, item.quantity)) {
+                    if (!productIdsStr.empty()) productIdsStr += ";";
+                    productIdsStr += std::to_string(item.productId);
+                    totalAmount += (item.price * item.quantity);
+                    purchasedProductIds.push_back(item.productId);
                 }
             }
             
@@ -519,20 +459,17 @@ json response = {
                 return;
             }
             
-            // 3. Determine Provider(s)
+            // Determine Provider(s)
             std::string providerNames = "";
             std::unordered_set<string> uniqueProviders;
 
             for (int pid : purchasedProductIds) {
-                // Find product to get category
-                Product* pptr = productServer.searchProduct("");
-                // This is O(N) but N is small.
                 vector<Product> allProds;
                 productServer.getAllProducts(allProds);
                 string prodProvider = "Unknown";
                 for(auto& p : allProds) {
                     if (p.id == pid) {
-                        prodProvider = p.provider; // Use the direct provider field
+                        prodProvider = p.provider;
                         break;
                     }
                 }
@@ -540,7 +477,6 @@ json response = {
                 if (prodProvider != "Unknown" && !prodProvider.empty()) {
                     uniqueProviders.insert(prodProvider);
                 } else {
-                    // Fallback to Unknown if provider is missing in product but that shouldn't happen with new CSV
                     uniqueProviders.insert("Unknown");
                 }
             }
@@ -551,7 +487,7 @@ json response = {
             }
             if (providerNames.empty()) providerNames = "Unknown";
 
-            // 4. Create Order
+            // Create Order
             Order newOrder;
             newOrder.orderId = ++globalOrderID;
             newOrder.customerId = customerId;
@@ -566,24 +502,12 @@ json response = {
                 newOrder.paymentMethod = "Cash";
             }
             
-            // 5. Save Order
-            deliveryQueue.enqueue(newOrder); // Add to memory queue
-            deliveryQueue.saveOrder(newOrder, "data/Orders.csv"); // Append to file
+            // Save Order
+            deliveryQueue.enqueue(newOrder);
+            deliveryQueue.saveOrder(newOrder, "data/Orders.csv");
             
-            // 6. Save Stock Changes
+            // Save Stock Changes
             productServer.saveToFile("data/Products.csv");
-            
-            // 7. Remove purchased items from cart
-            auto it = std::remove_if(shoppingCart.begin(), shoppingCart.end(),
-                [&](const CartItem& item) {
-                    if (item.customerId != customerId) return false;
-                    // Check if this product was actually purchased (stock updated)
-                    for (int pid : purchasedProductIds) {
-                        if (item.productId == pid) return true;
-                    }
-                    return false;
-                });
-            shoppingCart.erase(it, shoppingCart.end());
             
             json response = {
                 {"success", true},
@@ -606,10 +530,6 @@ json response = {
         }
     });
 
-// ---------------------------------------------------------
-    // ADMIN API (Fixed to match your DeliveryQueue.h)
-    // ---------------------------------------------------------
-
     // API: Get Delivery Queue (for admin)
     svr.Get("/api/admin/deliveryQueue", [&](const httplib::Request& req, httplib::Response& res) {
         try {
@@ -618,10 +538,10 @@ json response = {
             json orderArray = json::array();
             for (const auto& o : orders) {
                 orderArray.push_back({
-                    {"orderId", o.orderId},          // MATCHES YOUR CLASS
-                    {"customerId", o.customerId},    // MATCHES YOUR CLASS
-                    {"productIds", o.productIds},    // MATCHES YOUR CLASS
-                    {"totalAmount", o.totalAmount},  // MATCHES YOUR CLASS
+                    {"orderId", o.orderId},
+                    {"customerId", o.customerId},
+                    {"productIds", o.productIds},
+                    {"totalAmount", o.totalAmount},
                     {"status", o.status}
                 });
             }
@@ -670,7 +590,7 @@ json response = {
             {"orderId", processedOrder.orderId},
             {"customerId", processedOrder.customerId},
             {"totalAmount", processedOrder.totalAmount},
-            {"status", "Shipped"} // We just shipped it
+            {"status", "Shipped"}
         };
 
         json response = {
