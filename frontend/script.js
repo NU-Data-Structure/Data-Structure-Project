@@ -11,6 +11,176 @@ const API_ENDPOINTS = {
     PROVIDERS: '/api/providers'
 };
 
+// ================== Theme Toggle Logic ==================
+function initThemeToggle() {
+    // 1. Inject CSS for White Theme
+    const style = document.createElement('style');
+    style.innerHTML = `
+        /* Toggle Button Style */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1); /* Default for dark mode */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-theme .theme-toggle-btn {
+            background: white !important;
+            color: #f59e0b !important; /* Sun color */
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        /* Enhanced Light Theme Styles */
+        body.light-theme {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            color: #1e293b !important;
+        }
+        
+        body.light-theme::before, body.light-theme::after {
+            display: none !important;
+        }
+
+        body.light-theme .container,
+        body.light-theme .login-container,
+        body.light-theme .payment-container,
+        body.light-theme .orders-section,
+        body.light-theme .cart-section,
+        body.light-theme .profile-card,
+        body.light-theme .provider-card {
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05) !important;
+            color: #334155 !important;
+        }
+
+        body.light-theme .product-card {
+            background: white !important;
+            border: 1px solid rgba(226, 232, 240, 0.8) !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        body.light-theme .product-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02) !important;
+            border-color: #38bdf8 !important;
+        }
+
+        body.light-theme header, 
+        body.light-theme .header,
+        body.light-theme .nav-buttons button,
+        body.light-theme .back-btn {
+            background: rgba(255, 255, 255, 0.9) !important;
+            border-color: rgba(226, 232, 240, 0.8) !important;
+            color: #475569 !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+        }
+
+        body.light-theme h1, 
+        body.light-theme h2, 
+        body.light-theme h3, 
+        body.light-theme .profile-header h1,
+        body.light-theme .product-title,
+        body.light-theme .provider-name {
+            background: linear-gradient(135deg, #0f172a 0%, #334155 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            text-shadow: none !important;
+        }
+
+        body.light-theme .stock-badge {
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: #059669 !important;
+            border-color: rgba(16, 185, 129, 0.2) !important;
+        }
+
+        body.light-theme .price-tag {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme input {
+            background: #f8fafc !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+
+        body.light-theme input:focus {
+            background: white !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        }
+
+        body.light-theme .nav-btn,
+        body.light-theme .action-buttons .btn-secondary {
+            background: white !important;
+            color: #475569 !important;
+            border: 1px solid #e2e8f0 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+        }
+
+        body.light-theme .nav-btn:hover {
+            background: #f1f5f9 !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // 2. Inject Toggle Button
+    const btn = document.createElement('button');
+    btn.className = 'theme-toggle-btn';
+    btn.innerHTML = '<i class="fas fa-moon"></i>';
+    btn.onclick = toggleTheme;
+    btn.title = "Toggle Light/Dark Theme";
+    document.body.appendChild(btn);
+
+    // 3. Load Saved Theme
+    const currentTheme = localStorage.getItem('theme');
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-theme');
+        btn.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const btn = document.querySelector('.theme-toggle-btn');
+
+    body.classList.toggle('light-theme');
+
+    if (body.classList.contains('light-theme')) {
+        localStorage.setItem('theme', 'light');
+        btn.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+        localStorage.setItem('theme', 'dark');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+}
+// ========================================================
+
 async function handleRegistration() {
     const id = document.getElementById("id").value;
     const name = document.getElementById("name").value;
@@ -49,80 +219,13 @@ async function handleRegistration() {
             alert("Registration successful! Please login.");
             window.location.href = "login.html";
         } else {
-            alert(`Registration failed: ${data.message || 'Unknown error'}`);
+            alert(`Registration failed: ${data.message || 'Unknown error'} `);
         }
     } catch (error) {
         console.error('Error during registration:', error);
         alert('An error occurred. Please try again.');
     }
 }
-
-// Login / Sign up function
-// async function login() {
-//     const id = document.getElementById("id").value;
-//     const name = document.getElementById("name").value;
-//     const phone = document.getElementById("phone").value;
-//     const address = document.getElementById("address").value;
-//     const password = document.getElementById("password").value;
-//     const confirmPassword = document.getElementById("confirm_password").value;
-
-//     if (!id) {
-//         alert("Customer ID is required.");
-//         return;
-//     }
-
-//     // If name, phone, and address are provided, it's a registration attempt
-//     if (name && phone && address && password && confirmPassword) {
-//         try {
-//             const response = await fetch(API_ENDPOINTS.REGISTER, {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify({
-//                     id: parseInt(id),
-//                     name: name,
-//                     phone: phone,
-//                     address: address,
-//                     password: password,
-//                     confirmPassword: confirmPassword
-//                 })
-//             });
-
-//             const data = await response.json();
-
-//             if (response.ok && data.success) {
-//                 alert("Registration successful! Redirecting to profile.");
-//                 localStorage.setItem("currentCustomerId", id);
-//                 window.location.href = "profile.html";
-//             } else {
-//                 alert(`Registration failed: ${data.message || 'Unknown error'}`);
-//             }
-//         } catch (error) {
-//             console.error('Error during registration:', error);
-//             alert('An error occurred. Please try again.');
-//         }
-//     } else {
-//         // Otherwise, it's a login attempt
-//         try {
-//             const response = await fetch(API_ENDPOINTS.LOGIN, {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify({ id: parseInt(id) })
-//             });
-
-//             const data = await response.json();
-
-//             if (response.ok && data.exists) {
-//                 localStorage.setItem("customerId", id);
-//                 window.location.href = "profile.html";
-//             } else {
-//                 alert("Login failed: Customer ID not found. Please fill in all fields to register.");
-//             }
-//         } catch (error) {
-//             console.error('Error during login:', error);
-//             alert('An error occurred. Please try again.');
-//         }
-//     }
-// }
 
 // Load profile data
 async function loadProfile() {
@@ -135,15 +238,15 @@ async function loadProfile() {
     }
 
     try {
-        const response = await fetch(`${API_ENDPOINTS.PROFILE}?id=${customerId}&password=${password}`);
+        const response = await fetch(`${API_ENDPOINTS.PROFILE}?id = ${customerId}& password=${password} `);
         if (response.ok) {
             const customer = await response.json();
             document.getElementById("profile").innerHTML = `
-                <b>ID:</b> ${customer.id}<br>
-                <b>Name:</b> ${customer.name}<br>
+        < b > ID:</b > ${customer.id} <br>
+            <b>Name:</b> ${customer.name}<br>
                 <b>Phone:</b> ${customer.phone}<br>
-                <b>Address:</b> ${customer.address}
-            `;
+                    <b>Address:</b> ${customer.address}
+                    `;
         } else {
             alert(`Failed to load profile: ${await response.text()}`);
             localStorage.removeItem("currentCustomerId");
@@ -185,25 +288,25 @@ async function searchProduct() {
             const imgSrc = `/images/${rawCategory}/${rawProvider}/${rawName}.png`;
 
             resultDiv.innerHTML = `
-                <div class="product-card" style="max-width: 350px; margin: 0 auto;">
-                    <div class="product-image-container">
-                        <img src="${imgSrc}" alt="${p.name}" class="product-image" onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-subcategory">${p.subcategory}</div>
-                        <h3 class="product-title">${p.name}</h3>
-                        <div class="product-meta">
-                            <span class="stock-badge">${p.stock} in stock</span>
-                            <div class="price-tag">$${p.price}</div>
+                    <div class="product-card" style="max-width: 350px; margin: 0 auto;">
+                        <div class="product-image-container">
+                            <img src="${imgSrc}" alt="${p.name}" class="product-image" onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')">
                         </div>
-                        <div class="card-actions">
-                            <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
-                            <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                        </button>
-                    </div>
-                </div>
-            `;
+                        <div class="product-info">
+                            <div class="product-subcategory">${p.subcategory}</div>
+                            <h3 class="product-title">${p.name}</h3>
+                            <div class="product-meta">
+                                <span class="stock-badge">${p.stock} in stock</span>
+                                <div class="price-tag">$${p.price}</div>
+                            </div>
+                            <div class="card-actions">
+                                <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
+                                    <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                        `;
         } else {
             resultDiv.innerHTML = `<p style="color: red; margin-top: 10px;">${data.message || 'Product not found'}</p>`;
         }
@@ -228,7 +331,7 @@ async function loadProducts() {
 
     let url = API_ENDPOINTS.PRODUCT;
     let title = "All Products";
-    
+
     if (provider) {
         url += `?provider=${encodeURIComponent(provider)}`;
         title = `Products from ${provider}`;
@@ -247,41 +350,34 @@ async function loadProducts() {
             html += '<div class="products-grid">';
 
             data.products.forEach(p => {
-                // Construct image path based on provider and product name
-                // Assuming structure: /data/<ProviderName>/<ProductName>.jpg
-                // Added .trim() to remove any invisible CSV characters like \r
-                // const safeProvider = p.provider ? encodeURIComponent(p.provider.trim()) : 'default';
-                // const safeName = p.name ? encodeURIComponent(p.name.trim()) : 'unknown';
-                // const imgSrc = `/images/${safeProvider}/${safeName}.jpg`;
                 const rawCategory = p.category ? p.category.trim() : 'default';
                 const rawProvider = p.provider ? p.provider.trim() : 'default';
                 const rawName = p.name ? p.name.trim() : 'unknown';
                 const imgSrc = `/images/${rawCategory}/${rawProvider}/${rawName}.jpg`;
-                
 
-            html += `
-                <div class="product-card">
-                    <div class="product-image-container">
-                        <img src="${imgSrc}" 
-                            alt="${p.name}" 
-                            class="product-image" 
-                            onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')"> 
-                    </div>
-                    <div class="product-info">
-                        <div class="product-subcategory">${p.subcategory}</div>
-                        <h3 class="product-title">${p.name}</h3>
-                        <div class="product-meta">
-                            <span class="stock-badge">${p.stock} in stock</span>
-                            <div class="price-tag">$${p.price.toFixed(2)}</div>
-                        </div>
-                        <div class="card-actions">
-                            <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
-                            <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
-                                <i class="fas fa-cart-plus"></i> Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>`;
+                html += `
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="${imgSrc}"
+                                        alt="${p.name}"
+                                        class="product-image"
+                                        onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')">
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-subcategory">${p.subcategory}</div>
+                                    <h3 class="product-title">${p.name}</h3>
+                                    <div class="product-meta">
+                                        <span class="stock-badge">${p.stock} in stock</span>
+                                        <div class="price-tag">$${p.price.toFixed(2)}</div>
+                                    </div>
+                                    <div class="card-actions">
+                                        <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
+                                            <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
+                                            <i class="fas fa-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`;
             });
             html += '</div>';
             productList.innerHTML = html;
@@ -303,11 +399,11 @@ function handleImageError(img, category, provider, name) {
         console.warn(`JPG failed for ${name}, trying PNG...`);
         img.src = `/images/${category}/${provider}/${name}.png`;
         // Re-attach error handler specifically for the PNG attempt
-        img.onerror = function() {
+        img.onerror = function () {
             console.warn(`PNG also failed for ${name}, using placeholder.`);
             this.src = 'https://placehold.co/300x200?text=No+Image';
         };
-    } 
+    }
     // 2. If it wasn't a JPG (or logic fell through), show placeholder
     else {
         img.src = 'https://placehold.co/300x200?text=No+Image';
@@ -316,7 +412,7 @@ function handleImageError(img, category, provider, name) {
 
 // ==================Admin page functions ==================
 async function loadQueue() {
-    const queueDiv = document.getElementById('deliveryQueue');   
+    const queueDiv = document.getElementById('deliveryQueue');
     if (!queueDiv) return;
 
     try {
@@ -330,7 +426,7 @@ async function loadQueue() {
             }
 
             let html = '<table><thead><tr><th>Order ID</th><th>Customer ID</th><th>Products</th><th>Total</th><th>Status</th></tr></thead><tbody>';
-            
+
             data.orders.forEach(o => {
                 html += `<tr>
                     <td><strong>#${o.orderId}</strong></td>
@@ -373,7 +469,7 @@ async function addToCart(productId, productName, price, quantity) {
         window.location.href = "login.html";
         return;
     }
-    
+
     try {
         const response = await fetch('/api/cart/add', {
             method: 'POST',
@@ -386,7 +482,7 @@ async function addToCart(productId, productName, price, quantity) {
                 quantity: quantity
             })
         });
-        
+
         const data = await response.json();
         if (data.success) {
             alert(`✓ Added ${quantity} x ${productName} to cart!`);
@@ -408,18 +504,18 @@ async function updateCartDisplay() {
     const cartTotal = document.getElementById('cartTotal');
     const cartBackendCount = document.getElementById('cartBackendCount');
     const emptyState = document.getElementById('emptyState');
-    
+
     if (!customerId) return;
-    
+
     try {
         const response = await fetch(`/api/cart?customerId=${customerId}`);
         const data = await response.json();
-        
+
         if (data.success) {
             // Update cart count badge
             if (cartCount) cartCount.textContent = data.itemCount;
             if (cartBackendCount) cartBackendCount.textContent = data.backendTotalItems;
-            
+
             if (data.itemCount === 0) {
                 if (cartContents) cartContents.innerHTML = '<p>Your cart is empty.</p>';
                 if (cartTotal) cartTotal.textContent = '$0.00';
@@ -446,7 +542,7 @@ async function updateCartDisplay() {
                     `;
                 });
                 html += '</div>';
-                
+
                 if (cartContents) cartContents.innerHTML = html;
                 if (cartTotal) cartTotal.textContent = `$${data.total.toFixed(2)}`;
                 if (cartDiv) cartDiv.style.display = window.location.pathname.includes('cart.html') ? 'grid' : 'block';
@@ -461,9 +557,9 @@ async function updateCartDisplay() {
 async function removeFromCart(productId) {
     const customerId = localStorage.getItem("customerId");
     if (!customerId) return;
-    
+
     if (!confirm("Remove this item from cart?")) return;
-    
+
     try {
         const response = await fetch('/api/cart/remove', {
             method: 'POST',
@@ -473,7 +569,7 @@ async function removeFromCart(productId) {
                 productId: productId
             })
         });
-        
+
         const data = await response.json();
         if (data.success) {
             updateCartDisplay();
@@ -487,16 +583,16 @@ async function removeFromCart(productId) {
 async function clearCart() {
     const customerId = localStorage.getItem("customerId");
     if (!customerId) return;
-    
+
     if (!confirm("Clear all items from your cart?")) return;
-    
+
     try {
         const response = await fetch('/api/cart/clear', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ customerId: parseInt(customerId) })
         });
-        
+
         const data = await response.json();
         if (data.success) {
             alert(`Cleared ${data.removedCount} items from cart`);
@@ -511,56 +607,56 @@ async function clearCart() {
 async function checkout() {
     const customerId = localStorage.getItem("customerId");
     if (!customerId) return;
-    
+
     try {
         const response = await fetch('/api/cart?customerId=' + customerId);
         const data = await response.json();
-        
+
         if (!data.success || data.itemCount === 0) {
             alert("Your cart is empty!");
             return;
         }
-        
+
         // Show order summary
         let summary = "Order Summary:\n\n";
         data.items.forEach(item => {
             summary += `${item.quantity} x ${item.productName} - $${item.itemTotal.toFixed(2)}\n`;
         });
         summary += `\nTotal: $${data.total.toFixed(2)}\n\n`;
-        
+
         if (confirm(summary + "Proceed with checkout?")) {
             // Get selected payment method
             let paymentMethod = "Cash";
             const cashRadio = document.getElementById("payCash");
             const visaRadio = document.getElementById("payVisa");
-            
+
             if (visaRadio && visaRadio.checked) {
                 // Redirect to payment page for Visa
                 window.location.href = 'payment.html';
                 return;
             }
-            
+
             // Call C++ Checkout API for Cash
             const checkoutResponse = await fetch('/api/cart/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     customerId: parseInt(customerId),
-                    paymentMethod: "Cash" 
+                    paymentMethod: "Cash"
                 })
             });
-            
+
             const checkoutData = await checkoutResponse.json();
-            
+
             if (checkoutData.success) {
                 alert(`✅ Checkout complete!\n\n` +
-                      `Order ID: #${checkoutData.orderId}\n` +
-                      `Items purchased: ${checkoutData.itemCount}\n` +
-                      `Total: $${checkoutData.total.toFixed(2)}\n\n` +
-                      `Thank you for your purchase!`);
+                    `Order ID: #${checkoutData.orderId}\n` +
+                    `Items purchased: ${checkoutData.itemCount}\n` +
+                    `Total: $${checkoutData.total.toFixed(2)}\n\n` +
+                    `Thank you for your purchase!`);
                 updateCartDisplay();
                 // Optionally refresh product list to show updated stock
-                if (typeof loadProducts === 'function') loadProducts(); 
+                if (typeof loadProducts === 'function') loadProducts();
             } else {
                 alert("Checkout failed: " + checkoutData.message);
             }
@@ -571,10 +667,11 @@ async function checkout() {
     }
 }
 
-// Initialize cart display on product page load
-if (window.location.pathname.includes('product.html') || window.location.pathname.includes('cart.html') || window.location.pathname.includes('home.html')) {
-    document.addEventListener('DOMContentLoaded', function() {
+// Initialize theme and other components
+document.addEventListener('DOMContentLoaded', function () {
+    initThemeToggle();
+
+    if (window.location.pathname.includes('product.html') || window.location.pathname.includes('cart.html') || window.location.pathname.includes('home.html')) {
         updateCartDisplay();
-    });
-}
-// ================ END CART FUNCTIONS ================
+    }
+});

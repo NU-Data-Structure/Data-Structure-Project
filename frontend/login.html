@@ -1,89 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NUH2H - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="script.js" defer></script>
     <style>
-        :root {
-            --primary-blue: #1976D2;
-            --light-blue: #E3F2FD;
-            --white: #FFFFFF;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--light-blue);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg,
+                    #020617 0%,
+                    #0a1628 12%,
+                    #0c2445 25%,
+                    #0e3460 40%,
+                    #1e40af 55%,
+                    #1e3a8a 70%,
+                    #172554 85%,
+                    #0f172a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
-        }
-        .welcome-message {
-            margin-bottom: 1.5rem;
-            color: #333;
-            line-height: 1.5;
+            position: relative;
         }
 
-        .welcome-message p {
-            margin: 0.5rem 0;
-            font-size: 1.1rem;
+        /* Subtle shining overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 25% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 75%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(96, 165, 250, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(14, 165, 233, 0.1) 0%, transparent 45%);
+            pointer-events: none;
         }
 
-        .welcome-message .subtext {
-            color: #666;
-            font-size: 0.95rem;
-            font-style: italic;
+        /* Shimmer effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: linear-gradient(45deg,
+                    transparent 40%,
+                    rgba(59, 130, 246, 0.03) 45%,
+                    rgba(56, 189, 248, 0.05) 50%,
+                    rgba(59, 130, 246, 0.03) 55%,
+                    transparent 60%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .login-container {
-            background-color: var(--white);
-            padding: 2.5rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            padding: 3rem;
+            border-radius: 28px;
             width: 100%;
-            max-width: 400px;
+            max-width: 440px;
             text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(59, 130, 246, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, #3b82f6, #8b5cf6, transparent);
+            border-radius: 28px 28px 0 0;
         }
 
         .logo {
-            color: var(--primary-blue);
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         h2 {
-            color: #333;
-            margin-bottom: 1.5rem;
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
             font-weight: 600;
+            font-size: 1.5rem;
         }
 
-        /* Toggle Switch Styles */
+        .welcome-message {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .welcome-message p {
+            margin: 0.3rem 0;
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+
+        .welcome-message .subtext {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Toggle Switch */
         .user-type-toggle {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            gap: 10px;
+            margin-bottom: 1.5rem;
+            gap: 14px;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 24px;
+            width: 60px;
+            height: 30px;
         }
 
-        .switch input { 
+        .switch input {
             opacity: 0;
             width: 0;
             height: 0;
@@ -96,106 +162,138 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
+            background: rgba(30, 41, 59, 0.8);
+            transition: 0.4s;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
+            height: 22px;
+            width: 22px;
             left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
+            bottom: 3px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            transition: 0.4s;
             border-radius: 50%;
+            box-shadow: 0 2px 15px rgba(6, 182, 212, 0.5);
         }
 
-        input:checked + .slider {
-            background-color: var(--primary-blue);
+        input:checked+.slider {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
         }
 
-        input:checked + .slider:before {
-            transform: translateX(26px);
+        input:checked+.slider:before {
+            transform: translateX(28px);
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            box-shadow: 0 2px 15px rgba(139, 92, 246, 0.5);
         }
 
         .toggle-label {
             font-size: 0.9rem;
             font-weight: 600;
-            color: #555;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .toggle-label.active {
+            color: #22d3ee;
         }
 
         /* Form Styles */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             text-align: left;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #555;
+            color: #94a3b8;
             font-weight: 500;
+            font-size: 0.9rem;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 15px 20px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input::placeholder {
+            color: #475569;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.08);
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
         }
 
         .btn {
-            background-color: var(--primary-blue);
+            width: 100%;
+            padding: 16px 28px;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
+            border-radius: 14px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 500;
-            width: 100%;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            margin-top: 0.5rem;
         }
 
         .btn:hover {
-            background-color: #1565C0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
         }
 
         .footer-text {
-            margin-top: 1.5rem;
-            color: #666;
+            margin-top: 1.75rem;
+            color: #64748b;
             font-size: 0.9rem;
         }
 
-        /* Utility to hide elements */
+        .footer-text a {
+            background: linear-gradient(135deg, #22d3ee, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
         .hidden {
             display: none;
         }
 
         @media (max-width: 480px) {
             .login-container {
-                padding: 1.5rem;
+                padding: 2rem;
+                border-radius: 24px;
             }
+
             .logo {
-                font-size: 1.75rem;
+                font-size: 2.25rem;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
-     
         <div class="logo">NUH2H</div>
         <h2 id="formTitle">Customer Login</h2>
         <div class="welcome-message">
@@ -204,14 +302,14 @@
         </div>
 
         <div class="user-type-toggle">
-            <span class="toggle-label" style="color: var(--primary-blue)">Customer</span>
+            <span class="toggle-label active" id="customerLabel">Customer</span>
             <label class="switch">
                 <input type="checkbox" id="isAdminCheckbox" onchange="toggleUserType()">
                 <span class="slider"></span>
             </label>
-            <span class="toggle-label">Provider</span>
+            <span class="toggle-label" id="providerLabel">Provider</span>
         </div>
-        
+
         <div id="customerFields">
             <div class="form-group">
                 <label for="customerId">Customer ID</label>
@@ -233,110 +331,101 @@
                 <input id="providerPassword" type="password" placeholder="Enter admin password">
             </div>
         </div>
-        
+
         <button class="btn" onclick="login()">Login</button>
-        
+
         <p class="footer-text" id="footerText">New customer? <a href="signup.html">Sign up here</a></p>
     </div>
 
     <script>
-    // Function to handle the UI toggle between Customer and Admin
-    function toggleUserType() {
-        const isAdmin = document.getElementById('isAdminCheckbox').checked;
-        const customerFields = document.getElementById('customerFields');
-        const adminFields = document.getElementById('adminFields');
-        const formTitle = document.getElementById('formTitle');
-        const footerText = document.getElementById('footerText');
+        function toggleUserType() {
+            const isAdmin = document.getElementById('isAdminCheckbox').checked;
+            const customerFields = document.getElementById('customerFields');
+            const adminFields = document.getElementById('adminFields');
+            const formTitle = document.getElementById('formTitle');
+            const footerText = document.getElementById('footerText');
+            const customerLabel = document.getElementById('customerLabel');
+            const providerLabel = document.getElementById('providerLabel');
 
-        if (isAdmin) {
-            // Show Admin Fields
-            customerFields.classList.add('hidden');
-            adminFields.classList.remove('hidden');
-            formTitle.innerText = "Provider Login";
-            footerText.classList.add('hidden'); // Hide footer for admins
-        } else {
-            // Show Customer Fields
-            adminFields.classList.add('hidden');
-            customerFields.classList.remove('hidden');
-            formTitle.innerText = "Customer Login";
-            footerText.classList.remove('hidden');
-        }
-    }
-
-    async function login() {
-        const isAdmin = document.getElementById('isAdminCheckbox').checked;
-
-        if (isAdmin) {
-            // --- ADMIN / PROVIDER LOGIN LOGIC ---
-            const providerName = document.getElementById('providerName').value;
-            const password = document.getElementById('providerPassword').value;
-
-            if (!providerName || !password) {
-                alert("Please enter Provider Name and Password");
-                return;
-            }
-
-            try {
-                // Example Admin API Endpoint
-                const response = await fetch('/api/admin/login', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ 
-                        username: providerName, 
-                        password: password 
-                    })
-                });
-                
-                const data = await response.json();
-
-                if (data.success) {
-                    window.location.href = 'admin.html';
-                } else {
-                    // If login fails (name/password doesn't exist), go to sign up like customer login
-                    alert('Provider not found or invalid credentials. Redirecting to sign up.');
-                    // Note: You may need to adapt signup.html to handle provider registration if needed
-                    window.location.href = 'signup.html';
-                }
-            } catch (error) {
-                console.error('Admin login error:', error);
-                alert('Admin login failed. Check console.');
-            }
-
-        } else {
-            // --- CUSTOMER LOGIN LOGIC ---
-            const id = document.getElementById('customerId').value;
-            const password = document.getElementById('customerPassword').value;
-
-            if (!id || !password) {
-                alert("Please enter Customer ID and Password");
-                return;
-            }
-
-            try {
-                const response = await fetch('/api/login', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        id: parseInt(id),
-                        password: password // Sending password now as well
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.exists) {
-                    localStorage.setItem('customerId', id);
-                    localStorage.setItem('customerPassword', password);
-                    window.location.href = 'home.html';
-                } else {
-                    alert("Login failed: Customer ID not found or password incorrect.");
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('An error occurred. Please try again.');
+            if (isAdmin) {
+                customerFields.classList.add('hidden');
+                adminFields.classList.remove('hidden');
+                formTitle.innerText = "Provider Login";
+                footerText.classList.add('hidden');
+                customerLabel.classList.remove('active');
+                providerLabel.classList.add('active');
+            } else {
+                adminFields.classList.add('hidden');
+                customerFields.classList.remove('hidden');
+                formTitle.innerText = "Customer Login";
+                footerText.classList.remove('hidden');
+                customerLabel.classList.add('active');
+                providerLabel.classList.remove('active');
             }
         }
-    }
+
+        async function login() {
+            const isAdmin = document.getElementById('isAdminCheckbox').checked;
+
+            if (isAdmin) {
+                const providerName = document.getElementById('providerName').value;
+                const password = document.getElementById('providerPassword').value;
+
+                if (!providerName || !password) {
+                    alert("Please enter Provider Name and Password");
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/admin/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: providerName, password: password })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        alert('Provider not found or invalid credentials.');
+                    }
+                } catch (error) {
+                    console.error('Admin login error:', error);
+                    alert('Admin login failed.');
+                }
+            } else {
+                const id = document.getElementById('customerId').value;
+                const password = document.getElementById('customerPassword').value;
+
+                if (!id || !password) {
+                    alert("Please enter Customer ID and Password");
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ id: parseInt(id), password: password })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.exists) {
+                        localStorage.setItem('customerId', id);
+                        localStorage.setItem('customerPassword', password);
+                        window.location.href = 'home.html';
+                    } else {
+                        alert("Login failed: Customer ID not found or password incorrect.");
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            }
+        }
     </script>
 </body>
+
 </html>

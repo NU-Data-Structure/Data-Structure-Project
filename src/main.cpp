@@ -3,6 +3,7 @@
 #include "../include/server.h"
 #include "../include/ProductBST.h"
 #include "../include/DeliveryQueue.h"
+#include "../include/orderhistory.h"
 #define CARTSHARED_IMPORTS
 #include "../include/cart.h"
 #include <iostream>
@@ -206,33 +207,101 @@ int main() {
         }
     });
 
-    // API: Get profile
-    svr.Get("/api/profile", [&](const httplib::Request& req, httplib::Response& res) {
-        if (!req.has_param("id")) {
-            res.status = 400;
-            res.set_content("Missing id", "text/plain");
-            return;
-        }
+   // API: Get orders for a customer
+svr.Get(R"(/api/orders/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
+    if (!req.has_param("password")) {
+        res.status = 400;
+        res.set_content("{\"error\": \"Missing password\"}", "application/json");
+        return;
+    }
 
-        int id = std::stoi(req.get_param_value("id"));
-        string password = req.get_param_value("password");
+    int customerId = std::stoi(req.matches[1]);
+    string password = req.get_param_value("password");
 
-        if (!customerServer.login(id,password)) {
-            res.status = 404;
-            res.set_content("Customer not found", "text/plain");
-            return;
-        }
+    if (!customerServer.login(customerId, password)) {
+        res.status = 401;
+        res.set_content("{\"error\": \"Invalid credentials\"}", "application/json");
+        return;
+    }
 
-        customer cust = customerServer.getProfile(id);
+    OrderHistoryStack orderHistory;
+    json ordersArray = json::array();
+    
+    try {
+        orderHistory.loadFromFile("data/Orders.csv", customerId);
+        
+        // Convert stack to array (newest first)
+        orderHistory.forEachOrder([&](const Order& order) {
+            ordersArray.push_back({
+                {"orderId", order.orderId},
+                {"productIds", order.productIds},
+                {"totalAmount", order.totalAmount},
+                {"status", order.status},
+                {"provider", order.provider},
+                {"paymentMethod", order.paymentMethod}
+            });
+        });
+        
+        res.set_content(ordersArray.dump(), "application/json");
+    } catch (const exception& e) {
+        res.status = 500;
+        json error = {
+            {"error", "Failed to load orders"},
+            {"details", e.what()}
+        };
+        res.set_content(error.dump(), "application/json");
+    }
+});
 
-        json custJson;
-        custJson["id"] = cust.get_ID();
-        custJson["name"] = cust.get_Name();
-        custJson["phone"] = cust.get_Phone();
-        custJson["address"] = cust.get_Address();
+// API: Get profile
+svr.Get("/api/profile", [&](const httplib::Request& req, httplib::Response& res) {
+    if (!req.has_param("id")) {
+        res.status = 400;
+        res.set_content("Missing id", "text/plain");
+        return;
+    }
 
-        res.set_content(custJson.dump(), "application/json");
-    });
+    int id = std::stoi(req.get_param_value("id"));
+    string password = req.get_param_value("password");
+
+    if (!customerServer.login(id, password)) {
+        res.status = 404;
+        res.set_content("Customer not found", "text/plain");
+        return;
+    }
+
+    customer cust = customerServer.getProfile(id);
+    
+    // This is where you should add the order history code
+    OrderHistoryStack orderHistory;
+    orderHistory.loadFromFile("data/Orders.csv", id); 
+    
+    auto allOrders = orderHistory.getAllOrders();
+    nlohmann::json ordersArray = nlohmann::json::array();
+
+    for (const auto& order : allOrders) {
+        ordersArray.push_back(nlohmann::json{
+            {"orderId", order.orderId},
+            {"customerId", order.customerId},
+            {"productIds", order.productIds},
+            {"totalAmount", order.totalAmount},
+            {"status", order.status},
+            {"provider", order.provider},
+            {"paymentMethod", order.paymentMethod}
+        });
+    }
+
+
+json response = {
+    {"id", cust.get_ID()},
+    {"name", cust.get_Name()},
+    {"address", cust.get_Address()},
+    {"phone", cust.get_Phone()},
+    {"orders", ordersArray}
+};
+    
+    res.set_content(response.dump(), "application/json");
+});
 
     // API 1: Add item to cart
     svr.Post("/api/cart/add", [&](const httplib::Request& req, httplib::Response& res) {
