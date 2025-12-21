@@ -38,20 +38,64 @@ Order DeliveryQueue::dequeue() {
     return o;
 }
 
+Order DeliveryQueue::dequeueForProvider(string providerName) {
+    if (isEmpty()) {
+        return Order();
+    }
+
+    OrderNode* current = front;
+    OrderNode* prev = nullptr;
+
+    while (current != nullptr) {
+        if (current->data.provider.find(providerName) != string::npos) {
+            Order o = current->data;
+            
+            // Remove current node from the list
+            if (prev == nullptr) {
+                front = current->next;
+                if (front == nullptr) {
+                    rear = nullptr;
+                }
+            } else {
+                prev->next = current->next;
+                if (current == rear) {
+                    rear = prev;
+                }
+            }
+            delete current;
+            return o;
+        }
+        prev = current;
+        current = current->next;
+    }
+    return Order();
+}
+
 bool DeliveryQueue::isEmpty() {
     return front == nullptr;
 }
 
-vector<Order> DeliveryQueue::getAllOrders() {
+// vector<Order> DeliveryQueue::getAllOrders() {
+//     vector<Order> orders;
+//     OrderNode* current = front;
+//     while (current != nullptr) {
+//         orders.push_back(current->data);
+//         current = current->next;
+//     }
+//     return orders;
+// }
+
+vector<Order> DeliveryQueue::getOrdersForProvider(string providerName) {
     vector<Order> orders;
     OrderNode* current = front;
     while (current != nullptr) {
-        orders.push_back(current->data);
+        if (current->data.provider.find(providerName) != string::npos) {
+            orders.push_back(current->data);
+        }
         current = current->next;
     }
     return orders;
 }
-
 
 
 // Fixed loadFromFile with proper PaymentMethod support

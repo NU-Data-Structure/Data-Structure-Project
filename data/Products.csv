@@ -6,8 +6,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 208,9V Battery,25,Electronics,Power,100,Circuits Electronics
 171,9V Battery Clip,10,Electronics,Power,500,Lampatronics
 155,A4 Paper Ream (500 sheets),120,Stationary,Paper,100,Samir & Aly
-150,Advil 200mg,45,Pharmacy,Medicine,100,Elezaby
-148,Alcohol Spray 70%,35,Pharmacy,Health,149,Elezaby
+148,Alcohol Spray 70%,35,Pharmacy,Health,147,Elezaby
 148,Alcohol Spray 70%,35,Pharmacy,Health,147,Elezaby
 209,Alligator Clips (10pcs),40,Electronics,Cables,90,Circuits Electronics
 328,American Coffee,35,Food,Beverages,90,Pottery Cafe
@@ -22,13 +21,13 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 115,ASUS Laptop,5000,Electronics,Laptops,4,B Tech
-366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,95,Elezaby
+366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,93,Elezaby
 366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,97,Elezaby
 277,Bacon Mushroom Jack,150,Food,Burgers,50,Buffalo Burger
 156,Ballpoint Pens Blue (Box),40,Stationary,Writing,200,Samir & Aly
 313,Banana Chocolate Crepe,65,Food,Dessert,70,Friends
 372,Band-Aid Box,30,Pharmacy,Health,200,Elezaby
-104,Basbousa,80,Food,Dessert,22,El Abd
+104,Basbousa,80,Food,Dessert,21,El Abd
 109,Batates,25,Food,Breakfast,95,My Corner
 286,BBQ Wings (6pcs),80,Food,Chicken,50,Buffalo Burger
 101,Big Mac,85,Food,Burgers,50,Bazooka
@@ -127,6 +126,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 111,Hamborgar,130,Food,Burgers,38,Buffalo Burger
 129,HDMI Cable 2m,75,Electronics,Cables,100,Circuits Electronics
 121,Head and shoulders,120,Pharmacy,Skincare,98,Elezaby
+133,headache medicine,100,,General,200,Elezaby
 206,Heat Shrink Tube Kit,60,Electronics,Components,70,Circuits Electronics
 157,Highlighter Set (4 colors),35,Stationary,Writing,150,Samir & Aly
 257,Hot Chocolate,30,Food,Beverages,80,My Corner
@@ -184,6 +184,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 312,Mix Chocolate Crepe,75,Food,Dessert,50,Friends
 353,Mix Grill Meal,180,Food,Meals,20,Rosto
 294,Mix Shawerma Fatteh,100,Food,Meals,75,Karam El Sham
+102,mm,12,,General,500,Elezaby
 330,Mocha,50,Food,Beverages,70,Pottery Cafe
 139,Molten Cake,60,Food,Dessert,30,El Abd
 354,Mombar Plate,60,Food,Sides,30,Rosto

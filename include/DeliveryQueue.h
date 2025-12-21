@@ -9,7 +9,7 @@ using namespace std;
 
 class Order {
     public:
-        int orderId;
+        int orderId = 0;
         int customerId;
         string productIds;
         double totalAmount;
@@ -40,9 +40,11 @@ class DeliveryQueue {
 
         void enqueue(Order o);
         Order dequeue();
+        Order dequeueForProvider(string providerName);
         bool isEmpty();
         Order peek();
-        vector<Order> getAllOrders();
+        // vector<Order> getAllOrders();
+        vector<Order> getOrdersForProvider(string providerName);
         void loadFromFile(string filename);
         void saveOrder(Order o, string filename);
 };

@@ -50,6 +50,66 @@ void ProductBST::addProduct(Product p) {
     root = add(root, p);
 }
 
+BSTNode* ProductBST::findMin(BSTNode* node) {
+    if(node == nullptr) return nullptr;
+    while(node->left != nullptr) node = node->left;
+    return node;
+}
+
+BSTNode* ProductBST::remove(BSTNode* node, string name) {
+    if(node == nullptr) return nullptr;
+    
+    string lowerName = toLower(name);
+    string nodeName = toLower(node->data.name);
+
+    if(lowerName < nodeName) {
+        node->left = remove(node->left, name);
+    } else if(lowerName > nodeName) {
+        node->right = remove(node->right, name);
+    } else {
+        // Found node to delete
+        if(node->left == nullptr && node->right == nullptr) {
+            delete node;
+            return nullptr;
+        } else if(node->left == nullptr) {
+            BSTNode* temp = node->right;
+            delete node;
+            return temp;
+        } else if(node->right == nullptr) {
+            BSTNode* temp = node->left;
+            delete node;
+            return temp;
+        } else {
+            // Node with two children: Get the inorder successor (smallest in the right subtree)
+            BSTNode* temp = findMin(node->right);
+            node->data = temp->data;
+            node->right = remove(node->right, temp->data.name);
+        }
+    }
+    return node;
+}
+
+// Helper to find a product name by ID (since the tree is sorted by Name)
+void findNameById(BSTNode* node, int id, string& foundName) {
+    if (node == nullptr || !foundName.empty()) return;
+    
+    if (node->data.id == id) {
+        foundName = node->data.name;
+        return;
+    }
+    findNameById(node->left, id, foundName);
+    findNameById(node->right, id, foundName);
+}
+
+void ProductBST::removeProduct(int id) {
+    string nameToDelete = "";
+    findNameById(root, id, nameToDelete);
+    
+    if (!nameToDelete.empty()) {
+        root = remove(root, nameToDelete);
+    }
+}
+
 Product* ProductBST::search(BSTNode* node, string name) {
     if (node == nullptr) return nullptr;
 

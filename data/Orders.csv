@@ -3,33 +3,36 @@ OrderID,CustomerID,ProductIDs,TotalAmount,Status,Provider,PaymentMethod
 5002,21,101,1000.00,Shipped,Unknown,Cash
 5003,20,101;102,1020.00,Shipped,Unknown,Cash
 5004,20,101;102,1020.00,Shipped,Unknown,Cash
-5006,123,101,4.5,Pending,Unknown,Cash
-5007,123,102;104;103,1200.78,Pending,Unknown,Cash
-5009,123,101;102;104,202.29,Pending,Lampatronics;Unknown,Cash
-5011,123,111;113;116,45580,Pending,Lampatronics;Bazooka,Cash
-5013,123,119,630,Pending,Elezaby,Cash
-5015,123,118;115;102,505095,Pending,Bazooka;Lampatronics,Cash
-5017,1939,111;120,220,Pending,Elezaby;Bazooka,Cash
-5019,1939,109;116,150025,Pending,Lampatronics;Bazooka,Cash
-5021,1939,113;114,2950,Pending,Lampatronics,Cash
+5006,123,101,4.5,Shipped,Unknown,Cash
+5007,123,102;104;103,1200.78,Shipped,Unknown,Cash
+5009,123,101;102;104,202.29,Shipped,Lampatronics;Unknown,Cash
+5011,123,111;113;116,45580,Shipped,Lampatronics;Bazooka,Cash
+5013,123,119,630,Shipped,Elezaby,Cash
+5015,123,118;115;102,505095,Shipped,Bazooka;Lampatronics,Cash
+5017,1939,111;120,220,Shipped,Elezaby;Bazooka,Cash
+5019,1939,109;116,150025,Shipped,Lampatronics;Bazooka,Cash
+5021,1939,113;114,2950,Shipped,Lampatronics,Cash
 5022,1939,113,450,Pending,Lampatronics,Visa
-5024,1939,121;119;109,265,Pending,Bazooka;Elezaby,Visa
+5024,1939,121;119;109,265,Shipped,Bazooka;Elezaby,Visa
 5025,1939,103;104;110;118,500310,Pending,Lampatronics;Bazooka,Cash
-5027,1939,120;104;107,920,Pending,"Friends;El Abd;Elezaby",Visa
+5027,1939,120;104;107,920,Shipped,"Friends;El Abd;Elezaby",Visa
 5029,1939,115;116,620000,Pending,"B Tech",Cash
-5031,12,"104",80,Pending,El Abd,Cash
-5032,12,"119;120",180,Pending,Elezaby,Cash
-5034,12,"121;119",165,Pending,Elezaby,Visa
-5036,12,"113",3150,Pending,Lampatronics,Cash
-5038,12,"113",450,Pending,Lampatronics,Cash
-5040,12,"113",2250,Pending,Lampatronics,Cash
-5041,12,"113",900,Pending,Lampatronics,Cash
-5042,12,"113",900,Pending,Lampatronics,Cash
-5043,12,"366;113",495,Pending,Lampatronics;Elezaby,Cash
-5045,241000934,"148;366",215,Pending,Elezaby,Cash
-5047,241000934,"115",5000,Pending,B Tech,Cash
-5049,241000934,"231",140,Pending,El Abd,Cash
-5051,241000934,"126",3200,Pending,B Tech,Cash
-5045,241000934,"148;366",125,Pending,Elezaby,Cash
-5047,241000934,"191;115",6500,Pending,B Tech,Cash
-5049,1111,"148",70,Pending,Elezaby,Visa
+5031,12,104,80,Pending,"El Abd",Cash
+5032,12,119;120,180,Pending,Elezaby,Cash
+5034,12,121;119,165,Pending,Elezaby,Visa
+5036,12,113,3150,Pending,Lampatronics,Cash
+5038,12,113,450,Pending,Lampatronics,Cash
+5040,12,113,2250,Pending,Lampatronics,Cash
+5041,12,113,900,Pending,Lampatronics,Cash
+5042,12,113,900,Pending,Lampatronics,Cash
+5043,12,366;113,495,Pending,Lampatronics;Elezaby,Cash
+5045,241000934,148;366,215,Pending,Elezaby,Cash
+5047,241000934,115,5000,Pending,"B Tech",Cash
+5049,241000934,231,140,Pending,"El Abd",Cash
+5051,241000934,126,3200,Pending,"B Tech",Cash
+5045,241000934,148;366,125,Pending,Elezaby,Cash
+5047,241000934,191;115,6500,Pending,"B Tech",Cash
+5049,1111,148,70,Pending,Elezaby,Visa
+5053,1111,148;366,80,Pending,Elezaby,Cash
+5054,1111,104,80,Pending,"El Abd",Cash
+5001,1,148;366,80,Pending,Elezaby,Cash
