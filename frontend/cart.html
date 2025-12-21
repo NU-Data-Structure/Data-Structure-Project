@@ -1,149 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Cart</title>
+    <title>My Cart - NUH2H</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="script.js" defer></script>
     <style>
-        :root {
-            --primary-blue: #1976D2;
-            --dark-blue: #0D47A1;
-            --light-blue: #E3F2FD;
-            --white: #FFFFFF;
-            --shadow: 0 4px 15px rgba(25, 118, 210, 0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
+
         body {
-            background: linear-gradient(135deg, #f5f9ff 0%, #e1f0ff 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0a1628 20%, #0c2445 40%, #0e3460 60%, #1e40af 80%, #1e3a8a 100%);
+            background-attachment: fixed;
             min-height: 100vh;
-            padding-bottom: 50px;
+            color: #e2e8f0;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: white;
-            padding: 1.2rem 2.5rem;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            padding: 1.25rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 15px rgba(13, 71, 161, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        header h1 { font-size: 1.5rem; font-weight: 600; }
-        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #3b82f6, #0ea5e9, #38bdf8, transparent);
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .nav-btn {
-            color: white;
+            color: #e2e8f0;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
-            border-radius: 50px;
+            gap: 10px;
+            background: rgba(59, 130, 246, 0.15);
+            padding: 12px 24px;
+            border-radius: 14px;
             transition: all 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
-        .nav-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(14, 165, 233, 0.3));
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 1fr 350px;
+            grid-template-columns: 1fr 380px;
             gap: 30px;
+            position: relative;
+            z-index: 1;
         }
 
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
         }
 
         .cart-section {
-            background: white;
-            border-radius: 16px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(25, 118, 210, 0.1);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 80px rgba(59, 130, 246, 0.1);
         }
 
-        h2 { color: var(--dark-blue); margin-bottom: 20px; border-bottom: 2px solid var(--light-blue); padding-bottom: 10px; }
+        .cart-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, #0ea5e9, transparent);
+            border-radius: 24px 24px 0 0;
+        }
 
-        .cart-items { display: flex; flex-direction: column; gap: 15px; }
-        
+        h2 {
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            background: linear-gradient(135deg, #38bdf8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background: #f8fbff;
-            border-radius: 10px;
-            border: 1px solid #e1f0ff;
-            transition: transform 0.2s;
+            padding: 18px 20px;
+            background: rgba(30, 58, 138, 0.3);
+            border-radius: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
         }
-        .cart-item:hover { transform: translateX(5px); border-color: var(--primary-blue); }
+
+        .cart-item:hover {
+            transform: translateX(8px);
+            border-color: rgba(56, 189, 248, 0.4);
+            background: rgba(30, 58, 138, 0.5);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .cart-item span {
+            color: #e2e8f0;
+            font-weight: 500;
+        }
 
         .remove-btn {
-            background: #ffcdd2; color: #c62828; border: none; padding: 8px 12px;
-            border-radius: 8px; cursor: pointer; transition: all 0.3s; font-size: 0.9rem;
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
-        .remove-btn:hover { background: #ef9a9a; }
 
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1rem; color: #555; }
-        .summary-total { font-size: 1.4rem; font-weight: 700; color: var(--dark-blue); border-top: 2px solid #eee; padding-top: 15px; margin-top: 10px; }
+        .remove-btn:hover {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.4), rgba(220, 38, 38, 0.4));
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #94a3b8;
+        }
+
+        .summary-total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #38bdf8;
+            border-top: 1px solid rgba(59, 130, 246, 0.3);
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .summary-total span:last-child {
+            background: linear-gradient(135deg, #38bdf8, #22d3ee);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .payment-box {
+            margin: 1.5rem 0;
+            padding: 1.25rem;
+            background: rgba(30, 58, 138, 0.3);
+            border-radius: 14px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .payment-box label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 12px;
+            color: #60a5fa;
+            font-size: 0.95rem;
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 20px;
+        }
+
+        .payment-options label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #cbd5e1;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .payment-options input[type="radio"] {
+            accent-color: #3b82f6;
+            width: 18px;
+            height: 18px;
+        }
 
         .checkout-btn {
-            width: 100%; padding: 15px; background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
-            color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: 600;
-            cursor: pointer; margin-top: 20px; transition: all 0.3s; box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            font-family: inherit;
         }
-        .checkout-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(25, 118, 210, 0.4); }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+        }
 
         .clear-btn {
-            width: 100%; padding: 10px; background: transparent; color: #757575; border: 1px solid #bdbdbd;
-            border-radius: 10px; margin-top: 10px; cursor: pointer; transition: all 0.3s;
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 14px;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            font-weight: 600;
         }
-        .clear-btn:hover { background: #f5f5f5; color: #d32f2f; border-color: #d32f2f; }
+
+        .clear-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        #emptyState {
+            position: relative;
+            z-index: 1;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-cart i {
+            font-size: 5rem;
+            background: linear-gradient(135deg, #3b82f6, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-cart h3 {
+            color: #94a3b8;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .empty-cart a {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .empty-cart a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+        }
     </style>
 </head>
+
 <body>
     <header>
-        <h1>Shopping Cart</h1>
-        <a href="home.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+        <h1><i class="fas fa-shopping-cart"></i> Shopping Cart</h1>
+        <div style="display: flex; gap: 10px;">
+            <a href="profile.html" class="nav-btn"><i class="fas fa-user"></i> Profile</a>
+            <a href="home.html" class="nav-btn"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+        </div>
     </header>
 
     <div class="container" id="cartItems">
-        <div class="cart-section">
+        <div class="cart-section" style="position: relative;">
             <h2>Items in Cart</h2>
-            <div id="cartContents"></div>
+            <div id="cartContents" class="cart-items"></div>
         </div>
-        <div class="cart-section" style="height: fit-content;">
+        <div class="cart-section" style="height: fit-content; position: relative;">
             <h2>Order Summary</h2>
             <div class="summary-row summary-total">
                 <span>Total</span>
                 <span id="cartTotal">$0.00</span>
             </div>
-            <div style="margin: 20px 0; padding: 15px; background: #f8fbff; border-radius: 8px; border: 1px solid #e1f0ff;">
-                <label style="font-weight: 600; display: block; margin-bottom: 10px; color: #0D47A1;">Payment Method:</label>
-                <div style="display: flex; gap: 15px;">
-                    <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                        <input type="radio" id="payCash" name="payment" value="Cash" checked> Cash 💵
+            <div class="payment-box">
+                <label>Payment Method:</label>
+                <div class="payment-options">
+                    <label>
+                        <input type="radio" id="payCash" name="payment" value="Cash" checked> 💵 Cash
                     </label>
-                    <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                        <input type="radio" id="payVisa" name="payment" value="Visa"> Visa 💳
+                    <label>
+                        <input type="radio" id="payVisa" name="payment" value="Visa"> 💳 Visa
                     </label>
                 </div>
             </div>
-            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout <i class="fas fa-check-circle"></i></button>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout <i
+                    class="fas fa-check-circle"></i></button>
             <button class="clear-btn" onclick="clearCart()">Clear Cart</button>
         </div>
     </div>
-    
-    <div id="emptyState" class="container" style="display: none; text-align: center;">
-         <div class="cart-section" style="padding: 50px;"><i class="fas fa-shopping-basket" style="font-size: 4rem; color: #e0e0e0; margin-bottom: 20px;"></i><h3 style="color: #666;">Your cart is currently empty</h3><a href="home.html" class="checkout-btn" style="display: inline-block; width: auto; margin-top: 20px; text-decoration: none;">Start Shopping</a></div>
+
+    <div id="emptyState" class="container" style="display: none;">
+        <div class="cart-section empty-cart" style="grid-column: 1 / -1; position: relative;">
+            <i class="fas fa-shopping-basket"></i>
+            <h3>Your cart is currently empty</h3>
+            <a href="home.html">Start Shopping</a>
+        </div>
     </div>
 </body>
+
 </html>

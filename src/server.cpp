@@ -46,7 +46,8 @@ vector<Provider> Server::getProvidersByCategory(string category) {
 
 void Server::loadFile(){
     try {
-        rapidcsv::Document doc("data/Customer_List.csv");
+        // Use SeparatorParams to trim whitespace from loaded CSV data, fixing login issues.
+        rapidcsv::Document doc("data/Customer_List.csv", rapidcsv::LabelParams(), rapidcsv::SeparatorParams(',', true));
         
         vector<int> id_list = doc.GetColumn<int>("userID");
         vector<string> name_list = doc.GetColumn<string>("userName");

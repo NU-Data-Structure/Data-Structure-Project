@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Shopping App</title>
+    <title>Home - NUH2H Shopping</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="script.js" defer></script>
     <style>
@@ -11,324 +14,396 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        :root {
-            --primary-blue: #1976D2;
-            --light-blue: #E3F2FD;
-            --dark-blue: #0D47A1;
-            --white: #FFFFFF;
-            --shadow: 0 4px 15px rgba(25, 118, 210, 0.1);
-        }
-        
+
         body {
-            background: linear-gradient(135deg, #f5f9ff 0%, #e1f0ff 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg,
+                    #020617 0%,
+                    #0a1628 12%,
+                    #0c2445 25%,
+                    #0e3460 40%,
+                    #1e40af 55%,
+                    #1e3a8a 70%,
+                    #172554 85%,
+                    #0f172a 100%);
+            background-attachment: fixed;
             min-height: 100vh;
+            color: #e2e8f0;
+            position: relative;
         }
-        
+
+        /* Shining overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.18) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(96, 165, 250, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(14, 165, 233, 0.12) 0%, transparent 45%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Shimmer effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: linear-gradient(45deg, transparent 40%, rgba(59, 130, 246, 0.03) 45%, rgba(56, 189, 248, 0.06) 50%, rgba(59, 130, 246, 0.03) 55%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-            color: white;
-            padding: 1.2rem 2.5rem;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 15px rgba(13, 71, 161, 0.2);
-            position: relative;
-            z-index: 10;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        
+
         header h1 {
-            font-weight: 600;
-            font-size: 1.8rem;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            font-size: 1.5rem;
         }
-        
-        .profile-icon {
-            color: white;
-            font-size: 1.8rem;
+
+        header h1 .welcome {
+            background: linear-gradient(135deg, #22d3ee, #3b82f6, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header h1 span {
+            color: #e2e8f0;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-icon {
+            color: #e2e8f0;
+            font-size: 1.15rem;
             text-decoration: none;
-            transition: transform 0.3s ease;
-            background: rgba(255, 255, 255, 0.2);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        
-        .profile-icon:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .welcome-message {
-            text-align: center;
-            padding: 3rem 2rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
-        
-        .welcome-message h2 {
-            font-size: 2.2rem;
-            color: var(--dark-blue);
-            margin-bottom: 0.8rem;
+
+        .nav-icon:hover {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+            border-color: rgba(6, 182, 212, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.2);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: linear-gradient(135deg, #f43f5e, #ec4899);
+            color: white;
+            font-size: 0.7rem;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            border-radius: 10px;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(244, 63, 94, 0.4);
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-section h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 40%, #a78bfa 70%, #f472b6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: inline-block;
+            background-clip: text;
+            text-shadow: 0 0 80px rgba(59, 130, 246, 0.5);
         }
-        
-        .welcome-message p {
-            color: #546E7A;
-            font-size: 1.1rem;
-            max-width: 600px;
+
+        .welcome-section p {
+            color: #94a3b8;
+            font-size: 1.15rem;
+            max-width: 550px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.7;
         }
-        
+
         .categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 1rem 2rem 4rem;
-            max-width: 1300px;
+            gap: 1.75rem;
+            padding: 0 2rem 5rem;
+            max-width: 1250px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
-        
+
         .category {
-            background: white;
-            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(59, 130, 246, 0.15));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
             padding: 2.5rem 2rem;
             text-align: center;
-            box-shadow: var(--shadow);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(25, 118, 210, 0.1);
             position: relative;
             overflow: hidden;
         }
-        
+
         .category::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-blue), #64B5F6);
-            transition: height 0.3s ease;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        
-        .category:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 10px 25px rgba(25, 118, 210, 0.15);
-        }
-        
-        .category:hover::before {
-            height: 8px;
-        }
-        
-        .category i {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-blue), #64B5F6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-        
-        .category:hover i {
-            transform: scale(1.1) rotate(5deg);
-        }
-        
-        .category h2 {
-            margin-bottom: 1.2rem;
-            color: #2C3E50;
-            font-size: 1.6rem;
-            font-weight: 600;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .category h2::after {
+
+        .category::after {
             content: '';
             position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-blue), #64B5F6);
-            border-radius: 3px;
-            transition: width 0.3s ease;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
-        
-        .category:hover h2::after {
+
+        .category:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 25px 50px rgba(6, 182, 212, 0.15),
+                0 0 100px rgba(139, 92, 246, 0.1);
+        }
+
+        .category:hover::before,
+        .category:hover::after {
+            opacity: 1;
+        }
+
+        .category .icon-wrapper {
             width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
+
+        .category:hover .icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.3));
+        }
+
+        .category i {
+            font-size: 2.25rem;
+            background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .category h3 {
+            margin-bottom: 0.75rem;
+            color: #f1f5f9;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
         .category p {
-        margin-bottom: 2rem; 
-        color: #666;
-        min-height: 3rem; 
+            margin-bottom: 2rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
         }
-        
+
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, var(--primary-blue), #1976D2);
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            background-size: 200% 200%;
             color: white;
             padding: 0.9rem 2rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 12px;
             cursor: pointer;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
-            letter-spacing: 0.5px;
+            font-size: 0.95rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
             position: relative;
             overflow: hidden;
-            z-index: 1;
         }
-        
+
         .btn::before {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1E88E5, #0D47A1);
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            border-radius: 50px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
-        
+
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+            transform: translateY(-3px);
+            background-position: 100% 0;
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
         }
-        
+
         .btn:hover::before {
-            opacity: 1;
+            left: 100%;
         }
-        
+
         @media (max-width: 768px) {
             .categories {
-                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                grid-template-columns: 1fr;
+                padding: 0 1rem 3rem;
+            }
+
+            header {
                 padding: 1rem;
             }
-            
-            header {
-                padding: 1rem 1.5rem;
+
+            .welcome-section {
+                padding: 3rem 1rem 2rem;
             }
-            
-            header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .welcome-message h2 {
-                font-size: 1.8rem;
+
+            .welcome-section h2 {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
+
 <body>
     <header>
-        <h1>Welcome, <span id="customerName">Customer</span></h1>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <a href="cart.html" class="profile-icon" title="View Cart" style="position: relative;">
+        <h1><span class="welcome">Welcome,</span> <span id="customerName">Customer</span></h1>
+        <div class="nav-icons">
+            <a href="cart.html" class="nav-icon" title="View Cart">
                 <i class="fas fa-shopping-cart"></i>
-                <span id="cartCount" style="position: absolute; top: -5px; right: -5px; background: #ff4081; color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 50%;">0</span>
+                <span class="cart-badge" id="cartCount">0</span>
             </a>
-            <a href="profile.html" class="profile-icon" title="View Profile">
+            <a href="profile.html" class="nav-icon" title="View Profile">
                 <i class="fas fa-user"></i>
             </a>
         </div>
     </header>
-    
-    <div class="welcome-message">
+
+    <div class="welcome-section">
         <h2>Shop by Category</h2>
         <p>Discover our wide range of products and services tailored just for you</p>
     </div>
-    
+
     <div class="categories">
         <div class="category">
-            <i class="fas fa-utensils"></i>
-            <h2>Food</h2>
-            <p class="category-desc">Fresh and delicious meals</p>
+            <div class="icon-wrapper">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h3>Food</h3>
+            <p>Fresh and delicious meals</p>
             <a href="providers.html?category=Food" class="btn">Browse Food</a>
         </div>
-        
+
         <div class="category">
-            <i class="fas fa-pills"></i>
-            <h2>Pharmacy</h2>
-            <p class="category-desc">Healthcare and wellness products</p>
+            <div class="icon-wrapper">
+                <i class="fas fa-pills"></i>
+            </div>
+            <h3>Pharmacy</h3>
+            <p>Healthcare and wellness products</p>
             <a href="providers.html?category=Pharmacy" class="btn">Browse Pharmacy</a>
         </div>
-        
+
         <div class="category">
-            <i class="fas fa-laptop"></i>
-            <h2>Electronics</h2>
-            <p class="category-desc">Latest tech and gadgets</p>
+            <div class="icon-wrapper">
+                <i class="fas fa-laptop"></i>
+            </div>
+            <h3>Electronics</h3>
+            <p>Latest tech and gadgets</p>
             <a href="providers.html?category=Electronics" class="btn">Browse Electronics</a>
         </div>
-        
+
         <div class="category">
-            <i class="fas fa-pencil-alt"></i>
-            <h2>Stationary</h2>
-            <p class="category-desc">Office and school supplies</p>
+            <div class="icon-wrapper">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+            <h3>Stationary</h3>
+            <p>Office and school supplies</p>
             <a href="providers.html?category=Stationary" class="btn">Browse Stationary</a>
         </div>
     </div>
 
     <script>
-        // Get customer name from localStorage if available
-        document.addEventListener('DOMContentLoaded', function() {
-            const customerName = localStorage.getItem('customerName');
-            if (customerName) {
-                document.getElementById('customerName').textContent = customerName;
+        document.addEventListener('DOMContentLoaded', async function () {
+            const customerId = localStorage.getItem('customerId');
+            const password = localStorage.getItem('customerPassword');
+            const customerNameElement = document.getElementById('customerName');
+
+            if (!customerId) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/profile?id=${customerId}&password=${password}`);
+                if (!response.ok) throw new Error('Failed to fetch profile');
+
+                const customer = await response.json();
+                if (customer && customer.name) {
+                    customerNameElement.textContent = customer.name;
+                } else {
+                    customerNameElement.textContent = 'Valued Customer';
+                }
+            } catch (error) {
+                console.error('Error fetching customer data:', error);
+                customerNameElement.textContent = 'Valued Customer';
             }
         });
     </script>
-
-    <!-- Add this script before the closing </body> tag -->
-<script>
-    // Fetch and display customer name when the page loads
-    document.addEventListener('DOMContentLoaded', async function() {
-        const customerId = localStorage.getItem('customerId');
-        const password = localStorage.getItem('customerPassword');
-        const customerNameElement = document.getElementById('customerName');
-        
-        if (!customerId) {
-            // If no customer ID is found, redirect to login
-            window.location.href = 'login.html';
-            return;
-        }
-
-        try {
-            // Fetch customer data from the profile API
-            const response = await fetch(`/api/profile?id=${customerId}&password=${password}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch profile');
-            }
-            
-            const customer = await response.json();
-            if (customer && customer.name) {
-                // Display the customer's name
-                customerNameElement.textContent = customer.name;
-            } else {
-                customerNameElement.textContent = 'Valued Customer';
-            }
-        } catch (error) {
-            console.error('Error fetching customer data:', error);
-            customerNameElement.textContent = 'Valued Customer';
-        }
-    });
-</script>
 </body>
+
 </html>
