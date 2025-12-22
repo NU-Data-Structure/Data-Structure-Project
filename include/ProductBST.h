@@ -33,9 +33,9 @@ private:
 
     // Private helpers for recursion
     BSTNode* add(BSTNode* node, Product p);
-    // BSTNode* remove(BSTNode* node, string name);
+    BSTNode* remove(BSTNode* node, string name);
     Product* search(BSTNode* node, string name);
-    // BSTNode* findMin(BSTNode* node); // Helper to find successor for deletion
+    BSTNode* findMin(BSTNode* node); // Helper to find successor for deletion
     void destroy(BSTNode* node);
     void inorder(BSTNode* node, vector<Product>& products);
 
@@ -44,7 +44,7 @@ public:
     ~ProductBST();
 
     void addProduct(Product p);
-    // void removeProduct(string name);
+    void removeProduct(int id);
     Product* searchProduct(string name);
     void loadFromFile(string filename);
     void getAllProducts(vector<Product>& products);

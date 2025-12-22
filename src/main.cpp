@@ -37,12 +37,12 @@ int main() {
     deliveryQueue.loadFromFile("data/Orders.csv");
     
     // Find highest ID in loaded orders to set next globalOrderID
-    vector<Order> existingOrders = deliveryQueue.getAllOrders();
-    for(const auto& o : existingOrders) {
-        if(o.orderId >= globalOrderID) {
-            globalOrderID = o.orderId + 1; // Start from next available
-        }
-    }
+    // vector<Order> existingOrders = deliveryQueue.getAllOrders();
+    // for(const auto& o : existingOrders) {
+    //     if(o.orderId >= globalOrderID) {
+    //         globalOrderID = o.orderId + 1; // Start from next available
+    //     }
+    // }
 
     // Serve all static files (HTML, etc.) from the current folder
     svr.set_mount_point("/", "./frontend");
@@ -73,7 +73,23 @@ int main() {
 
             bool success = customerServer.loginProvider(username, password);
 
-            json response = { {"success", success} };
+            string image = "";
+            if (success) {
+                // Retrieve provider image from CSV
+                try {
+                    rapidcsv::Document doc("data/Providers.csv", rapidcsv::LabelParams(0, -1));
+                    vector<string> names = doc.GetColumn<string>("providerName");
+                    vector<string> images = doc.GetColumn<string>("providerImage");
+                    for(size_t i = 0; i < names.size(); ++i) {
+                        if(names[i] == username && i < images.size()) {
+                            image = images[i];
+                            break;
+                        }
+                    }
+                } catch(...) {}
+            }
+
+            json response = { {"success", success}, {"username", username}, {"image", image} };
             res.set_content(response.dump(), "application/json");
         } catch (...) {
             res.status = 400;
@@ -92,6 +108,74 @@ int main() {
                 providerArray.push_back({ {"name", p.name}, {"image", p.image} });
             }
             json response = { {"success", true}, {"providers", providerArray} };
+            res.set_content(response.dump(), "application/json");
+        }
+    });
+
+    // API: Admin Add Product
+    svr.Post("/api/admin/addProduct", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            Product p;
+            p.id = j["id"];
+            p.name = j["name"];
+            p.price = j["price"];
+            p.stock = j["stock"];
+            p.provider = j["provider"];
+            
+            // Retrieve category from Providers.csv based on provider name
+            string category = "General";
+            try {
+                rapidcsv::Document doc("data/Providers.csv", rapidcsv::LabelParams(0, -1));
+                vector<string> names = doc.GetColumn<string>("providerName");
+                vector<string> categories = doc.GetColumn<string>("providerCategory");
+                for(size_t i = 0; i < names.size(); ++i) {
+                    if(names[i] == p.provider && i < categories.size()) {
+                        category = categories[i];
+                        break;
+                    }
+                }
+            } catch(...) {}
+            p.category = category;
+            p.subcategory = j.value("subcategory", "General");
+
+            // Check if product ID already exists
+            vector<Product> allProducts;
+            productServer.getAllProducts(allProducts);
+            for (const auto& prod : allProducts) {
+                if (prod.id == p.id && prod.provider == p.provider) {
+                    json response = {{"success", false}, {"message", "Product ID already exists"}};
+                    res.set_content(response.dump(), "application/json");
+                    return;
+                }
+            }
+
+            productServer.addProduct(p);
+            productServer.saveToFile("data/Products.csv");
+
+            json response = {{"success", true}, {"message", "Product added successfully"}};
+            res.set_content(response.dump(), "application/json");
+        } catch (...) {
+            res.status = 400;
+            json response = {{"success", false}, {"message", "Failed to add product"}};
+            res.set_content(response.dump(), "application/json");
+        }
+    });
+
+    // API: Admin Delete Product
+    svr.Post("/api/admin/deleteProduct", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            json j = json::parse(req.body);
+            int id = j["id"];
+
+            productServer.removeProduct(id);
+            productServer.saveToFile("data/Products.csv");
+
+            json response = {{"success", true}, {"message", "Product deleted successfully"}};
+            res.set_content(response.dump(), "application/json");
+        } catch (...) {
+            res.status = 400;
+            json response = {{"success", false}, {"message", "Failed to delete product"}};
             res.set_content(response.dump(), "application/json");
         }
     });
@@ -533,7 +617,12 @@ json response = {
     // API: Get Delivery Queue (for admin)
     svr.Get("/api/admin/deliveryQueue", [&](const httplib::Request& req, httplib::Response& res) {
         try {
-            vector<Order> orders = deliveryQueue.getAllOrders();
+            vector<Order> orders;
+            // if (req.has_param("provider")) {
+                orders = deliveryQueue.getOrdersForProvider(req.get_param_value("provider"));
+            // } else {
+            //     orders = deliveryQueue.getAllOrders();
+            // }
 
             json orderArray = json::array();
             for (const auto& o : orders) {
@@ -557,14 +646,20 @@ json response = {
 
     // API: Process Next Order (Dequeue) - For Admin
     svr.Post("/api/admin/processOrder", [&](const httplib::Request& req, httplib::Response& res) {
-        if (deliveryQueue.isEmpty()) {
-            json response = {{"success", false}, {"message", "Queue is empty! No orders to process."}};
+        json j = json::parse(req.body);
+        string provider = "";
+        if (j.contains("provider")) {
+            provider = j["provider"];
+        }
+
+        // Dequeue specific provider's order
+        Order processedOrder = deliveryQueue.dequeueForProvider(provider);
+
+        if (processedOrder.orderId == 0) {
+            json response = {{"success", false}, {"message", "No pending orders found for this provider."}};
             res.set_content(response.dump(), "application/json");
             return;
         }
-
-        // Dequeue returns the Order object directly in your implementation
-        Order processedOrder = deliveryQueue.dequeue();
 
         // Update status in CSV
         try {

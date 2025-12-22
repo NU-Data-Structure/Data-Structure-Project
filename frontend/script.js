@@ -8,7 +8,9 @@ const API_ENDPOINTS = {
     PRODUCT: '/api/product',
     ADMIN_QUEUE: '/api/admin/deliveryQueue',
     ADMIN_PROCESS: '/api/admin/processOrder',
-    PROVIDERS: '/api/providers'
+    PROVIDERS: '/api/providers',
+    ADMIN_ADD_PROD: '/api/admin/addProduct',
+    ADMIN_DEL_PROD: '/api/admin/deleteProduct'
 };
 
 // ================== Theme Toggle Logic ==================
@@ -145,6 +147,56 @@ function initThemeToggle() {
             background: #f1f5f9 !important;
             color: #0f172a !important;
             border-color: #cbd5e1 !important;
+        }
+
+        /* Admin Dashboard Light Theme Support */
+        body.light-theme .sidebar {
+            background: white !important;
+            border-right: 1px solid #e2e8f0 !important;
+        }
+        
+        body.light-theme .main-content {
+            background: #f8fafc !important;
+        }
+
+        body.light-theme .add-form {
+            background: white !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+
+        body.light-theme table {
+            background: white !important;
+            border: 1px solid #e2e8f0 !important;
+            color: #1e293b !important;
+        }
+
+        body.light-theme th {
+            background: #f1f5f9 !important;
+            color: #475569 !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        body.light-theme td {
+            border-bottom: 1px solid #e2e8f0 !important;
+            color: #334155 !important;
+        }
+
+        body.light-theme tr:hover {
+            background: #f8fafc !important;
+        }
+
+        body.light-theme .nav-item {
+            color: #64748b !important;
+        }
+
+        body.light-theme .nav-item:hover,
+        body.light-theme .nav-item.active {
+            background: #3b82f6 !important;
+            color: white !important;
+        }
+        
+        body.light-theme h2 {
+            border-bottom-color: #e2e8f0 !important;
         }
     `;
     document.head.appendChild(style);
@@ -415,8 +467,13 @@ async function loadQueue() {
     const queueDiv = document.getElementById('deliveryQueue');
     if (!queueDiv) return;
 
+    const provider = localStorage.getItem('adminName');
+
     try {
-        const response = await fetch(API_ENDPOINTS.ADMIN_QUEUE);
+        const url = provider 
+            ? `${API_ENDPOINTS.ADMIN_QUEUE}?provider=${encodeURIComponent(provider)}` 
+            : API_ENDPOINTS.ADMIN_QUEUE;
+        const response = await fetch(url);
         const data = await response.json();
 
         if (data.success) {
@@ -446,8 +503,18 @@ async function loadQueue() {
 }
 
 async function processNextOrder() {
+    const provider = localStorage.getItem('adminName');
+    if (!provider) {
+        alert("Please login as provider first.");
+        return;
+    }
+
     try {
-        const response = await fetch(API_ENDPOINTS.ADMIN_PROCESS, { method: 'POST' });
+        const response = await fetch(API_ENDPOINTS.ADMIN_PROCESS, { 
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ provider: provider })
+        });
         const data = await response.json();
         alert(data.message);
         if (data.success) {
@@ -459,6 +526,121 @@ async function processNextOrder() {
     }
 }
 
+// ================== Admin Dashboard Logic ==================
+
+function loadAdminDashboard() {
+    const providerName = localStorage.getItem('adminName');
+    const providerImage = localStorage.getItem('adminImage');
+
+    if (!providerName) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    document.getElementById('adminName').textContent = providerName;
+    
+    const imgEl = document.getElementById('adminImg');
+    if (providerImage && providerImage !== "") {
+        imgEl.src = providerImage;
+    } else {
+        // Fallback image
+        imgEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(providerName)}&background=random`;
+    }
+
+    loadAdminProducts();
+    loadQueue();
+}
+
+function switchAdminTab(tabId, navElement) {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+    // Show selected section
+    document.getElementById(tabId).classList.add('active');
+
+    // Update nav active state
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    if(navElement) navElement.classList.add('active');
+}
+
+async function loadAdminProducts() {
+    const tbody = document.getElementById('adminProductList');
+    const provider = localStorage.getItem('adminName');
+    if(!tbody || !provider) return;
+
+    try {
+        const response = await fetch(`${API_ENDPOINTS.PRODUCT}?provider=${encodeURIComponent(provider)}`);
+        const data = await response.json();
+
+        if(data.success) {
+            let html = '';
+            data.products.forEach(p => {
+                html += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td>${p.name}</td>
+                        <td>$${p.price}</td>
+                        <td>${p.stock}</td>
+                        <td>
+                            <button class="btn btn-danger" onclick="adminDeleteProduct(${p.id})">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+async function adminAddProduct() {
+    const id = document.getElementById('newId').value;
+    const name = document.getElementById('newName').value;
+    const price = document.getElementById('newPrice').value;
+    const stock = document.getElementById('newStock').value;
+    const subCat = document.getElementById('newSubCat').value;
+    const provider = localStorage.getItem('adminName');
+
+    if(!id || !name || !price || !stock) {
+        alert("Please fill required fields");
+        return;
+    }
+    loadAdminProducts();
+
+    const response = await fetch(API_ENDPOINTS.ADMIN_ADD_PROD, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            id: parseInt(id), name, price: parseFloat(price), 
+            stock: parseInt(stock), provider, subcategory: subCat
+        })
+    });
+    
+    const data = await response.json();
+    if(data.success) {
+        loadAdminProducts();
+        // Clear inputs
+        document.querySelectorAll('.add-form input').forEach(i => i.value = '');
+    } else {
+        alert(data.message || "Failed to add product");
+    }
+}
+
+async function adminDeleteProduct(id) {
+    if(!confirm("Delete this product?")) return;
+    
+    const response = await fetch(API_ENDPOINTS.ADMIN_DEL_PROD, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+    });
+    
+    if((await response.json()).success) {
+        loadAdminProducts();
+    } else {
+        alert("Failed to delete product");
+    }
+}
 
 // ================ CART FUNCTIONS ================
 
