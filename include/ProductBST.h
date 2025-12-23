@@ -31,11 +31,10 @@ class ProductBST {
 private:
     BSTNode* root;
 
-    // Private helpers for recursion
     BSTNode* add(BSTNode* node, Product p);
     BSTNode* remove(BSTNode* node, string name);
     Product* search(BSTNode* node, string name);
-    BSTNode* findMin(BSTNode* node); // Helper to find successor for deletion
+    BSTNode* findMin(BSTNode* node); 
     void destroy(BSTNode* node);
     void inorder(BSTNode* node, vector<Product>& products);
 

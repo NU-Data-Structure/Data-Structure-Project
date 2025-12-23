@@ -5,11 +5,21 @@
 using namespace std;
 
 bool Server::login(int id, string password) {
-    return accounts.searchID(id, password);
+    for (auto& c : customers) {
+        if (c.get_ID() == id && c.get_Password() == password) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Server::idExists(int id) {
-    return customerIDs.find(id) != customerIDs.end();
+    for (auto& c : customers) {
+        if (c.get_ID() == id) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Server::loginProvider(string name, string password) {
@@ -18,8 +28,7 @@ bool Server::loginProvider(string name, string password) {
 
 customer Server::registerCustomer(int id, string name, string phone, string address, string password) {
     customer c(id, name, phone, address,password);
-    accounts.addCustomer(c);
-    customerIDs.insert(id);
+    customers.push_back(c);
     rapidcsv::Document doc("data/Customer_List.csv", rapidcsv::LabelParams(0, -1));
     
     vector<string> row = {to_string(c.get_ID()), c.get_Name(), c.get_Phone(), c.get_Address(), c.get_Password()};
@@ -31,10 +40,16 @@ customer Server::registerCustomer(int id, string name, string phone, string addr
 }
 
 customer Server::getProfile(int id) {
-    return accounts.getCustomer(id);
+    for (auto& c : customers) {
+        if (c.get_ID() == id) {
+            return c;
+        }
+    }
+    return customer();
 }
 
 vector<Provider> Server::getProvidersByCategory(string category) {
+
     vector<Provider> result;
     for (const auto& p : providers) {
         if (p.category == category) {
@@ -59,8 +74,7 @@ void Server::loadFile(){
         
         for (int i = 0; i < number_users; i++) {
             customer c(id_list[i], name_list[i], phone_list[i], address_list[i], password_list[i]);
-            accounts.addCustomer(c);
-            customerIDs.insert(id_list[i]);
+            customers.push_back(c);
         }
         cout << "Loaded " << number_users << " customers." << endl;
     } catch (const std::exception& e) {
@@ -69,7 +83,7 @@ void Server::loadFile(){
     }
 
     try {
-        rapidcsv::Document doc("data/Providers.csv", rapidcsv::LabelParams(0, -1));
+        rapidcsv::Document doc("data/Providers.csv", rapidcsv::LabelParams(0, -1), rapidcsv::SeparatorParams(',', true));
         vector<string> names = doc.GetColumn<string>("providerName");
         vector<string> passwords = doc.GetColumn<string>("providerPassword");
         vector<string> categories = doc.GetColumn<string>("providerCategory");

@@ -279,6 +279,111 @@ async function handleRegistration() {
     }
 }
 
+
+function toggleUserType() {
+    const isAdmin = document.getElementById('isAdminCheckbox').checked;
+    const customerFields = document.getElementById('customerFields');
+    const adminFields = document.getElementById('adminFields');
+    const formTitle = document.getElementById('formTitle');
+    const footerText = document.getElementById('footerText');
+    const customerLabel = document.getElementById('customerLabel');
+    const providerLabel = document.getElementById('providerLabel');
+
+    if (isAdmin) {
+        customerFields.classList.add('hidden');
+        adminFields.classList.remove('hidden');
+        formTitle.innerText = "Provider Login";
+        footerText.classList.add('hidden');
+        customerLabel.classList.remove('active');
+        providerLabel.classList.add('active');
+    } else {
+        adminFields.classList.add('hidden');
+        customerFields.classList.remove('hidden');
+        formTitle.innerText = "Customer Login";
+        footerText.classList.remove('hidden');
+        customerLabel.classList.add('active');
+        providerLabel.classList.remove('active');
+    }
+}
+
+function togglePassword(inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+
+async function login() {
+    const isAdmin = document.getElementById('isAdminCheckbox').checked;
+
+    if (isAdmin) {
+        const providerName = document.getElementById('providerName').value;
+        const password = document.getElementById('providerPassword').value;
+
+        if (!providerName || !password) {
+            alert("Please enter Provider Name and Password");
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: providerName, password: password })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                localStorage.setItem('adminName', data.username);
+                localStorage.setItem('adminImage', data.image);
+                window.location.href = 'admin.html';
+            } else {
+                alert('Provider not found or invalid credentials.');
+            }
+        } catch (error) {
+            console.error('Admin login error:', error);
+            alert('Admin login failed.');
+        }
+    } else {
+        const id = document.getElementById('customerId').value;
+        const password = document.getElementById('customerPassword').value;
+
+        if (!id || !password) {
+            alert("Please enter Customer ID and Password");
+            return;
+        }
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: parseInt(id), password: password })
+            });
+
+            const result = await response.json();
+
+            if (result.exists) {
+                localStorage.setItem('customerId', id);
+                localStorage.setItem('customerPassword', password);
+                window.location.href = 'home.html';
+            } else {
+                alert("Login failed: Customer ID not found or password incorrect.");
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alert('An error occurred. Please try again.');
+        }
+    }
+}
+
+
 // Load profile data
 async function loadProfile() {
     const customerId = localStorage.getItem("customerId");

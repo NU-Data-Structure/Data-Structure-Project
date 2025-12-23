@@ -16,8 +16,7 @@ struct Provider {
 
 class Server {
 private:
-    Customer_Accounts accounts;
-    std::unordered_set<int> customerIDs;
+    std::vector<customer> customers;
     std::unordered_map<string, string> providerPasswords;
     vector<Provider> providers;
 

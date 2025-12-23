@@ -99,17 +99,18 @@ int main() {
 
     // API: Get Providers by Category
     svr.Get("/api/providers", [&](const httplib::Request& req, httplib::Response& res) {
+        string category = "";
         if (req.has_param("category")) {
-            string category = req.get_param_value("category");
-            vector<Provider> providers = customerServer.getProvidersByCategory(category);
-            
-            json providerArray = json::array();
-            for (const auto& p : providers) {
-                providerArray.push_back({ {"name", p.name}, {"image", p.image} });
-            }
-            json response = { {"success", true}, {"providers", providerArray} };
-            res.set_content(response.dump(), "application/json");
+            category = req.get_param_value("category");
         }
+        vector<Provider> providers = customerServer.getProvidersByCategory(category);
+
+        json providerArray = json::array();
+        for (const auto& p : providers) {
+            providerArray.push_back({ {"name", p.name}, {"image", p.image}, {"category", p.category} });
+        }
+        json response = { {"success", true}, {"providers", providerArray} };
+        res.set_content(response.dump(), "application/json");
     });
 
     // API: Admin Add Product
@@ -665,9 +666,10 @@ json response = {
         try {
             rapidcsv::Document doc("data/Orders.csv", rapidcsv::LabelParams(), rapidcsv::SeparatorParams(',', true));
             vector<int> ids = doc.GetColumn<int>("OrderID");
+            vector<string> statuses = doc.GetColumn<string>("Status");
             int rowIndex = -1;
             for(size_t i=0; i<ids.size(); ++i) {
-                if(ids[i] == processedOrder.orderId) {
+                if(ids[i] == processedOrder.orderId && statuses[i] == "Pending") {
                     rowIndex = i;
                     break;
                 }

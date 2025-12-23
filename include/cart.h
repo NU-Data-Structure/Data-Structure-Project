@@ -15,7 +15,7 @@ struct CartItem {
     CartItem(int id, const string& name, double p, int qty)
         : productId(id), productName(name), price(p), quantity(qty) {}
     
-    CartItem() : productId(0), price(0.0), quantity(0) {}
+    // CartItem() : productId(0), price(0.0), quantity(0) {}
 };
 
 struct CartNode {

@@ -28,10 +28,8 @@ void CartList::push_back(CartItem item) {
 bool CartList::remove(int productId) {
     CartNode* current = head;
     while (current != nullptr) {
-        // Access data directly (current->data.field)
         if (current->data.productId == productId) {
             
-            // Logic to unlink the node
             if (current->prev != nullptr) {
                 current->prev->next = current->next;
             } else {
@@ -153,7 +151,6 @@ int Cart::clearCustomerCart(int customerId) {
 }
 
 int Cart::getCustomerItemCount(int customerId) const {
-    // We use .at() or find because [] on const map is not allowed
     auto it = customerCarts.find(customerId);
     if (it == customerCarts.end()) return 0;
 
@@ -205,7 +202,6 @@ void Cart::saveToFile(const string& filename) const {
         return;
     }
     
-    // Write Header
     file << "CustomerId,ProductId,ProductName,Price,Quantity\n";
     
     for (auto const& [customerId, list] : customerCarts) {

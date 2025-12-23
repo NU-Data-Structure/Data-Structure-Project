@@ -5,7 +5,6 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 262,5 Pcs Chicken Meal,160,Food,Meals,80,Bazooka
 208,9V Battery,25,Electronics,Power,100,Circuits Electronics
 171,9V Battery Clip,10,Electronics,Power,500,Lampatronics
-155,A4 Paper Ream (500 sheets),120,Stationary,Paper,100,Samir & Aly
 148,Alcohol Spray 70%,35,Pharmacy,Health,147,Elezaby
 148,Alcohol Spray 70%,35,Pharmacy,Health,147,Elezaby
 209,Alligator Clips (10pcs),40,Electronics,Cables,90,Circuits Electronics
@@ -24,15 +23,16 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,93,Elezaby
 366,Baby Wipes (72pcs),45,Pharmacy,Baby Care,97,Elezaby
 277,Bacon Mushroom Jack,150,Food,Burgers,50,Buffalo Burger
-156,Ballpoint Pens Blue (Box),40,Stationary,Writing,200,Samir & Aly
 313,Banana Chocolate Crepe,65,Food,Dessert,70,Friends
 372,Band-Aid Box,30,Pharmacy,Health,200,Elezaby
-104,Basbousa,80,Food,Dessert,21,El Abd
+104,Basbousa,80,Food,Dessert,20,El Abd
 109,Batates,25,Food,Breakfast,95,My Corner
 286,BBQ Wings (6pcs),80,Food,Chicken,50,Buffalo Burger
 101,Big Mac,85,Food,Burgers,50,Bazooka
-385,Binder 2-Ring,45,Stationary,Office Supplies,60,Samir & Aly
-231,Biscuits Ammonia 1kg,140,Food,Bakery,59,El Abd
+231,Biscuits Ammonia 1kg,140,Food,Bakery,58,El Abd
+9,Black waterproof bag Jujutsu Kaisen anime character Satoru Jojo,8,AcademicSupplies,BackBags,100,Anime Home
+11,Black waterproof bag Jujutsu Kaisen anime character Satoru Jujo,8,AcademicSupplies,BackBags,99,Anime Home
+12,Black waterproof bag Naruto Shippuden anime featuring Sasuke Uchiha (with Sharingan and Rinnegan eyes),8,AcademicSupplies,BackBags,99,Anime Home
 182,Braun Hand Blender,1200,Electronics,Kitchen,25,B Tech
 166,Breadboard 830pts,60,Electronics,Prototyping,80,Lampatronics
 217,Brushless Motor,350,Electronics,Motors,25,Future Electronics
@@ -45,7 +45,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 194,Capacitor Kit,120,Electronics,Components,50,Circuits Electronics
 141,Cappuccino,45,Food,Beverages,100,Pottery Cafe
 341,Carrot Cake,55,Food,Dessert,30,Pottery Cafe
-160,Casio Scientific Calculator,450,Stationary,Electronics,30,Samir & Aly
+7,CASIO Python Graphing Calculator - Graph 35+ E II,228,AcademicSupplies,Calculators,100,Bakierstationery
 367,Centrum Multivitamin,450,Pharmacy,Vitamins,30,Elezaby
 140,Cheese Croissant,35,Food,Bakery,40,Pottery Cafe
 244,Cheese Sandwich,15,Food,Breakfast,100,My Corner
@@ -73,12 +73,12 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 342,Club Sandwich Platter,90,Food,Meals,25,Pottery Cafe
 137,Coleslaw,20,Food,Sides,100,Karam El Sham
 267,Coleslaw Large,25,Food,Sides,150,Bazooka
-373,Correction Fluid,15,Stationary,Writing,150,Samir & Aly
 371,Cough Syrup Ivy,45,Pharmacy,Medicine,80,Elezaby
 357,Cream Chicken Soup,35,Food,Soup,60,Rosto
 107,Crepe,250,Food,Grill,17,Friends
 297,Crispy Chicken Sandwich,60,Food,Sandwiches,100,Karam El Sham
 173,DC Motor 3-6V,15,Electronics,Motors,150,Lampatronics
+13,Death Note anime school notebook,3,AcademicSupplies,Notebooks,96,Anime Home
 126,Dell Monitor 24inch,3200,Electronics,Monitors,14,B Tech
 204,Desoldering Pump,45,Electronics,Tools,50,Circuits Electronics
 364,Dettol Antiseptic 500ml,110,Pharmacy,Health,60,Elezaby
@@ -94,18 +94,17 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 123,Electricity,1000,Electronics,Components,1000,Circuits Electronics
 212,Ender 3 V2 Printer,9500,Electronics,3D Printing,5,Future Electronics
 112,English Breakfast,150,Food,Breakfast,25,Pottery Cafe
-376,Eraser Large,10,Stationary,Writing,300,Samir & Aly
 218,ESC 30A Speed Controller,200,Electronics,Modules,30,Future Electronics
 176,ESP8266 WiFi Module,95,Electronics,Modules,85,Lampatronics
 327,Espresso Double,35,Food,Beverages,100,Pottery Cafe
 326,Espresso Single,25,Food,Beverages,100,Pottery Cafe
 145,Family Meal Box,350,Food,Meals,15,Bazooka
 122,Father beans,18,Food,Breakfast,1000,My Corner
-384,File Folder A4,10,Stationary,Office Supplies,300,Samir & Aly
 154,First Aid Kit,250,Pharmacy,Health,20,Elezaby
 331,Flat White,50,Food,Beverages,70,Pottery Cafe
 219,Flight Controller,1200,Electronics,Robotics,10,Future Electronics
 203,Flux Paste,35,Electronics,Tools,80,Circuits Electronics
+1,Fountain Pen Heritage Dark Blue,102,AcademicSupplies,Writing Instruments,100,Bakierstationery
 220,FPV Camera,600,Electronics,Cameras,20,Future Electronics
 334,Frappuccino Caramel,60,Food,Beverages,50,Pottery Cafe
 335,Frappuccino Mocha,60,Food,Beverages,50,Pottery Cafe
@@ -116,9 +115,8 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 252,Fruit Salad,35,Food,Dessert,50,My Corner
 118,Future machine,500000,Electronics,Tools,48,Future Electronics
 138,Garlic Dip,15,Food,Sides,150,Karam El Sham
-378,Geometry Set,45,Stationary,School Supplies,80,Samir & Aly
 232,Ghorayeba 1kg,180,Food,Bakery,50,El Abd
-382,Glue Stick 20g,15,Stationary,Office Supplies,150,Samir & Aly
+5,Gipta Sunday Note Lined HardLeather cover Notebook,8,AcademicSupplies,Notebooks,100,Bakierstationery
 249,Greek Salad,40,Food,Salads,40,My Corner
 358,Green Salad,20,Food,Salads,100,Rosto
 350,Grilled Chicken Meal,130,Food,Meals,35,Rosto
@@ -128,10 +126,10 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 121,Head and shoulders,120,Pharmacy,Skincare,98,Elezaby
 133,headache medicine,100,,General,200,Elezaby
 206,Heat Shrink Tube Kit,60,Electronics,Components,70,Circuits Electronics
-157,Highlighter Set (4 colors),35,Stationary,Writing,150,Samir & Aly
 257,Hot Chocolate,30,Food,Beverages,80,My Corner
 319,Hot Dog Crepe,75,Food,Savory,65,Friends
 188,HP Pavilion Laptop,25000,Electronics,Laptops,10,B Tech
+14,Hunter x Hunter Kilua Notebook,2,AcademicSupplies,Notebooks,100,Anime Home
 240,Ice Cream Chocolate Scoop,15,Food,Dessert,200,El Abd
 241,Ice Cream Mango Scoop,15,Food,Dessert,200,El Abd
 242,Ice Cream Strawberry Scoop,15,Food,Dessert,200,El Abd
@@ -156,7 +154,6 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 346,Lasagna Meat,95,Food,Pasta,40,Rosto
 329,Latte,45,Food,Beverages,80,Pottery Cafe
 172,LCD 16x2 Display,85,Electronics,Displays,60,Lampatronics
-375,Lead Refills 0.5mm,10,Stationary,Writing,200,Samir & Aly
 198,LED Blue (50pcs),25,Electronics,Components,300,Circuits Electronics
 197,LED Green (50pcs),25,Electronics,Components,300,Circuits Electronics
 196,LED Red (50pcs),25,Electronics,Components,300,Circuits Electronics
@@ -176,7 +173,6 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 105,Meat Shawerma,75,Food,Sandwiches,60,Karam El Sham
 293,Meat Shawerma Fatteh,110,Food,Meals,70,Karam El Sham
 128,Mechanical Keyboard,1200,Electronics,Accessories,30,Lampatronics
-374,Mechanical Pencil 0.5mm,25,Stationary,Writing,100,Samir & Aly
 289,Milkshake Chocolate,45,Food,Beverages,60,Buffalo Burger
 291,Milkshake Strawberry,45,Food,Beverages,60,Buffalo Burger
 290,Milkshake Vanilla,45,Food,Beverages,60,Buffalo Burger
@@ -190,6 +186,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 354,Mombar Plate,60,Food,Sides,30,Rosto
 136,Mozzarella Sticks,55,Food,Sides,50,Bazooka
 276,Mushroom Jack Burger,140,Food,Burgers,60,Buffalo Burger
+16,Naruto Uchiha Itachi Notebook,2,AcademicSupplies,Notebooks,100,Anime Home
 256,Nescafe,25,Food,Beverages,100,My Corner
 361,Nivea Creme 150ml,65,Pharmacy,Skincare,80,Elezaby
 308,Nutella Crepe,60,Food,Dessert,80,Friends
@@ -197,26 +194,27 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 278,Old School Burger,120,Food,Burgers,70,Buffalo Burger
 103,Omak Ali,120,Food,Dessert,29,El Abd
 368,Omega 3 Fish Oil,300,Pharmacy,Vitamins,40,Elezaby
+15,One Piece Luffy Notebook,2,AcademicSupplies,Notebooks,100,Anime Home
 135,Onion Rings,45,Food,Sides,60,Buffalo Burger
 151,Oral-B Toothbrush,30,Pharmacy,Personal Care,80,Elezaby
 309,Oreo Crepe,65,Food,Dessert,70,Friends
 243,Oriental Sweets Mix 1kg,200,Food,Dessert,40,El Abd
 356,Orzo Soup,25,Food,Soup,80,Rosto
 226,Oscilloscope Handheld,4500,Electronics,Tools,7,Future Electronics
-381,Paint Brushes Set,55,Stationary,Art Supplies,60,Samir & Aly
 365,Pampers Size 3 (64pcs),350,Pharmacy,Baby Care,40,Elezaby
 119,Panadol Extra gedan,45,Pharmacy,Tablets,482,Elezaby
 325,Pancake Honey,40,Food,Dessert,70,Friends
 324,Pancake Nutella,50,Food,Dessert,60,Friends
+6,PAPER CONCEPT Soft Cover Executive Notebook - Pastel Colors - A4,7,AcademicSupplies,Notebooks,100,Bakierstationery
 370,Paracetamol Syrup,25,Pharmacy,Medicine,100,Elezaby
 343,Pasta Bechamel,80,Food,Pasta,50,Rosto
 108,Pasta Negresco,90,Food,Pasta,35,Rosto
 344,Pasta Red Sauce,60,Food,Pasta,60,Rosto
 345,Pasta White Sauce,70,Food,Pasta,60,Rosto
 201,PCB Board 5x7cm,10,Electronics,Prototyping,150,Circuits Electronics
-162,Pencil Case,25,Stationary,School Supplies,80,Samir & Aly
 230,Petit Four Mix 1kg,220,Food,Bakery,45,El Abd
 183,Philips Air Fryer,4500,Electronics,Kitchen,20,B Tech
+4,Pilot Mechanical Pencil Versatil H 327 - 0.7 mm,4,AcademicSupplies,Writing Instruments,100,Bakierstationery
 227,Plain Kahk 1kg,180,Food,Bakery,50,El Abd
 187,PS5 Controller,3500,Electronics,Gaming,30,B Tech
 114,Raspberry Pi 4,2500,Electronics,Microcontrollers,29,Lampatronics
@@ -230,19 +228,17 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 266,Rizo Plain,25,Food,Rice,100,Bazooka
 265,Rizo with Chicken,45,Food,Rice,150,Bazooka
 246,Roast Beef Sandwich,30,Food,Breakfast,70,My Corner
-377,Ruler 30cm,15,Stationary,School Supplies,200,Samir & Aly
 304,Sambousek Cheese (3pcs),30,Food,Sides,60,Karam El Sham
 305,Sambousek Meat (3pcs),35,Food,Sides,60,Karam El Sham
 184,Samsung Galaxy S23,35000,Electronics,Mobile,12,B Tech
 125,Samsung Smart TV,8500,Electronics,TV,10,B Tech
-383,Scissors Office,35,Stationary,Office Supplies,80,Samir & Aly
+2,Serve Hoop Pencil case - Pastel Colors,7,AcademicSupplies,Pencil Cases,100,Bakierstationery
 165,Servo Motor SG90,35,Electronics,Motors,100,Lampatronics
 180,Sharp Refrigerator 18ft,12000,Electronics,Appliances,8,B Tech
 352,Shish Tawook Meal,130,Food,Meals,35,Rosto
 295,Shish Tawook Sandwich,65,Food,Sandwiches,90,Karam El Sham
 363,Signal Toothpaste,25,Pharmacy,Personal Care,120,Elezaby
 260,Single Chicken Piece,35,Food,Chicken,200,Bazooka
-379,Sketchbook A3,60,Stationary,Art Supplies,50,Samir & Aly
 223,Smart Home Hub,2500,Electronics,Smart Home,12,Future Electronics
 193,Smart LED Bulb,250,Electronics,Smart Home,80,B Tech
 336,Smoothie Mango,50,Food,Beverages,60,Pottery Cafe
@@ -255,10 +251,8 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 332,Spanish Latte,55,Food,Beverages,60,Pottery Cafe
 263,Spicy Chicken Strips (3pcs),55,Food,Chicken,120,Bazooka
 264,Spicy Chicken Strips (5pcs),85,Food,Chicken,100,Bazooka
-158,Spiral Notebook A4,45,Stationary,Notebooks,120,Samir & Aly
-159,Stapler with Pins,55,Stationary,Office Supplies,60,Samir & Aly
+3,Staedtler 4 Highlighters Textsurfer Classic,10,AcademicSupplies,Writing & Corrections,100,Bakierstationery
 213,Stepper Motor NEMA17,250,Electronics,Motors,40,Future Electronics
-161,Sticky Notes Pad,15,Stationary,Office Supplies,300,Samir & Aly
 314,Strawberry Chocolate Crepe,65,Food,Dessert,70,Friends
 147,Surgical Face Mask (50pcs),75,Pharmacy,Health,200,Elezaby
 235,Swiss Roll Chocolate,30,Food,Dessert,80,El Abd
@@ -284,9 +278,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 322,Waffle Lotus,65,Food,Dessert,50,Friends
 321,Waffle Nutella,55,Food,Dessert,60,Friends
 124,Water,10,Food,Beverages,1000,My Corner
-380,Watercolor Set 12 Colors,85,Stationary,Art Supplies,40,Samir & Aly
 311,White Chocolate Crepe,60,Food,Dessert,80,Friends
-163,Whiteboard Marker (Black),12,Stationary,Writing,500,Samir & Aly
 301,Whole Grilled Chicken,220,Food,Grill,30,Karam El Sham
 205,Wire Stripper,75,Electronics,Tools,40,Circuits Electronics
 253,Yogurt with Honey,20,Food,Breakfast,60,My Corner
