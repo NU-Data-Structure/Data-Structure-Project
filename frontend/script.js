@@ -417,17 +417,139 @@ function initThemeToggle() {
         }
 
         /* ============================================
-           ENHANCED DARK THEME - Blue Gradients
-           Already applied in HTML, just enhance
+           ENHANCED DARK THEME - Deepest Navy & Gradients
            ============================================ */
         
-        /* Enhanced Dark Mode Animations */
-        @keyframes shimmerDark {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
+        body.dark-theme {
+            background: linear-gradient(135deg, 
+                #020617 0%, 
+                #0b1120 25%, 
+                #0f172a 50%, 
+                #172554 80%,
+                #1e3a8a 100%) !important;
+            background-attachment: fixed !important;
+            color: #e2e8f0 !important;
+        }
+        
+        body.dark-theme::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(29, 78, 216, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(14, 165, 233, 0.1) 0%, transparent 25%);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Smooth transitions for theme switch */
+        /* Dark Theme Containers - Glassmorphism */
+        body.dark-theme .container,
+        body.dark-theme .login-container,
+        body.dark-theme .payment-container,
+        body.dark-theme .orders-section,
+        body.dark-theme .cart-section,
+        body.dark-theme .profile-card,
+        body.dark-theme .provider-card,
+        body.dark-theme .sidebar,
+        body.dark-theme .add-form,
+        body.dark-theme .search-box,
+        body.dark-theme .header,
+        body.dark-theme header {
+            background: linear-gradient(145deg, 
+                rgba(15, 23, 42, 0.9) 0%, 
+                rgba(30, 41, 59, 0.85) 100%) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(30, 58, 138, 0.3) !important;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+            color: #f1f5f9 !important;
+        }
+
+        /* Dark Theme Product Cards */
+        body.dark-theme .product-card,
+        body.dark-theme .category-card,
+        body.dark-theme .order-card {
+            background: linear-gradient(145deg, 
+                rgba(30, 41, 59, 0.8) 0%, 
+                rgba(15, 23, 42, 0.9) 100%) !important;
+            border: 1px solid rgba(59, 130, 246, 0.15) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        body.dark-theme .product-card:hover,
+        body.dark-theme .category-card:hover {
+            transform: translateY(-8px) scale(1.02) !important;
+            border-color: rgba(96, 165, 250, 0.4) !important;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6),
+                        0 0 20px rgba(59, 130, 246, 0.2) !important;
+        }
+
+        /* Dark Theme Text Gradients */
+        body.dark-theme h1, 
+        body.dark-theme h2, 
+        body.dark-theme h3,
+        body.dark-theme .active-link {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            text-shadow: 0 0 30px rgba(59, 130, 246, 0.3) !important;
+        }
+
+        /* Dark Theme Inputs */
+        body.dark-theme input,
+        body.dark-theme .qty-input {
+            background: rgba(15, 23, 42, 0.6) !important;
+            border: 1px solid rgba(59, 130, 246, 0.2) !important;
+            color: #f1f5f9 !important;
+        }
+
+        body.dark-theme input:focus {
+            background: rgba(15, 23, 42, 0.9) !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25) !important;
+        }
+
+        /* Dark Theme Buttons */
+        body.dark-theme .btn,
+        body.dark-theme button,
+        body.dark-theme .nav-icon {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        body.dark-theme .nav-item {
+            color: #94a3b8 !important;
+        }
+
+        body.dark-theme .nav-item:hover,
+        body.dark-theme .nav-item.active {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2)) !important;
+            color: #60a5fa !important;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.15) !important;
+        }
+
+        body.dark-theme table {
+            background: rgba(15, 23, 42, 0.6) !important;
+            color: #cbd5e1 !important;
+        }
+
+        body.dark-theme th {
+            background: rgba(30, 41, 59, 0.8) !important;
+            color: #93c5fd !important;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2) !important;
+        }
+
+        body.dark-theme td {
+            border-bottom: 1px solid rgba(30, 41, 59, 0.5) !important;
+        }
+        
+        body.dark-theme tr:hover {
+            background: rgba(30, 41, 59, 0.5) !important;
+        }
+        
+        /* Smooth transitions */
         body, body * {
             transition: background 0.4s ease, 
                         background-color 0.4s ease, 
@@ -441,15 +563,19 @@ function initThemeToggle() {
     // 2. Inject Toggle Button with Blue Gradient
     const btn = document.createElement('button');
     btn.className = 'theme-toggle-btn';
-    btn.innerHTML = '<i class="fas fa-moon"></i>';
+    btn.innerHTML = '<i class="fas fa-sun"></i>'; // Default to Sun (Light Mode)
     btn.onclick = toggleTheme;
     btn.title = "Toggle Light/Dark Theme";
     document.body.appendChild(btn);
 
     // 3. Load Saved Theme
     const currentTheme = localStorage.getItem('theme');
-    if (currentTheme === 'light') {
-        document.body.classList.add('light-theme');
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        btn.innerHTML = '<i class="fas fa-moon"></i>';
+        // Dark theme active
+    } else {
+        document.body.classList.remove('dark-theme'); // Ensure clean state
         btn.innerHTML = '<i class="fas fa-sun"></i>';
     }
 }
@@ -458,14 +584,25 @@ function toggleTheme() {
     const body = document.body;
     const btn = document.querySelector('.theme-toggle-btn');
 
-    body.classList.toggle('light-theme');
+    // Toggle dark-theme class
+    body.classList.toggle('dark-theme');
 
-    if (body.classList.contains('light-theme')) {
-        localStorage.setItem('theme', 'light');
-        btn.innerHTML = '<i class="fas fa-sun"></i>';
-    } else {
+    if (body.classList.contains('dark-theme')) {
         localStorage.setItem('theme', 'dark');
         btn.innerHTML = '<i class="fas fa-moon"></i>';
+
+        // Add specific dark mode styles dynamically
+        btn.style.background = 'linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #0ea5e9 100%)';
+        btn.style.color = 'white';
+        btn.style.boxShadow = '0 0 20px rgba(59, 130, 246, 0.5)';
+    } else {
+        localStorage.setItem('theme', 'light');
+        btn.innerHTML = '<i class="fas fa-sun"></i>';
+
+        // Return to default light mode styles
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.style.boxShadow = '';
     }
 }
 // ========================================================
@@ -1162,9 +1299,10 @@ async function checkout() {
 
 // Initialize theme and other components
 document.addEventListener('DOMContentLoaded', function () {
-    initThemeToggle();
+    // initThemeToggle instantiates the CSS and Button.
+    if (typeof initThemeToggle === 'function') initThemeToggle();
 
     if (window.location.pathname.includes('product.html') || window.location.pathname.includes('cart.html') || window.location.pathname.includes('home.html')) {
-        updateCartDisplay();
+        if (typeof updateCartDisplay === 'function') updateCartDisplay();
     }
 });

@@ -19,12 +19,11 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg,
-                    #050a14 0%,
-                    #0a1222 20%,
-                    #0d1a2d 40%,
-                    #0f1e33 60%,
-                    #122238 80%,
-                    #0d1a2d 100%);
+                    #0369a1 0%,
+                    #0284c7 25%,
+                    #0ea5e9 50%,
+                    #38bdf8 75%,
+                    #7dd3fc 100%);
             background-attachment: fixed;
             min-height: 100vh;
             display: flex;
@@ -34,7 +33,7 @@
             position: relative;
         }
 
-        /* Subtle shining overlay */
+        /* Bright overlay effects */
         body::before {
             content: '';
             position: fixed;
@@ -43,8 +42,8 @@
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(ellipse at 25% 25%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 75% 75%, rgba(56, 189, 248, 0.06) 0%, transparent 50%);
+                radial-gradient(ellipse at 25% 25%, rgba(255, 255, 255, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 75%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
             pointer-events: none;
         }
 
@@ -67,9 +66,9 @@
         }
 
         .login-container {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(59, 130, 246, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
             padding: 3rem;
             border-radius: 28px;
             width: 100%;
@@ -77,9 +76,8 @@
             text-align: center;
             position: relative;
             z-index: 1;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
-                0 0 100px rgba(59, 130, 246, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 60px rgba(3, 105, 161, 0.25),
+                0 0 80px rgba(14, 165, 233, 0.15);
         }
 
         .login-container::before {
@@ -88,8 +86,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #0ea5e9, #3b82f6, #60a5fa, transparent);
+            height: 4px;
+            background: linear-gradient(90deg, #0369a1, #0ea5e9, #38bdf8, #7dd3fc, #38bdf8, #0ea5e9, #0369a1);
             border-radius: 28px 28px 0 0;
         }
 
@@ -97,14 +95,14 @@
             font-size: 2.75rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         h2 {
-            color: #e2e8f0;
+            color: #0369a1;
             margin-bottom: 0.5rem;
             font-weight: 600;
             font-size: 1.5rem;
@@ -118,7 +116,7 @@
         .welcome-message p {
             margin: 0.3rem 0;
             font-size: 0.95rem;
-            color: #94a3b8;
+            color: #475569;
         }
 
         .welcome-message .subtext {
@@ -134,9 +132,9 @@
             margin-bottom: 1.5rem;
             gap: 14px;
             padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.15));
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.2));
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(14, 165, 233, 0.3);
         }
 
         .switch {
@@ -159,10 +157,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(14, 165, 233, 0.2);
             transition: 0.4s;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.4);
         }
 
         .slider:before {
@@ -191,12 +189,12 @@
         .toggle-label {
             font-size: 0.9rem;
             font-weight: 600;
-            color: #64748b;
+            color: #0369a1;
             transition: all 0.3s;
         }
 
         .toggle-label.active {
-            color: #38bdf8;
+            color: #0284c7;
         }
 
         /* Form Styles */
@@ -208,7 +206,7 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #94a3b8;
+            color: #0369a1;
             font-weight: 500;
             font-size: 0.9rem;
         }
@@ -216,24 +214,24 @@
         .form-group input {
             width: 100%;
             padding: 15px 20px;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #f0f9ff;
+            border: 2px solid #bae6fd;
             border-radius: 14px;
             font-size: 1rem;
-            color: #e2e8f0;
+            color: #0c4a6e;
             transition: all 0.3s ease;
             font-family: inherit;
         }
 
         .form-group input::placeholder {
-            color: #475569;
+            color: #7dd3fc;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.08);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            border-color: #0ea5e9;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
         }
 
         .password-wrapper {
@@ -246,28 +244,28 @@
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: #94a3b8;
+            color: #0ea5e9;
             z-index: 2;
         }
 
         .toggle-password:hover {
-            color: #e2e8f0;
+            color: #0369a1;
         }
 
-        /* Fix for browser autofill white background */
+        /* Fix for browser autofill */
         input:-webkit-autofill,
         input:-webkit-autofill:hover,
         input:-webkit-autofill:focus,
         input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 30px rgba(30, 41, 59, 0.8) inset !important;
-            -webkit-text-fill-color: #e2e8f0 !important;
+            -webkit-box-shadow: 0 0 0 30px #f0f9ff inset !important;
+            -webkit-text-fill-color: #0c4a6e !important;
             transition: background-color 5000s ease-in-out 0s;
         }
 
         .btn {
             width: 100%;
             padding: 16px 28px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #1d4ed8 100%);
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
             color: white;
             border: none;
             border-radius: 14px;
@@ -276,23 +274,23 @@
             font-weight: 600;
             font-family: inherit;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 20px rgba(3, 105, 161, 0.4);
             margin-top: 0.5rem;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 8px 30px rgba(3, 105, 161, 0.5);
         }
 
         .footer-text {
             margin-top: 1.75rem;
-            color: #64748b;
+            color: #475569;
             font-size: 0.9rem;
         }
 
         .footer-text a {
-            background: linear-gradient(135deg, #38bdf8, #3b82f6);
+            background: linear-gradient(135deg, #0369a1, #0284c7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
