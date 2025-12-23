@@ -4,7 +4,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 211,3D Printer Filament PLA,450,Electronics,3D Printing,30,Future Electronics
 262,5 Pcs Chicken Meal,160,Food,Meals,80,Bazooka
 208,9V Battery,25,Electronics,Power,100,Circuits Electronics
-171,9V Battery Clip,10,Electronics,Power,500,Lampatronics
+171,9V Battery Clip,10,Electronics,Power,499,Lampatronics
 155,A4 Paper Ream (500 sheets),120,Stationary,Paper,100,Samir & Aly
 148,Alcohol Spray 70%,35,Pharmacy,Health,147,Elezaby
 148,Alcohol Spray 70%,35,Pharmacy,Health,147,Elezaby
@@ -15,7 +15,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 131,Apple Watch Series 7,9000,Electronics,Wearables,8,Future Electronics
 214,Arduino Mega 2560,450,Electronics,Microcontrollers,35,Future Electronics
 175,Arduino Nano,180,Electronics,Microcontrollers,90,Lampatronics
-113,Arduino Uno,450,Electronics,Microcontrollers,86,Lampatronics
+113,Arduino Uno,450,Electronics,Microcontrollers,85,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
 113,Arduino Uno,450,Electronics,Microcontrollers,96,Lampatronics
@@ -34,7 +34,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 385,Binder 2-Ring,45,Stationary,Office Supplies,60,Samir & Aly
 231,Biscuits Ammonia 1kg,140,Food,Bakery,59,El Abd
 182,Braun Hand Blender,1200,Electronics,Kitchen,25,B Tech
-166,Breadboard 830pts,60,Electronics,Prototyping,80,Lampatronics
+166,Breadboard 830pts,60,Electronics,Prototyping,79,Lampatronics
 217,Brushless Motor,350,Electronics,Motors,25,Future Electronics
 285,Buffalo Wings (12pcs),150,Food,Chicken,30,Buffalo Burger
 284,Buffalo Wings (6pcs),80,Food,Chicken,50,Buffalo Burger
@@ -145,8 +145,8 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 274,Jalapeno Cheese Bites,40,Food,Sides,120,Bazooka
 132,JBL Bluetooth Speaker,1800,Electronics,Audio,25,B Tech
 153,Johnson Baby Powder,55,Pharmacy,Baby Care,40,Elezaby
-168,Jumper Wires M-F,25,Electronics,Cables,200,Lampatronics
-167,Jumper Wires M-M,25,Electronics,Cables,200,Lampatronics
+168,Jumper Wires M-F,25,Electronics,Cables,199,Lampatronics
+167,Jumper Wires M-M,25,Electronics,Cables,199,Lampatronics
 283,Keto Lettuce Wrap Burger,140,Food,Burgers,40,Buffalo Burger
 303,Kobeba (3pcs),40,Food,Sides,50,Karam El Sham
 351,Kofta Meal,140,Food,Meals,30,Rosto
@@ -165,7 +165,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 215,LiPo Battery 3.7V,150,Electronics,Power,60,Future Electronics
 152,Listerine Mouthwash,85,Pharmacy,Personal Care,50,Elezaby
 134,Logitech Webcam,850,Electronics,Accessories,20,Lampatronics
-127,Logitech Wireless Mouse,450,Electronics,Accessories,50,Lampatronics
+127,Logitech Wireless Mouse,450,Electronics,Accessories,49,Lampatronics
 310,Lotus Crepe,70,Food,Dessert,60,Friends
 355,Mahshi Mix Plate,50,Food,Sides,40,Rosto
 228,Malban Kahk 1kg,190,Food,Bakery,50,El Abd
@@ -273,7 +273,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 251,Tuna Salad,50,Food,Salads,35,My Corner
 245,Turkey Sandwich,25,Food,Breakfast,80,My Corner
 255,Turkish Coffee,20,Food,Beverages,120,My Corner
-164,Ultrasonic Sensor,45,Electronics,Sensors,50,Lampatronics
+164,Ultrasonic Sensor,45,Electronics,Sensors,49,Lampatronics
 192,USB-C Cable 1m,150,Electronics,Cables,100,B Tech
 282,Vegan Burger,130,Food,Burgers,30,Buffalo Burger
 221,Video Transmitter,500,Electronics,Modules,20,Future Electronics

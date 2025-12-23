@@ -20,20 +20,20 @@
         body {
             display: flex;
             height: 100vh;
-            background-color: #0f172a;
+            background-color: #0a1222;
             color: #e2e8f0;
             overflow: hidden;
         }
 
-            /* Sidebar */
+        /* Sidebar */
         .sidebar {
             width: 280px;
-            background: #1e293b;
+            background: #0d1a2d;
             padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-right: 1px solid #334155;
+            border-right: 1px solid #162438;
             flex-shrink: 0;
         }
 
@@ -50,13 +50,15 @@
             object-fit: cover;
             border: 4px solid #3b82f6;
             margin-bottom: 1rem;
-            background: #334155;
+            background: #162438;
         }
+
         .provider-name {
             font-size: 1.25rem;
             font-weight: 700;
             color: #fff;
         }
+
         .nav-menu {
             width: 100%;
             display: flex;
@@ -76,7 +78,8 @@
             font-weight: 500;
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-item:hover,
+        .nav-item.active {
             background: #3b82f6;
             color: white;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
@@ -84,17 +87,17 @@
 
         .btn-process:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
 
         .main-content {
             flex: 1;
             padding: 2rem;
             overflow-y: auto;
-            background: #0f172a;
+            background: #0a1222;
         }
 
-         .section {
+        .section {
             display: none;
             animation: fadeIn 0.3s ease;
         }
@@ -104,33 +107,40 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
             margin-bottom: 1.5rem;
             color: #fff;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid #162438;
             padding-bottom: 1rem;
             font-size: 1.8rem;
         }
-        /* Forms */
+
         .add-form {
-            background: #1e293b;
+            background: #0d1a2d;
             padding: 1.5rem;
             border-radius: 16px;
             margin-bottom: 2rem;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
-            border: 1px solid #334155;
+            border: 1px solid #162438;
         }
 
         input {
             padding: 12px;
-            background: #0f172a;
-            border: 1px solid #334155;
+            background: #0a1222;
+            border: 1px solid #162438;
             border-radius: 8px;
             color: white;
             width: 100%;
@@ -145,7 +155,7 @@
             transition: 0.2s;
         }
 
-          .btn-primary {
+        .btn-primary {
             background: #3b82f6;
             color: white;
         }
@@ -155,43 +165,44 @@
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
             padding: 6px 12px;
             font-size: 0.85rem;
         }
 
-                .btn-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+        .btn-danger {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
             padding: 6px 12px;
             font-size: 0.85rem;
         }
 
         .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.3);
+            background: rgba(59, 130, 246, 0.3);
         }
 
         /* Table */
         table {
             width: 100%;
             border-collapse: collapse;
-            background: #1e293b;
+            background: #0d1a2d;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid #334155;
+            border: 1px solid #162438;
         }
 
-        th, td {
+        th,
+        td {
             padding: 16px;
             text-align: left;
-            border-bottom: 1px solid #334155;
+            border-bottom: 1px solid #162438;
         }
 
         th {
-            background: #0f172a;
+            background: #0a1222;
             color: #94a3b8;
             font-weight: 600;
             text-transform: uppercase;
@@ -199,7 +210,7 @@
         }
 
         tr:hover {
-            background: #2d3748;
+            background: #122238;
         }
     </style>
 </head>
@@ -219,14 +230,14 @@
             </div>
             <div class="nav-item" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i> Logout
-            </div>        
+            </div>
         </div>
     </div>
     <div class="main-content">
         <!-- Products Section -->
         <div id="products" class="section active">
             <h2>Manage Products</h2>
-            
+
             <div class="add-form">
                 <input type="number" id="newId" placeholder="ID">
                 <input type="text" id="newName" placeholder="Name">
@@ -276,4 +287,5 @@
         }
     </script>
 </body>
+
 </html>

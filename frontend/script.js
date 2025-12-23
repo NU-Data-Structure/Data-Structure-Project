@@ -15,20 +15,25 @@ const API_ENDPOINTS = {
 
 // ================== Theme Toggle Logic ==================
 function initThemeToggle() {
-    // 1. Inject CSS for White Theme
+    // 1. Inject Enhanced Blue Gradient CSS for Both Themes
     const style = document.createElement('style');
     style.innerHTML = `
-        /* Toggle Button Style */
+        /* ============================================
+           ENHANCED BLUE GRADIENT THEME SYSTEM
+           Only Blue & Light Blue Colors
+           ============================================ */
+
+        /* Toggle Button Style - Blue Gradient */
         .theme-toggle-btn {
             position: fixed;
             bottom: 25px;
             left: 25px;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1); /* Default for dark mode */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #0ea5e9 100%);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(56, 189, 248, 0.4);
             color: white;
             font-size: 1.5rem;
             display: flex;
@@ -36,31 +41,79 @@ function initThemeToggle() {
             justify-content: center;
             cursor: pointer;
             z-index: 1000;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        body.light-theme .theme-toggle-btn {
-            background: white !important;
-            color: #f59e0b !important; /* Sun color */
-            border-color: #e2e8f0 !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.4),
+                        0 0 20px rgba(14, 165, 233, 0.3);
         }
 
         .theme-toggle-btn:hover {
-            transform: scale(1.1) rotate(15deg);
+            transform: scale(1.15) rotate(20deg);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.5),
+                        0 0 30px rgba(14, 165, 233, 0.4);
         }
 
-        /* Enhanced Light Theme Styles */
+        body.light-theme .theme-toggle-btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #38bdf8 100%) !important;
+            color: white !important;
+            border: 2px solid rgba(56, 189, 248, 0.5) !important;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.35),
+                        0 0 20px rgba(56, 189, 248, 0.25) !important;
+        }
+
+        /* ============================================
+           ENHANCED LIGHT THEME - Blue Gradients
+           ============================================ */
+        
         body.light-theme {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-            color: #1e293b !important;
+            background: linear-gradient(135deg, 
+                #f0f9ff 0%, 
+                #e0f2fe 25%, 
+                #bae6fd 50%, 
+                #7dd3fc 75%,
+                #38bdf8 100%) !important;
+            background-attachment: fixed !important;
+            color: #0c4a6e !important;
         }
         
-        body.light-theme::before, body.light-theme::after {
-            display: none !important;
+        body.light-theme::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(125, 211, 252, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        body.light-theme::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: linear-gradient(45deg,
+                transparent 40%,
+                rgba(56, 189, 248, 0.04) 45%,
+                rgba(14, 165, 233, 0.06) 50%,
+                rgba(56, 189, 248, 0.04) 55%,
+                transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+            animation: shimmerLight 8s ease-in-out infinite;
         }
 
+        @keyframes shimmerLight {
+            0%, 100% { transform: translateX(-20%) translateY(-20%) rotate(0deg); }
+            50% { transform: translateX(20%) translateY(20%) rotate(5deg); }
+        }
+
+        /* Containers - Light Theme Blue Glass */
         body.light-theme .container,
         body.light-theme .login-container,
         body.light-theme .payment-container,
@@ -68,140 +121,324 @@ function initThemeToggle() {
         body.light-theme .cart-section,
         body.light-theme .profile-card,
         body.light-theme .provider-card {
-            background: rgba(255, 255, 255, 0.8) !important;
-            backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.5) !important;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05) !important;
-            color: #334155 !important;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(224, 242, 254, 0.85) 50%,
+                rgba(186, 230, 253, 0.8) 100%) !important;
+            backdrop-filter: blur(25px) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 25px 60px rgba(14, 165, 233, 0.15),
+                        0 0 40px rgba(56, 189, 248, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+            color: #0c4a6e !important;
         }
 
+        /* Product Cards - Light Theme */
         body.light-theme .product-card {
-            background: white !important;
-            border: 1px solid rgba(226, 232, 240, 0.8) !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
-            transition: all 0.3s ease !important;
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(240, 249, 255, 0.9) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.12),
+                        0 4px 16px rgba(56, 189, 248, 0.08) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
 
         body.light-theme .product-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02) !important;
-            border-color: #38bdf8 !important;
+            transform: translateY(-8px) scale(1.02) !important;
+            border-color: rgba(14, 165, 233, 0.5) !important;
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.2),
+                        0 8px 24px rgba(56, 189, 248, 0.15),
+                        0 0 20px rgba(125, 211, 252, 0.1) !important;
         }
 
+        /* Headers - Light Theme Blue Gradient */
         body.light-theme header, 
-        body.light-theme .header,
+        body.light-theme .header {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.92) 0%, 
+                rgba(224, 242, 254, 0.88) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.12) !important;
+        }
+
         body.light-theme .nav-buttons button,
         body.light-theme .back-btn {
-            background: rgba(255, 255, 255, 0.9) !important;
-            border-color: rgba(226, 232, 240, 0.8) !important;
-            color: #475569 !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(224, 242, 254, 0.9) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            color: #0369a1 !important;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.1) !important;
+            transition: all 0.3s ease !important;
         }
 
+        body.light-theme .nav-buttons button:hover,
+        body.light-theme .back-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8) !important;
+            color: white !important;
+            border-color: transparent !important;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* Headings - Light Theme Blue Gradient Text */
         body.light-theme h1, 
         body.light-theme h2, 
         body.light-theme h3, 
         body.light-theme .profile-header h1,
         body.light-theme .product-title,
         body.light-theme .provider-name {
-            background: linear-gradient(135deg, #0f172a 0%, #334155 100%) !important;
+            background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0284c7 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
             text-shadow: none !important;
         }
 
+        /* Stock Badge - Light Theme Blue */
         body.light-theme .stock-badge {
-            background: rgba(16, 185, 129, 0.1) !important;
-            color: #059669 !important;
-            border-color: rgba(16, 185, 129, 0.2) !important;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.2)) !important;
+            color: #0369a1 !important;
+            border: 1px solid rgba(14, 165, 233, 0.3) !important;
         }
 
+        /* Price Tag - Light Theme */
         body.light-theme .price-tag {
-            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9, #38bdf8) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
         }
 
-        body.light-theme input {
-            background: #f8fafc !important;
-            border: 1px solid #cbd5e1 !important;
-            color: #0f172a !important;
+        /* Inputs - Light Theme Blue Focus */
+        body.light-theme input,
+        body.light-theme .qty-input {
+            background: linear-gradient(135deg, #ffffff, #f0f9ff) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            color: #0c4a6e !important;
+            transition: all 0.3s ease !important;
         }
 
-        body.light-theme input:focus {
+        body.light-theme input:focus,
+        body.light-theme .qty-input:focus {
             background: white !important;
-            border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15),
+                        0 4px 12px rgba(56, 189, 248, 0.1) !important;
         }
 
+        /* Buttons - Light Theme Blue Gradient */
+        body.light-theme .btn,
+        body.light-theme .search-btn,
+        body.light-theme .add-btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 50%, #38bdf8 100%) !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35) !important;
+        }
+
+        body.light-theme .btn:hover,
+        body.light-theme .search-btn:hover,
+        body.light-theme .add-btn:hover {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%) !important;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.45) !important;
+            transform: translateY(-3px) !important;
+        }
+
+        /* View Cart Button - Light Theme */
+        body.light-theme .view-cart-btn {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%) !important;
+            color: white !important;
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35) !important;
+        }
+
+        /* Nav Buttons */
         body.light-theme .nav-btn,
         body.light-theme .action-buttons .btn-secondary {
-            background: white !important;
-            color: #475569 !important;
-            border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+            background: linear-gradient(135deg, #ffffff, #f0f9ff) !important;
+            color: #0369a1 !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1) !important;
         }
 
         body.light-theme .nav-btn:hover {
-            background: #f1f5f9 !important;
-            color: #0f172a !important;
-            border-color: #cbd5e1 !important;
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8) !important;
+            color: white !important;
+            border-color: transparent !important;
         }
 
-        /* Admin Dashboard Light Theme Support */
+        /* Search Box - Light Theme */
+        body.light-theme .search-box {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(224, 242, 254, 0.85) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.1) !important;
+        }
+
+        /* Admin Dashboard Light Theme */
         body.light-theme .sidebar {
-            background: white !important;
-            border-right: 1px solid #e2e8f0 !important;
+            background: linear-gradient(180deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(224, 242, 254, 0.9) 100%) !important;
+            border-right: 1px solid rgba(56, 189, 248, 0.25) !important;
         }
         
         body.light-theme .main-content {
-            background: #f8fafc !important;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe) !important;
         }
 
         body.light-theme .add-form {
-            background: white !important;
-            border: 1px solid #e2e8f0 !important;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(240, 249, 255, 0.9) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
         }
 
+        /* Tables - Light Theme Blue */
         body.light-theme table {
-            background: white !important;
-            border: 1px solid #e2e8f0 !important;
-            color: #1e293b !important;
+            background: linear-gradient(135deg, #ffffff, #f0f9ff) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+            color: #0c4a6e !important;
+            border-radius: 16px !important;
+            overflow: hidden;
         }
 
         body.light-theme th {
-            background: #f1f5f9 !important;
-            color: #475569 !important;
-            border-bottom: 1px solid #e2e8f0 !important;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+            color: #0369a1 !important;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.3) !important;
         }
 
         body.light-theme td {
-            border-bottom: 1px solid #e2e8f0 !important;
-            color: #334155 !important;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15) !important;
+            color: #0c4a6e !important;
         }
 
         body.light-theme tr:hover {
-            background: #f8fafc !important;
+            background: linear-gradient(135deg, 
+                rgba(224, 242, 254, 0.5), 
+                rgba(186, 230, 253, 0.4)) !important;
         }
 
+        /* Nav Items - Light Theme */
         body.light-theme .nav-item {
-            color: #64748b !important;
+            color: #0369a1 !important;
+            transition: all 0.3s ease !important;
         }
 
         body.light-theme .nav-item:hover,
         body.light-theme .nav-item.active {
-            background: #3b82f6 !important;
+            background: linear-gradient(135deg, #0284c7, #0ea5e9) !important;
             color: white !important;
         }
         
         body.light-theme h2 {
-            border-bottom-color: #e2e8f0 !important;
+            border-bottom-color: rgba(56, 189, 248, 0.3) !important;
+        }
+
+        /* User Type Toggle - Light Theme */
+        body.light-theme .user-type-toggle {
+            background: linear-gradient(135deg, 
+                rgba(224, 242, 254, 0.8), 
+                rgba(186, 230, 253, 0.7)) !important;
+            border: 1px solid rgba(56, 189, 248, 0.3) !important;
+        }
+
+        body.light-theme .slider {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+        }
+
+        body.light-theme .slider:before {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9) !important;
+        }
+
+        body.light-theme .toggle-label.active {
+            color: #0284c7 !important;
+        }
+
+        /* Welcome Message - Light Theme */
+        body.light-theme .welcome-message p {
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme .welcome-message .subtext {
+            color: #0369a1 !important;
+        }
+
+        /* Footer Text - Light Theme */
+        body.light-theme .footer-text {
+            color: #0369a1 !important;
+        }
+
+        body.light-theme .footer-text a {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9, #38bdf8) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        /* Category Cards - Light Theme */
+        body.light-theme .category-card {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(240, 249, 255, 0.9) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.12) !important;
+        }
+
+        body.light-theme .category-card:hover {
+            border-color: rgba(14, 165, 233, 0.5) !important;
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.2) !important;
+        }
+
+        /* Cart Items - Light Theme */
+        body.light-theme .cart-item {
+            background: linear-gradient(135deg, #ffffff, #f0f9ff) !important;
+            border: 1px solid rgba(56, 189, 248, 0.2) !important;
+        }
+
+        body.light-theme .remove-btn {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9) !important;
+            color: white !important;
+        }
+
+        /* Order Cards - Light Theme */
+        body.light-theme .order-card {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.95) 0%, 
+                rgba(240, 249, 255, 0.9) 100%) !important;
+            border: 1px solid rgba(56, 189, 248, 0.25) !important;
+        }
+
+        body.light-theme .status-badge {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.2)) !important;
+            color: #0369a1 !important;
+            border: 1px solid rgba(14, 165, 233, 0.3) !important;
+        }
+
+        /* ============================================
+           ENHANCED DARK THEME - Blue Gradients
+           Already applied in HTML, just enhance
+           ============================================ */
+        
+        /* Enhanced Dark Mode Animations */
+        @keyframes shimmerDark {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        /* Smooth transitions for theme switch */
+        body, body * {
+            transition: background 0.4s ease, 
+                        background-color 0.4s ease, 
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease,
+                        color 0.3s ease !important;
         }
     `;
     document.head.appendChild(style);
 
-    // 2. Inject Toggle Button
+    // 2. Inject Toggle Button with Blue Gradient
     const btn = document.createElement('button');
     btn.className = 'theme-toggle-btn';
     btn.innerHTML = '<i class="fas fa-moon"></i>';

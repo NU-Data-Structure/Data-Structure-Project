@@ -18,7 +18,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #020617 0%, #0a1628 20%, #0c2445 40%, #0e3460 60%, #1e40af 80%, #1e3a8a 100%);
+            background: linear-gradient(135deg, #050a14 0%, #0a1222 20%, #0d1a2d 40%, #0f1e33 60%, #122238 80%, #0d1a2d 100%);
             background-attachment: fixed;
             min-height: 100vh;
             color: #e2e8f0;
@@ -34,8 +34,8 @@
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.06) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
@@ -106,20 +106,20 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%);
-            color: #1e293b;
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%);
+            color: white;
             border: none;
             padding: 12px 24px;
             border-radius: 14px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
             transition: all 0.3s ease;
         }
 
         .view-cart-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.5);
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.5);
         }
 
         .search-box {
@@ -355,7 +355,7 @@
             <input type="text" id="productName" placeholder="Search for products (e.g., Apple)...">
             <button class="search-btn" onclick="searchProduct()"><i class="fas fa-search"></i> Search</button>
             <button class="search-btn" id="sortBtn" onclick="sortProductsByPrice()"
-                style="background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);"
+                style="background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0ea5e9 100%); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);"
                 title="Sort by Price (Low to High)">
                 <i class="fas fa-sort-amount-up-alt"></i> Sort by Price
             </button>
