@@ -441,6 +441,80 @@ async function loadProducts() {
     }
 }
 
+// Sort products by price (Low to High) using counting sort on backend
+async function sortProductsByPrice() {
+    console.log("sortProductsByPrice function started");
+    const productList = document.getElementById("productList");
+    if (!productList) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const provider = urlParams.get('provider');
+
+    let url = '/api/product/sorted';
+    let title = "All Products (Sorted by Price: Low → High)";
+
+    if (provider) {
+        url += `?provider=${encodeURIComponent(provider)}`;
+        title = `Products from ${provider} (Sorted by Price: Low → High)`;
+    }
+
+    console.log("Fetching sorted products from URL:", url);
+
+    try {
+        const response = await fetch(url);
+        console.log("Response status:", response.status);
+        const data = await response.json();
+        console.log("Sorted data received:", data);
+
+        if (response.ok && data.success) {
+            let html = `<h2 style="margin-top: 10px; margin-bottom: 20px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                <i class="fas fa-sort-amount-up-alt" style="color: #10b981;"></i> ${title}
+            </h2>`;
+            html += '<div class="products-grid">';
+
+            data.products.forEach(p => {
+                const rawCategory = p.category ? p.category.trim() : 'default';
+                const rawProvider = p.provider ? p.provider.trim() : 'default';
+                const rawName = p.name ? p.name.trim() : 'unknown';
+                const imgSrc = `/images/${rawCategory}/${rawProvider}/${rawName}.jpg`;
+
+                html += `
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img src="${imgSrc}"
+                                        alt="${p.name}"
+                                        class="product-image"
+                                        onerror="handleImageError(this, '${rawCategory}', '${rawProvider}', '${rawName}')">
+                                </div>
+                                <div class="product-info">
+                                    <div class="product-subcategory">${p.subcategory}</div>
+                                    <h3 class="product-title">${p.name}</h3>
+                                    <div class="product-meta">
+                                        <span class="stock-badge">${p.stock} in stock</span>
+                                        <div class="price-tag">$${p.price.toFixed(2)}</div>
+                                    </div>
+                                    <div class="card-actions">
+                                        <input type="number" id="qty-${p.id}" value="1" min="1" max="${p.stock}" class="qty-input">
+                                            <button class="add-btn" onclick="addToCart(${p.id}, '${p.name.replace(/'/g, "\\'")}', ${p.price}, parseInt(document.getElementById('qty-${p.id}').value))">
+                                            <i class="fas fa-cart-plus"></i> Add to Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`;
+            });
+            html += '</div>';
+            productList.innerHTML = html;
+
+            // Show a notification
+            console.log(`Sorted ${data.products.length} products by price (low to high)`);
+        } else {
+            console.error("Failed to load sorted products. Success flag is false or response not OK.", data);
+        }
+    } catch (error) {
+        console.error('Error loading sorted products:', error);
+    }
+}
+
 // Image error handler to attempt PNG if JPG fails, then placeholder
 function handleImageError(img, category, provider, name) {
     // Prevent infinite loops if the placeholder itself fails
@@ -470,8 +544,8 @@ async function loadQueue() {
     const provider = localStorage.getItem('adminName');
 
     try {
-        const url = provider 
-            ? `${API_ENDPOINTS.ADMIN_QUEUE}?provider=${encodeURIComponent(provider)}` 
+        const url = provider
+            ? `${API_ENDPOINTS.ADMIN_QUEUE}?provider=${encodeURIComponent(provider)}`
             : API_ENDPOINTS.ADMIN_QUEUE;
         const response = await fetch(url);
         const data = await response.json();
@@ -510,9 +584,9 @@ async function processNextOrder() {
     }
 
     try {
-        const response = await fetch(API_ENDPOINTS.ADMIN_PROCESS, { 
+        const response = await fetch(API_ENDPOINTS.ADMIN_PROCESS, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ provider: provider })
         });
         const data = await response.json();
@@ -538,7 +612,7 @@ function loadAdminDashboard() {
     }
 
     document.getElementById('adminName').textContent = providerName;
-    
+
     const imgEl = document.getElementById('adminImg');
     if (providerImage && providerImage !== "") {
         imgEl.src = providerImage;
@@ -559,19 +633,19 @@ function switchAdminTab(tabId, navElement) {
 
     // Update nav active state
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    if(navElement) navElement.classList.add('active');
+    if (navElement) navElement.classList.add('active');
 }
 
 async function loadAdminProducts() {
     const tbody = document.getElementById('adminProductList');
     const provider = localStorage.getItem('adminName');
-    if(!tbody || !provider) return;
+    if (!tbody || !provider) return;
 
     try {
         const response = await fetch(`${API_ENDPOINTS.PRODUCT}?provider=${encodeURIComponent(provider)}`);
         const data = await response.json();
 
-        if(data.success) {
+        if (data.success) {
             let html = '';
             data.products.forEach(p => {
                 html += `
@@ -588,7 +662,7 @@ async function loadAdminProducts() {
             });
             tbody.innerHTML = html;
         }
-    } catch(e) {
+    } catch (e) {
         console.error(e);
     }
 }
@@ -601,7 +675,7 @@ async function adminAddProduct() {
     const subCat = document.getElementById('newSubCat').value;
     const provider = localStorage.getItem('adminName');
 
-    if(!id || !name || !price || !stock) {
+    if (!id || !name || !price || !stock) {
         alert("Please fill required fields");
         return;
     }
@@ -609,15 +683,15 @@ async function adminAddProduct() {
 
     const response = await fetch(API_ENDPOINTS.ADMIN_ADD_PROD, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            id: parseInt(id), name, price: parseFloat(price), 
+            id: parseInt(id), name, price: parseFloat(price),
             stock: parseInt(stock), provider, subcategory: subCat
         })
     });
-    
+
     const data = await response.json();
-    if(data.success) {
+    if (data.success) {
         loadAdminProducts();
         // Clear inputs
         document.querySelectorAll('.add-form input').forEach(i => i.value = '');
@@ -627,15 +701,15 @@ async function adminAddProduct() {
 }
 
 async function adminDeleteProduct(id) {
-    if(!confirm("Delete this product?")) return;
-    
+    if (!confirm("Delete this product?")) return;
+
     const response = await fetch(API_ENDPOINTS.ADMIN_DEL_PROD, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({id})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
     });
-    
-    if((await response.json()).success) {
+
+    if ((await response.json()).success) {
         loadAdminProducts();
     } else {
         alert("Failed to delete product");

@@ -50,6 +50,12 @@ public:
     void getAllProducts(vector<Product>& products);
     bool updateStock(int productId, int quantity);
     void saveToFile(string filename);
+    
+    // Quick Sort functions for sorting products by price (low to high)
+    void getProductsSortedByPrice(vector<Product>& products);
+private:
+    void quickSortByPrice(vector<Product>& products, int low, int high);
+    int partitionByPrice(vector<Product>& products, int low, int high);
 };
 
 #endif

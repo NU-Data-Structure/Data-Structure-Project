@@ -223,3 +223,56 @@ void ProductBST::saveToFile(string filename) {
     }
     file.close();
 }
+
+// ==================== Quick Sort Implementation ====================
+// Partition function for Quick Sort - arranges elements around a pivot
+// Elements with price less than pivot go to the left, greater go to the right
+int ProductBST::partitionByPrice(vector<Product>& products, int low, int high) {
+    // Choose the last element as the pivot
+    double pivot = products[high].price;
+    
+    // Index of smaller element (tracks the boundary)
+    int i = low - 1;
+    
+    // Traverse through all elements, compare each with pivot
+    for (int j = low; j < high; j++) {
+        // If current element's price is smaller than or equal to pivot
+        if (products[j].price <= pivot) {
+            i++; // Increment index of smaller element
+            // Swap products[i] and products[j]
+            swap(products[i], products[j]);
+        }
+    }
+    
+    // Place pivot in its correct position
+    swap(products[i + 1], products[high]);
+    
+    // Return the partition index
+    return i + 1;
+}
+
+// Quick Sort recursive function - sorts products by price (low to high)
+void ProductBST::quickSortByPrice(vector<Product>& products, int low, int high) {
+    if (low < high) {
+        // Find partition index - pivot is now at its correct position
+        int partitionIndex = partitionByPrice(products, low, high);
+        
+        // Recursively sort elements before and after partition
+        quickSortByPrice(products, low, partitionIndex - 1);  // Sort left subarray
+        quickSortByPrice(products, partitionIndex + 1, high); // Sort right subarray
+    }
+}
+
+// Public function to get all products sorted by price using Quick Sort
+void ProductBST::getProductsSortedByPrice(vector<Product>& products) {
+    // First, get all products from the BST
+    getAllProducts(products);
+    
+    // Apply Quick Sort to sort by price (low to high)
+    if (!products.empty()) {
+        quickSortByPrice(products, 0, products.size() - 1);
+    }
+    
+    cout << "Quick Sort: Sorted " << products.size() << " products by price (low to high)" << endl;
+}
+

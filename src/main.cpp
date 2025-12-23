@@ -291,6 +291,43 @@ int main() {
         }
     });
 
+    // API: Get sorted products by price (Low to High) using Quick Sort
+    svr.Get("/api/product/sorted", [&](const httplib::Request& req, httplib::Response& res) {
+        try {
+            vector<Product> sortedProds;
+            productServer.getProductsSortedByPrice(sortedProds); // Uses Quick Sort
+
+            string providerFilter = "";
+            if (req.has_param("provider")) {
+                providerFilter = req.get_param_value("provider");
+            }
+
+            json prodArray = json::array();
+            for(const auto& p : sortedProds) {
+                if (!providerFilter.empty() && p.provider != providerFilter) {
+                    continue;
+                }
+
+                prodArray.push_back({
+                    {"id", p.id},
+                    {"name", p.name},
+                    {"price", p.price},
+                    {"category", p.category},
+                    {"subcategory", p.subcategory},
+                    {"stock", p.stock},
+                    {"provider", p.provider}
+                });
+            }
+
+            json response = { {"success", true}, {"products", prodArray}, {"sortedBy", "price"}, {"algorithm", "quickSort"} };
+            res.set_content(response.dump(), "application/json");
+
+        } catch (...) {
+            res.status = 500;
+            res.set_content("Error loading sorted products", "text/plain");
+        }
+    });
+
    // API: Get orders for a customer
 svr.Get(R"(/api/orders/(\d+))", [&](const httplib::Request& req, httplib::Response& res) {
     if (!req.has_param("password")) {
