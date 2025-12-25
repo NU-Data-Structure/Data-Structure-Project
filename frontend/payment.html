@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment - NUH2H</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0a1628 20%, #0c2445 40%, #0e3460 60%, #1e40af 80%, #1e3a8a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 30% 20%, rgba(59, 130, 246, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .payment-container {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 28px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(59, 130, 246, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, #0ea5e9, #38bdf8, transparent);
+            border-radius: 28px 28px 0 0;
+        }
+
+        .lock-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(14, 165, 233, 0.2));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            font-size: 1.75rem;
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            color: #e2e8f0;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-pay:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-cancel {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-cancel:hover {
+            color: #94a3b8;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(59, 130, 246, 0.15);
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .profile-icon-fixed {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e2e8f0;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+        }
+
+        .profile-icon-fixed:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: scale(1.1);
+            color: #38bdf8;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <a href="profile.html" class="profile-icon-fixed">
+        <i class="fas fa-user"></i>
+    </a>
+    <div class="payment-container">
+        <div class="lock-icon">
+            <i class="fas fa-lock" style="color: #3b82f6;"></i>
+        </div>
+        <h2>Secure Payment</h2>
+        <p class="subtitle">Complete your transaction securely</p>
+
+        <form id="paymentForm" onsubmit="handlePayment(event)">
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            </div>
+
+            <div class="form-group">
+                <label>Cardholder Name</label>
+                <input type="text" placeholder="John Doe" required>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label>Expiry Date</label>
+                        <input type="text" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" placeholder="123" maxlength="3" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-pay">
+                Pay Now <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <a href="cart.html" class="btn-cancel">Cancel Payment</a>
+        </form>
+
+        <div class="security-badge">
+            <i class="fas fa-shield-alt"></i>
+            <span>256-bit SSL Encrypted Payment</span>
+        </div>
+    </div>
+
+    <script>
+        // Check for pending payment on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const customerId = localStorage.getItem('pendingCustomerId');
+            const paymentMethod = localStorage.getItem('pendingPaymentMethod');
+
+            if (!customerId || paymentMethod !== 'Visa') {
+                alert('No pending Visa payment found. Please start checkout from cart.');
+                window.location.href = 'cart.html';
+                return;
+            }
+
+            console.log('Processing Visa payment for customer:', customerId);
+        });
+
+        // Format card number with spaces
+        document.querySelector('input[placeholder="0000 0000 0000 0000"]').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 == 0) formattedValue += ' ';
+                formattedValue += value[i];
+            }
+            e.target.value = formattedValue;
+        });
+
+        // Format expiry date
+        document.querySelector('input[placeholder="MM/YY"]').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // Handle payment form submission
+        async function handlePayment(e) {
+            e.preventDefault();
+            const btn = document.querySelector('.btn-pay');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.disabled = true;
+
+            try {
+                // Get customer ID from localStorage
+                const customerId = localStorage.getItem('pendingCustomerId');
+                if (!customerId) {
+                    throw new Error('No pending payment found');
+                }
+
+                // Call the checkout API with Visa payment method
+                const response = await fetch('/api/cart/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        customerId: parseInt(customerId),
+                        paymentMethod: "Visa",
+                        roomNumber: localStorage.getItem('pendingRoomNumber') || ""
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Clear pending data
+                    localStorage.removeItem('pendingCustomerId');
+                    localStorage.removeItem('pendingPaymentMethod');
+                    localStorage.removeItem('pendingRoomNumber');
+
+                    // Show success message
+                    alert(`✅ Visa Payment Successful!\n\n` +
+                        `Order ID: #${result.orderId}\n` +
+                        `Total: $${result.total.toFixed(2)}\n` +
+                        `Payment Method: Visa\n\n` +
+                        `Your order has been placed!`);
+
+                    // Redirect to profile page
+                    window.location.href = 'profile.html';
+                } else {
+                    throw new Error(result.message || 'Payment failed');
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+                alert('Payment failed: ' + error.message);
+
+                // Reset button
+                btn.innerHTML = 'Pay Now <i class="fas fa-arrow-right"></i>';
+                btn.disabled = false;
+            }
+        }
+
+        // Attach form handler
+    </script>
+</body>
+
+</html>

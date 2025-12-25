@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Providers - NUH2H</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0c2445 40%, #1e40af 80%, #1e3a8a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 2rem;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            padding: 14px 28px;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(20px);
+            color: #e2e8f0;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateX(-5px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 800;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #38bdf8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .providers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .provider-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .provider-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
+        }
+
+        .provider-img-wrapper {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 1.5rem;
+            background: rgba(248, 250, 252, 0.95);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .provider-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .provider-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #38bdf8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .loading-text {
+            text-align: center;
+            color: #64748b;
+            padding: 3rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div style="display: flex; gap: 12px; margin-bottom: 2rem;">
+            <a href="home.html" class="back-btn" style="margin-bottom: 0;"><i class="fas fa-arrow-left"></i> Back to
+                Home</a>
+            <a href="profile.html" class="back-btn" style="margin-bottom: 0;"><i class="fas fa-user"></i> Profile</a>
+        </div>
+        <h1 id="pageTitle">Providers</h1>
+        <div id="providersList" class="providers-container">
+            <p class="loading-text">Loading providers...</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            if (!category) {
+                document.getElementById('providersList').innerHTML = '<p class="loading-text">No category specified.</p>';
+                return;
+            }
+            document.getElementById('pageTitle').textContent = category.charAt(0).toUpperCase() + category.slice(1) + " Providers";
+            try {
+                const response = await fetch(`${API_ENDPOINTS.PROVIDERS}?category=${category}`);
+                const data = await response.json();
+                if (data.success && data.providers.length > 0) {
+                    let html = '';
+                    data.providers.forEach((p, i) => {
+                        html += `<div class="provider-card" style="--i: ${i};" onclick="window.location.href='product.html?category=${category}&provider=${p.name}'">
+                            <div class="provider-img-wrapper"><img src="${p.image}" alt="${p.name}" class="provider-img"></div>
+                            <div class="provider-name">${p.name}</div>
+                        </div>`;
+                    });
+                    document.getElementById('providersList').innerHTML = html;
+                } else {
+                    document.getElementById('providersList').innerHTML = '<p class="loading-text">No providers found.</p>';
+                }
+            } catch (error) {
+                document.getElementById('providersList').innerHTML = '<p class="loading-text">Error loading providers.</p>';
+            }
+        });
+    </script>
+</body>
+
+</html>

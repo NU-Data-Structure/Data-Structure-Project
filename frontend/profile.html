@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Online Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #020617 0%, #0a1628 20%, #0c2445 40%, #0e3460 60%, #1e40af 80%, #1e3a8a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .profile-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 50%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 80px rgba(59, 130, 246, 0.5);
+        }
+
+        .profile-header p {
+            color: #a1a1aa;
+            font-size: 1rem;
+        }
+
+        /* Error Message */
+        .error-message {
+            background: linear-gradient(135deg, #ff6b6b22, #ee5a5a22);
+            border: 1px solid #ff6b6b44;
+            color: #ff8787;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: none;
+            backdrop-filter: blur(10px);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        /* Main Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .user-id {
+            color: #a1a1aa;
+            font-size: 0.9rem;
+        }
+
+        .info-section {
+            margin-top: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0ea5e922, #0284c722);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #71717a;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: #e4e4e7;
+            font-weight: 500;
+        }
+
+        /* Orders Section */
+        .orders-section {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .section-title .icon {
+            font-size: 1.5rem;
+        }
+
+        .order-count {
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Order Cards */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out backwards;
+        }
+
+        .order-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.15);
+        }
+
+        .order-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .order-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .order-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .order-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .order-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .order-id {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        .order-status {
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-pending {
+            background: linear-gradient(135deg, #f59e0b22, #d9770622);
+            color: #fbbf24;
+            border: 1px solid #f59e0b44;
+        }
+
+        .status-shipped {
+            background: linear-gradient(135deg, #10b98122, #05966922);
+            color: #34d399;
+            border: 1px solid #10b98144;
+        }
+
+        .status-processing {
+            background: linear-gradient(135deg, #3b82f622, #2563eb22);
+            color: #60a5fa;
+            border: 1px solid #3b82f644;
+        }
+
+        .order-body {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .order-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .order-detail-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .order-detail-row .label {
+            color: #71717a;
+            min-width: 70px;
+        }
+
+        .order-detail-row .value {
+            color: #d4d4d8;
+        }
+
+        .order-detail-row .items-value {
+            color: #7dd3fc;
+        }
+
+        .order-amount {
+            text-align: right;
+        }
+
+        .amount-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #71717a;
+            margin-bottom: 0.25rem;
+        }
+
+        .amount-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #34d399, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* No Orders State */
+        .no-orders {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #71717a;
+        }
+
+        .no-orders-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .no-orders h3 {
+            font-size: 1.25rem;
+            color: #a1a1aa;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-orders p {
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 0.9rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #2563eb 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e4e4e7;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #a1a1aa;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(14, 165, 233, 0.2);
+            border-top-color: #38bdf8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                position: static;
+            }
+
+            .order-body {
+                grid-template-columns: 1fr;
+            }
+
+            .order-amount {
+                text-align: left;
+                margin-top: 0.5rem;
+                padding-top: 0.75rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+
+            .profile-header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-card,
+            .orders-section {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-container">
+        <div class="profile-header">
+            <h1>My Profile</h1>
+            <p>Manage your account and view order history</p>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <div id="mainContent" class="content-grid">
+            <div class="profile-card">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading profile...</p>
+                </div>
+            </div>
+            <div class="orders-section">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading orders...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD'
+            }).format(amount);
+        }
+
+        // Global product map for ID to name lookup
+        let productMap = {};
+
+        // Function to get product names from IDs string
+        function getProductNames(productIdsStr) {
+            if (!productIdsStr || productIdsStr === 'N/A') return 'N/A';
+
+            const ids = productIdsStr.split(';').map(id => parseInt(id.trim()));
+            const names = ids.map(id => productMap[id] || `Product #${id}`);
+            return names.join(', ');
+        }
+
+        // Get initials from name
+        function getInitials(name) {
+            if (!name) return '👤';
+            const parts = name.trim().split(' ');
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Get status class
+        function getStatusClass(status) {
+            const s = (status || '').toLowerCase();
+            if (s === 'shipped' || s === 'delivered') return 'status-shipped';
+            if (s === 'pending') return 'status-pending';
+            return 'status-processing';
+        }
+
+        // Function to create order element
+        function createOrderElement(order) {
+            const itemNames = getProductNames(order.productIds);
+            const statusClass = getStatusClass(order.status);
+
+            return `
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">Order #${order.orderId}</span>
+                        <span class="order-status ${statusClass}">${order.status || 'Processing'}</span>
+                    </div>
+                    <div class="order-body">
+                        <div class="order-details">
+                            <div class="order-detail-row">
+                                <span class="label">📦 Items:</span>
+                                <span class="value items-value">${itemNames}</span>
+                            </div>
+                            <div class="order-detail-row">
+                                <span class="label">💳 Payment:</span>
+                                <span class="value">${order.paymentMethod || 'N/A'}</span>
+                            </div>
+                            <div class="order-detail-row">
+                                <span class="label">🏪 Provider:</span>
+                                <span class="value">${order.provider || 'N/A'}</span>
+                            </div>
+                            <div class="order-detail-row">
+                                <span class="label">📍 Room:</span>
+                                <span class="value" style="color: #60a5fa;">${order.roomNumber || 'N/A'}</span>
+                            </div>
+                        </div>
+                        <div class="order-amount">
+                            <div class="amount-label">Total</div>
+                            <div class="amount-value">${formatCurrency(order.totalAmount || 0)}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper function to show error messages
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Render profile card
+        function renderProfileCard(customer) {
+            const initials = getInitials(customer.name);
+
+            return `
+                <div class="avatar-section">
+                    <div class="avatar">${initials}</div>
+                    <div class="user-name">${customer.name || 'Customer'}</div>
+                    <div class="user-id">ID: #${customer.id}</div>
+                </div>
+                
+                <div class="info-section">
+                    <div class="info-item">
+                        <div class="info-icon">📱</div>
+                        <div class="info-content">
+                            <div class="info-label">Phone Number</div>
+                            <div class="info-value">${customer.phone || 'Not provided'}</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <div class="info-label">Delivery Address</div>
+                            <div class="info-value">${customer.address || 'Not provided'}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a href="home.html" class="btn btn-primary">🏠 Home</a>
+                    <button onclick="logout()" class="btn btn-danger">🚪 Logout</button>
+                </div>
+            `;
+        }
+
+        // Render orders section
+        function renderOrdersSection(orders) {
+            const orderCount = orders ? orders.length : 0;
+
+            let ordersHTML = `
+                <div class="section-header">
+                    <div class="section-title">
+                        <span class="icon">📋</span>
+                        <h2>Order History</h2>
+                    </div>
+                    <span class="order-count">${orderCount} ${orderCount === 1 ? 'order' : 'orders'}</span>
+                </div>
+            `;
+
+            if (orders && orders.length > 0) {
+                ordersHTML += `<div class="orders-list">`;
+                ordersHTML += orders.map(order => createOrderElement(order)).join('');
+                ordersHTML += `</div>`;
+            } else {
+                ordersHTML += `
+                    <div class="no-orders">
+                        <div class="no-orders-icon">🛒</div>
+                        <h3>No orders yet</h3>
+                        <p>Your order history will appear here once you make a purchase.</p>
+                    </div>
+                `;
+            }
+
+            return ordersHTML;
+        }
+
+        // Load profile when the page loads
+        window.onload = async () => {
+            const id = localStorage.getItem('customerId');
+            const password = localStorage.getItem('customerPassword');
+
+            if (!id) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                // First, fetch all products to build the ID to name map
+                const productsResponse = await fetch('/api/product');
+                if (productsResponse.ok) {
+                    const productsData = await productsResponse.json();
+                    if (productsData.success && productsData.products) {
+                        productsData.products.forEach(product => {
+                            productMap[product.id] = product.name;
+                        });
+                    }
+                }
+
+                // Then load profile data
+                const profileResponse = await fetch(`/api/profile?id=${id}&password=${password}`);
+                if (!profileResponse.ok) {
+                    throw new Error('Failed to load profile');
+                }
+
+                const customer = await profileResponse.json();
+
+                if (customer && customer.id) {
+                    // Render content
+                    const mainContent = document.getElementById('mainContent');
+                    mainContent.innerHTML = `
+                        <div class="profile-card">
+                            ${renderProfileCard(customer)}
+                        </div>
+                        <div class="orders-section">
+                            ${renderOrdersSection(customer.orders)}
+                        </div>
+                    `;
+                } else {
+                    throw new Error('Invalid profile data');
+                }
+            } catch (err) {
+                console.error('Error loading profile:', err);
+                showError('Failed to load profile. Please try again later.');
+            }
+        };
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('customerId');
+            localStorage.removeItem('customerPassword');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+
+</html>

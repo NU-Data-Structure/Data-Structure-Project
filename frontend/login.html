@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUH2H - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js" defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg,
+                    #020617 0%,
+                    #0a1628 12%,
+                    #0c2445 25%,
+                    #0e3460 40%,
+                    #1e40af 55%,
+                    #1e3a8a 70%,
+                    #172554 85%,
+                    #0f172a 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Subtle shining overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 25% 25%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 75%, rgba(56, 189, 248, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(96, 165, 250, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 30% 70%, rgba(14, 165, 233, 0.1) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        /* Shimmer effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: linear-gradient(45deg,
+                    transparent 40%,
+                    rgba(59, 130, 246, 0.03) 45%,
+                    rgba(56, 189, 248, 0.05) 50%,
+                    rgba(59, 130, 246, 0.03) 55%,
+                    transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .login-container {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            padding: 3rem;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
+                0 0 100px rgba(59, 130, 246, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, #3b82f6, #8b5cf6, transparent);
+            border-radius: 28px 28px 0 0;
+        }
+
+        .logo {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            color: #e2e8f0;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .welcome-message {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .welcome-message p {
+            margin: 0.3rem 0;
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+
+        .welcome-message .subtext {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Toggle Switch */
+        .user-type-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            gap: 14px;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(30, 41, 59, 0.8);
+            transition: 0.4s;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 15px rgba(6, 182, 212, 0.5);
+        }
+
+        input:checked+.slider {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(6, 182, 212, 0.3));
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(28px);
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+            box-shadow: 0 2px 15px rgba(139, 92, 246, 0.5);
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .toggle-label.active {
+            color: #22d3ee;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            font-size: 1rem;
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input::placeholder {
+            color: #475569;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #06b6d4;
+            background: rgba(6, 182, 212, 0.08);
+            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #94a3b8;
+            z-index: 2;
+        }
+
+        .toggle-password:hover {
+            color: #e2e8f0;
+        }
+
+        /* Fix for browser autofill white background */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px rgba(30, 41, 59, 0.8) inset !important;
+            -webkit-text-fill-color: #e2e8f0 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 28px;
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .footer-text {
+            margin-top: 1.75rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .footer-text a {
+            background: linear-gradient(135deg, #22d3ee, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 2rem;
+                border-radius: 24px;
+            }
+
+            .logo {
+                font-size: 2.25rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="logo">NUH2H</div>
+        <h2 id="formTitle">Customer Login</h2>
+        <div class="welcome-message">
+            <p>Welcome to NUH2H Application</p>
+            <p class="subtext">Please log in to continue</p>
+        </div>
+
+        <div class="user-type-toggle">
+            <span class="toggle-label active" id="customerLabel">Customer</span>
+            <label class="switch">
+                <input type="checkbox" id="isAdminCheckbox" onchange="toggleUserType()">
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label" id="providerLabel">Provider</span>
+        </div>
+
+        <div id="customerFields">
+            <div class="form-group">
+                <label for="customerId">Customer ID</label>
+                <input id="customerId" type="number" placeholder="Enter your customer ID">
+            </div>
+            <div class="form-group">
+                <label for="customerPassword">Password</label>
+                <div class="password-wrapper">
+                    <input id="customerPassword" type="password" placeholder="Enter your password">
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword('customerPassword', this)"></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminFields" class="hidden">
+            <div class="form-group">
+                <label for="providerName">Provider Name</label>
+                <input id="providerName" type="text" placeholder="Enter provider name">
+            </div>
+            <div class="form-group">
+                <label for="providerPassword">Password</label>
+                <div class="password-wrapper">
+                    <input id="providerPassword" type="password" placeholder="Enter admin password">
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword('providerPassword', this)"></i>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" onclick="login()">Login</button>
+
+        <p class="footer-text" id="footerText">New customer? <a href="signup.html">Sign up here</a></p>
+    </div>
+
+    <!-- Logic moved to script.js -->
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+OrderID,CustomerID,ProductIDs,TotalAmount,Status,Provider,PaymentMethod,RoomNumber
+5001,20,101;102,1020.00,Shipped,Unknown,Cash
+5002,21,101,1000.00,Shipped,Unknown,Cash
+5003,20,101;102,1020.00,Shipped,Unknown,Cash
+5004,20,101;102,1020.00,Shipped,Unknown,Cash
+5006,123,101,4.5,Shipped,Unknown,Cash
+5007,123,102;104;103,1200.78,Shipped,Unknown,Cash
+5009,123,101;102;104,202.29,Shipped,Lampatronics;Unknown,Cash
+5011,123,111;113;116,45580,Shipped,Lampatronics;Bazooka,Cash
+5013,123,119,630,Shipped,Elezaby,Cash
+5015,123,118;115;102,505095,Shipped,Bazooka;Lampatronics,Cash
+5017,1939,111;120,220,Shipped,Elezaby;Bazooka,Cash
+5019,1939,109;116,150025,Shipped,Lampatronics;Bazooka,Cash
+5021,1939,113;114,2950,Shipped,Lampatronics,Cash
+5022,1939,113,450,Shipped,Lampatronics,Visa
+5024,1939,121;119;109,265,Shipped,Bazooka;Elezaby,Visa
+5025,1939,103;104;110;118,500310,Shipped,Lampatronics;Bazooka,Cash
+5027,1939,120;104;107,920,Shipped,"Friends;El Abd;Elezaby",Visa
+5029,1939,115;116,620000,Shipped,"B Tech",Cash
+5031,12,104,80,Shipped,"El Abd",Cash
+5032,12,119;120,180,Pending,Elezaby,Cash
+5034,12,121;119,165,Pending,Elezaby,Visa
+5036,12,113,3150,Shipped,Lampatronics,Cash
+5038,12,113,450,Shipped,Lampatronics,Cash
+5040,12,113,2250,Shipped,Lampatronics,Cash
+5041,12,113,900,Shipped,Lampatronics,Cash
+5042,12,113,900,Shipped,Lampatronics,Cash
+5043,12,366;113,495,Shipped,Lampatronics;Elezaby,Cash
+5045,241000934,148;366,215,Pending,Elezaby,Cash
+5047,241000934,115,5000,Shipped,"B Tech",Cash
+5049,241000934,231,140,Shipped,"El Abd",Cash
+5051,241000934,126,3200,Shipped,"B Tech",Cash
+5055,241000934,148;366,125,Pending,Elezaby,Cash
+5056,241000934,191;115,6500,Shipped,"B Tech",Cash
+5057,1111,148,70,Pending,Elezaby,Visa
+5053,1111,148;366,80,Pending,Elezaby,Cash
+5054,1111,104,80,Shipped,"El Abd",Cash
+5058,1,148;366,80,Shipped,Elezaby,Cash
+5059,241001842,11;13,20,Shipped,"Anime Home",Cash
+5060,241001842,104;231,220,Shipped,"El Abd",Cash
+5061,241001842,12,8,Shipped,"Anime Home",Cash
+5062,241001842,11;231,148,Shipped,"El Abd;Anime Home",Cash
+5001,241001842,11;9;12;14,34,Shipped,"Anime Home",Cash
+5001,241000222,11;12,16,Shipped,"Anime Home",Visa
+5002,241000222,12,8,Shipped,"Anime Home",Visa
+5001,241001842,11,8,Shipped,"Anime Home",Visa
+5001,241000245,115;182;191,7700,Pending,"B Tech",Visa
+5001,1939,116;179,175500,Shipped,"B Tech",Visa,G29
+5001,1939,123,4000,Shipped,"Circuits Electronics",Cash,347
+5002,1939,262;101,245,Shipped,Bazooka,Cash,1939
+5001,1939,262;267;233;123,1210,Shipped,"Circuits Electronics;El Abd;Bazooka",Cash,
+5001,1939,148;366,115,Pending,Elezaby,Visa,
+5001,1939,217;113,800,Pending,"Lampatronics;Future Electronics",Visa,13
+5002,1939,292,90,Shipped,"Karam El Sham",Cash,12
+5063,1939,231;262,300,Shipped,"Bazooka;El Abd",Cash,123
