@@ -18,22 +18,13 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg,
-                    #020617 0%,
-                    #0a1628 12%,
-                    #0c2445 25%,
-                    #0e3460 40%,
-                    #1e40af 55%,
-                    #1e3a8a 70%,
-                    #172554 85%,
-                    #0f172a 100%);
-            background-attachment: fixed;
+            background: linear-gradient(145deg, #0a0f1a 0%, #0d1526 50%, #0f172a 100%);
             min-height: 100vh;
             color: #e2e8f0;
             position: relative;
         }
 
-        /* Shining overlay */
+        /* Colorful overlay for depth */
         body::before {
             content: '';
             position: fixed;
@@ -42,25 +33,15 @@
             right: 0;
             bottom: 0;
             background:
-                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.18) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(96, 165, 250, 0.1) 0%, transparent 60%),
-                radial-gradient(ellipse at 30% 70%, rgba(14, 165, 233, 0.12) 0%, transparent 45%);
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Shimmer effect */
         body::after {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            background: linear-gradient(45deg, transparent 40%, rgba(59, 130, 246, 0.03) 45%, rgba(56, 189, 248, 0.06) 50%, rgba(59, 130, 246, 0.03) 55%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
+            display: none;
         }
 
         header {
@@ -177,9 +158,9 @@
         }
 
         .category {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(59, 130, 246, 0.15));
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(59, 130, 246, 0.4) 50%, rgba(99, 102, 241, 0.3) 100%);
             backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.3);
             border-radius: 24px;
             padding: 2.5rem 2rem;
             text-align: center;
@@ -357,7 +338,7 @@
             <p>Office and school supplies</p>
             <a href="providers.html?category=AcademicSupplies" class="btn">Browse Academic Supplies</a>
         </div>
-        
+
         <div class="category">
             <div class="icon-wrapper">
                 <i class="fas fa-pills"></i>

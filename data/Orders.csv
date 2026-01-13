@@ -53,3 +53,5 @@ OrderID,CustomerID,ProductIDs,TotalAmount,Status,Provider,PaymentMethod,RoomNumb
 5001,1939,217;113,800,Pending,"Lampatronics;Future Electronics",Visa,13
 5002,1939,292,90,Shipped,"Karam El Sham",Cash,12
 5063,1939,231;262,300,Shipped,"Bazooka;El Abd",Cash,123
+5064,241000934,"233",25,Pending,El Abd,Visa,232
+5065,241000934,"6;3;7",245,Pending,Bakierstationery,Visa,111

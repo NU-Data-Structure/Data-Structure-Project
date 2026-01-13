@@ -18,8 +18,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #020617 0%, #0a1628 20%, #0c2445 40%, #0e3460 60%, #1e40af 80%, #1e3a8a 100%);
-            background-attachment: fixed;
+            background: #0a0f1a;
             min-height: 100vh;
             color: #e2e8f0;
             position: relative;
@@ -32,10 +31,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background:
-                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            background: radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
@@ -371,7 +367,8 @@
             </div>
             <div class="payment-box">
                 <label for="roomNumber">Room Number:</label>
-                <input type="text" id="roomNumber" placeholder="Enter Room Number" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(15, 23, 42, 0.5); color: white; margin-top: 5px;">
+                <input type="text" id="roomNumber" placeholder="Enter Room Number"
+                    style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(15, 23, 42, 0.5); color: white; margin-top: 5px;">
             </div>
             <button class="checkout-btn" onclick="checkout()">Proceed to Checkout <i
                     class="fas fa-check-circle"></i></button>

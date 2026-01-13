@@ -44,7 +44,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 194,Capacitor Kit,120,Electronics,Components,50,Circuits Electronics
 141,Cappuccino,45,Food,Beverages,100,Pottery Cafe
 341,Carrot Cake,55,Food,Dessert,30,Pottery Cafe
-7,CASIO Python Graphing Calculator - Graph 35+ E II,228,AcademicSupplies,Calculators,100,Bakierstationery
+7,CASIO Python Graphing Calculator - Graph 35+ E II,228,AcademicSupplies,Calculators,99,Bakierstationery
 367,Centrum Multivitamin,450,Pharmacy,Vitamins,30,Elezaby
 140,Cheese Croissant,35,Food,Bakery,40,Pottery Cafe
 244,Cheese Sandwich,15,Food,Breakfast,100,My Corner
@@ -66,7 +66,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 271,Chicken Wrap,60,Food,Sandwiches,80,Bazooka
 280,Chili Chicken Burger,110,Food,Burgers,60,Buffalo Burger
 340,Chocolate Cake,60,Food,Dessert,45,Pottery Cafe
-233,Chocolate Gateaux (Piece),25,Food,Dessert,99,El Abd
+233,Chocolate Gateaux (Piece),25,Food,Dessert,98,El Abd
 146,Chocolate Waffle,50,Food,Dessert,35,Friends
 248,Club Sandwich,45,Food,Sandwiches,50,My Corner
 342,Club Sandwich Platter,90,Food,Meals,25,Pottery Cafe
@@ -204,7 +204,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 119,Panadol Extra gedan,45,Pharmacy,Tablets,482,Elezaby
 325,Pancake Honey,40,Food,Dessert,70,Friends
 324,Pancake Nutella,50,Food,Dessert,60,Friends
-6,PAPER CONCEPT Soft Cover Executive Notebook - Pastel Colors - A4,7,AcademicSupplies,Notebooks,100,Bakierstationery
+6,PAPER CONCEPT Soft Cover Executive Notebook - Pastel Colors - A4,7,AcademicSupplies,Notebooks,99,Bakierstationery
 370,Paracetamol Syrup,25,Pharmacy,Medicine,100,Elezaby
 343,Pasta Bechamel,80,Food,Pasta,50,Rosto
 108,Pasta Negresco,90,Food,Pasta,35,Rosto
@@ -250,7 +250,7 @@ ID,Name,Price,Category,Subcategory,Stock,Provider
 332,Spanish Latte,55,Food,Beverages,60,Pottery Cafe
 263,Spicy Chicken Strips (3pcs),55,Food,Chicken,120,Bazooka
 264,Spicy Chicken Strips (5pcs),85,Food,Chicken,100,Bazooka
-3,Staedtler 4 Highlighters Textsurfer Classic,10,AcademicSupplies,Writing & Corrections,100,Bakierstationery
+3,Staedtler 4 Highlighters Textsurfer Classic,10,AcademicSupplies,Writing & Corrections,99,Bakierstationery
 213,Stepper Motor NEMA17,250,Electronics,Motors,40,Future Electronics
 314,Strawberry Chocolate Crepe,65,Food,Dessert,70,Friends
 147,Surgical Face Mask (50pcs),75,Pharmacy,Health,200,Elezaby

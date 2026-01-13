@@ -15,7 +15,7 @@ const API_ENDPOINTS = {
 
 // ================== Theme Toggle Logic ==================
 function initThemeToggle() {
-    // 1. Inject CSS for White Theme
+    // 1. Inject CSS for Both Themes - Vibrant Blue Color Palette
     const style = document.createElement('style');
     style.innerHTML = `
         /* Toggle Button Style */
@@ -23,79 +23,87 @@ function initThemeToggle() {
             position: fixed;
             bottom: 25px;
             left: 25px;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1); /* Default for dark mode */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.3)) !important;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
             font-size: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             z-index: 1000;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
         }
 
         body.light-theme .theme-toggle-btn {
-            background: white !important;
-            color: #f59e0b !important; /* Sun color */
-            border-color: #e2e8f0 !important;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+            background: linear-gradient(135deg, #0ea5e9, #3b82f6) !important;
+            color: #fbbf24 !important;
+            border-color: #0284c7 !important;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
         }
 
         .theme-toggle-btn:hover {
-            transform: scale(1.1) rotate(15deg);
+            transform: scale(1.15) rotate(20deg);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
         }
 
-        /* Enhanced Light Theme Styles */
+        /* ==================== ENHANCED LIGHT THEME ==================== */
         body.light-theme {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
-            color: #1e293b !important;
+            background: linear-gradient(160deg, #e0f2fe 0%, #dbeafe 40%, #ede9fe 70%, #fce7f3 100%) !important;
+            color: #0c4a6e !important;
         }
         
-        body.light-theme::before, body.light-theme::after {
+        body.light-theme::before {
+            display: none !important;
+        }
+        
+        body.light-theme::after {
             display: none !important;
         }
 
-        body.light-theme .container,
         body.light-theme .login-container,
         body.light-theme .payment-container,
         body.light-theme .orders-section,
         body.light-theme .cart-section,
         body.light-theme .profile-card,
         body.light-theme .provider-card {
-            background: rgba(255, 255, 255, 0.8) !important;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%) !important;
             backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.5) !important;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05) !important;
-            color: #334155 !important;
+            border: 2px solid rgba(59, 130, 246, 0.2) !important;
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15) !important;
+            color: #0c4a6e !important;
         }
 
         body.light-theme .product-card {
-            background: white !important;
-            border: 1px solid rgba(226, 232, 240, 0.8) !important;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
-            transition: all 0.3s ease !important;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(240, 249, 255, 0.95)) !important;
+            border: 2px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 10px 30px rgba(3, 105, 161, 0.12) !important;
+            transition: all 0.4s ease !important;
         }
 
         body.light-theme .product-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02) !important;
-            border-color: #38bdf8 !important;
+            transform: translateY(-8px) scale(1.02) !important;
+            box-shadow: 0 25px 50px rgba(14, 165, 233, 0.25), 0 0 40px rgba(56, 189, 248, 0.2) !important;
+            border-color: #0ea5e9 !important;
         }
 
         body.light-theme header, 
         body.light-theme .header,
         body.light-theme .nav-buttons button,
         body.light-theme .back-btn {
-            background: rgba(255, 255, 255, 0.9) !important;
-            border-color: rgba(226, 232, 240, 0.8) !important;
-            color: #475569 !important;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 242, 254, 0.9)) !important;
+            border: 2px solid rgba(59, 130, 246, 0.2) !important;
+            color: #0369a1 !important;
+            box-shadow: 0 8px 25px rgba(3, 105, 161, 0.15) !important;
+        }
+
+        body.light-theme header::after {
+            background: linear-gradient(90deg, transparent, #0ea5e9, #38bdf8, #7dd3fc, transparent) !important;
         }
 
         body.light-theme h1, 
@@ -104,7 +112,7 @@ function initThemeToggle() {
         body.light-theme .profile-header h1,
         body.light-theme .product-title,
         body.light-theme .provider-name {
-            background: linear-gradient(135deg, #0f172a 0%, #334155 100%) !important;
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 40%, #0ea5e9 70%, #38bdf8 100%) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
@@ -112,91 +120,518 @@ function initThemeToggle() {
         }
 
         body.light-theme .stock-badge {
-            background: rgba(16, 185, 129, 0.1) !important;
-            color: #059669 !important;
-            border-color: rgba(16, 185, 129, 0.2) !important;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.15)) !important;
+            color: #047857 !important;
+            border: 1px solid rgba(16, 185, 129, 0.4) !important;
         }
 
         body.light-theme .price-tag {
-            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+            background: linear-gradient(135deg, #0369a1, #0284c7, #0ea5e9) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
         }
 
         body.light-theme input {
-            background: #f8fafc !important;
-            border: 1px solid #cbd5e1 !important;
-            color: #0f172a !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.9)) !important;
+            border: 2px solid rgba(56, 189, 248, 0.3) !important;
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme input::placeholder {
+            color: #64748b !important;
         }
 
         body.light-theme input:focus {
             background: white !important;
-            border-color: #3b82f6 !important;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2), 0 4px 15px rgba(59, 130, 246, 0.15) !important;
         }
 
         body.light-theme .nav-btn,
         body.light-theme .action-buttons .btn-secondary {
-            background: white !important;
-            color: #475569 !important;
-            border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 242, 254, 0.9)) !important;
+            color: #0369a1 !important;
+            border: 2px solid rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.15) !important;
         }
 
-        body.light-theme .nav-btn:hover {
-            background: #f1f5f9 !important;
-            color: #0f172a !important;
-            border-color: #cbd5e1 !important;
+        body.light-theme .nav-btn:hover,
+        body.light-theme .back-btn:hover {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+            color: #0284c7 !important;
+            border-color: #0ea5e9 !important;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.25) !important;
+        }
+
+        /* Nav icons (cart/profile) - match header bar background */
+        body.light-theme .nav-icon {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 50%, #e0f2fe 100%) !important;
+            border: 2px solid rgba(59, 130, 246, 0.2) !important;
+            color: #0369a1 !important;
+        }
+
+        body.light-theme .nav-icon:hover {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+            border-color: #0ea5e9 !important;
+            color: #0284c7 !important;
+        }
+
+        body.light-theme .cart-badge {
+            background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+        }
+
+        body.light-theme .btn,
+        body.light-theme .checkout-btn,
+        body.light-theme .add-btn,
+        body.light-theme .search-btn {
+            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 40%, #8b5cf6 100%) !important;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4) !important;
+        }
+
+        body.light-theme .btn:hover,
+        body.light-theme .checkout-btn:hover,
+        body.light-theme .add-btn:hover,
+        body.light-theme .search-btn:hover {
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.5) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        body.light-theme .view-cart-btn {
+            background: linear-gradient(135deg, #f59e0b, #f97316, #ef4444) !important;
+            color: white !important;
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4) !important;
+        }
+
+        body.light-theme .category {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(224, 242, 254, 0.95), rgba(237, 233, 254, 0.9)) !important;
+            border: 2px solid rgba(139, 92, 246, 0.2) !important;
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15) !important;
+        }
+
+        body.light-theme .category:hover {
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 25px 60px rgba(14, 165, 233, 0.25), 0 0 80px rgba(56, 189, 248, 0.15) !important;
+        }
+
+        body.light-theme .category::before {
+            background: linear-gradient(90deg, #0284c7, #0ea5e9, #38bdf8) !important;
+        }
+
+        body.light-theme .category i {
+            background: linear-gradient(135deg, #0369a1, #0284c7, #0ea5e9) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme .category h3 {
+            color: #0c4a6e !important;
+            -webkit-text-fill-color: #0c4a6e !important;
+        }
+
+        body.light-theme .category p {
+            color: #475569 !important;
+        }
+
+        body.light-theme .icon-wrapper {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(56, 189, 248, 0.15)) !important;
+        }
+
+        body.light-theme .welcome-section h2 {
+            background: linear-gradient(135deg, #0369a1 0%, #0284c7 30%, #0ea5e9 60%, #38bdf8 100%) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            text-shadow: 0 0 60px rgba(14, 165, 233, 0.5) !important;
+        }
+
+        body.light-theme .welcome-section p,
+        body.light-theme .welcome-message p {
+            color: #334155 !important;
+        }
+
+        body.light-theme .cart-item {
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.6), rgba(186, 230, 253, 0.4)) !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+        }
+
+        body.light-theme .cart-item:hover {
+            background: linear-gradient(135deg, rgba(186, 230, 253, 0.7), rgba(125, 211, 252, 0.5)) !important;
+            border-color: #0ea5e9 !important;
+        }
+
+        body.light-theme .cart-item span {
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme .payment-box {
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.5), rgba(186, 230, 253, 0.3)) !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+        }
+
+        body.light-theme .payment-box label {
+            color: #0369a1 !important;
+        }
+
+        body.light-theme .payment-options label {
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme .summary-total span {
+            color: #0284c7 !important;
+        }
+
+        body.light-theme .summary-total span:last-child {
+            background: linear-gradient(135deg, #0369a1, #0284c7) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme .logo {
+            background: linear-gradient(135deg, #0369a1, #0284c7, #0ea5e9, #38bdf8) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme .user-type-toggle {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(56, 189, 248, 0.1)) !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+        }
+
+        body.light-theme .toggle-label {
+            color: #64748b !important;
+        }
+
+        body.light-theme .toggle-label.active {
+            color: #0284c7 !important;
+        }
+
+        body.light-theme .slider {
+            background: rgba(203, 213, 225, 0.8) !important;
+        }
+
+        body.light-theme .footer-text {
+            color: #475569 !important;
+        }
+
+        body.light-theme .footer-text a {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme .search-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 242, 254, 0.9)) !important;
+            border-color: rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 10px 30px rgba(3, 105, 161, 0.12) !important;
+        }
+
+        body.light-theme .product-subcategory {
+            color: #0284c7 !important;
         }
 
         /* Admin Dashboard Light Theme Support */
         body.light-theme .sidebar {
-            background: white !important;
-            border-right: 1px solid #e2e8f0 !important;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(224, 242, 254, 0.95)) !important;
+            border-right: 2px solid rgba(56, 189, 248, 0.2) !important;
         }
         
         body.light-theme .main-content {
-            background: #f8fafc !important;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
         }
 
         body.light-theme .add-form {
-            background: white !important;
-            border: 1px solid #e2e8f0 !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 249, 255, 0.95)) !important;
+            border: 2px solid rgba(56, 189, 248, 0.25) !important;
         }
 
         body.light-theme table {
-            background: white !important;
-            border: 1px solid #e2e8f0 !important;
-            color: #1e293b !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(240, 249, 255, 0.95)) !important;
+            border: 2px solid rgba(56, 189, 248, 0.2) !important;
+            color: #0c4a6e !important;
         }
 
         body.light-theme th {
-            background: #f1f5f9 !important;
-            color: #475569 !important;
-            border-bottom: 1px solid #e2e8f0 !important;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+            color: #0369a1 !important;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.3) !important;
         }
 
         body.light-theme td {
-            border-bottom: 1px solid #e2e8f0 !important;
-            color: #334155 !important;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15) !important;
+            color: #0c4a6e !important;
         }
 
         body.light-theme tr:hover {
-            background: #f8fafc !important;
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.6), rgba(186, 230, 253, 0.4)) !important;
         }
 
         body.light-theme .nav-item {
-            color: #64748b !important;
+            color: #0369a1 !important;
         }
 
         body.light-theme .nav-item:hover,
         body.light-theme .nav-item.active {
-            background: #3b82f6 !important;
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
             color: white !important;
         }
         
         body.light-theme h2 {
-            border-bottom-color: #e2e8f0 !important;
+            border-bottom-color: rgba(56, 189, 248, 0.3) !important;
+        }
+
+        body.light-theme .empty-cart i {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme .empty-cart h3 {
+            color: #475569 !important;
+        }
+
+        /* Profile Page Light Theme Styles */
+        body.light-theme .avatar {
+            background: linear-gradient(135deg, #0284c7, #0ea5e9, #38bdf8) !important;
+            box-shadow: 0 10px 40px rgba(14, 165, 233, 0.4) !important;
+        }
+
+        body.light-theme .user-name {
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme .user-id {
+            color: #475569 !important;
+        }
+
+        body.light-theme .info-item {
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.5), rgba(186, 230, 253, 0.3)) !important;
+        }
+
+        body.light-theme .info-item:hover {
+            background: linear-gradient(135deg, rgba(186, 230, 253, 0.6), rgba(125, 211, 252, 0.4)) !important;
+        }
+
+        body.light-theme .info-icon {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(56, 189, 248, 0.15)) !important;
+        }
+
+        body.light-theme .info-label {
+            color: #64748b !important;
+        }
+
+        body.light-theme .info-value {
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme .order-card {
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.5), rgba(186, 230, 253, 0.3)) !important;
+            border-color: rgba(56, 189, 248, 0.25) !important;
+        }
+
+        body.light-theme .order-card:hover {
+            background: linear-gradient(135deg, rgba(186, 230, 253, 0.6), rgba(125, 211, 252, 0.4)) !important;
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.2) !important;
+        }
+
+        body.light-theme .order-id {
+            color: #0c4a6e !important;
+        }
+
+        body.light-theme .order-detail-row .label {
+            color: #64748b !important;
+        }
+
+        body.light-theme .order-detail-row .value {
+            color: #334155 !important;
+        }
+
+        body.light-theme .order-detail-row .items-value {
+            color: #0284c7 !important;
+        }
+
+        body.light-theme .amount-label {
+            color: #64748b !important;
+        }
+
+        body.light-theme .amount-value {
+            background: linear-gradient(135deg, #059669, #10b981) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body.light-theme .section-title h2 {
+            color: #0c4a6e !important;
+            -webkit-text-fill-color: #0c4a6e !important;
+        }
+
+        body.light-theme .order-count {
+            background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+        }
+
+        body.light-theme .status-pending {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1)) !important;
+            color: #b45309 !important;
+            border-color: rgba(245, 158, 11, 0.4) !important;
+        }
+
+        body.light-theme .status-shipped {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1)) !important;
+            color: #047857 !important;
+            border-color: rgba(16, 185, 129, 0.4) !important;
+        }
+
+        body.light-theme .status-processing {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.1)) !important;
+            color: #1d4ed8 !important;
+            border-color: rgba(59, 130, 246, 0.4) !important;
+        }
+
+        body.light-theme .no-orders h3 {
+            color: #475569 !important;
+        }
+
+        body.light-theme .no-orders p {
+            color: #64748b !important;
+        }
+
+        body.light-theme .btn-secondary {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 242, 254, 0.9)) !important;
+            color: #0369a1 !important;
+            border: 2px solid rgba(56, 189, 248, 0.3) !important;
+        }
+
+        body.light-theme .btn-secondary:hover {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd) !important;
+            border-color: #0ea5e9 !important;
+        }
+
+        body.light-theme .btn-danger {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            box-shadow: 0 8px 25px rgba(185, 28, 28, 0.35) !important;
+        }
+
+        body.light-theme .loading-spinner {
+            border-color: rgba(14, 165, 233, 0.2) !important;
+            border-top-color: #0284c7 !important;
+        }
+
+        body.light-theme .loading p {
+            color: #64748b !important;
+        }
+
+        body.light-theme .profile-header p {
+            color: #475569 !important;
+        }
+
+        /* Providers Page Light Theme */
+        body.light-theme .provider-img-wrapper {
+            background: white !important;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.15) !important;
+        }
+
+        /* ==================== ENHANCED DARK THEME (Default) ==================== */
+        /* These styles enhance the existing dark theme with more vibrant colors */
+        body:not(.light-theme) .category::before {
+            background: linear-gradient(90deg, #22d3ee, #3b82f6, #8b5cf6, #f472b6) !important;
+        }
+
+        body:not(.light-theme) .btn,
+        body:not(.light-theme) .checkout-btn,
+        body:not(.light-theme) .add-btn {
+            background: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 25%, #3b82f6 50%, #6366f1 75%, #8b5cf6 100%) !important;
+            background-size: 200% 200% !important;
+            animation: gradientShift 4s ease infinite !important;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body:not(.light-theme) .welcome-section h2 {
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 20%, #3b82f6 40%, #6366f1 60%, #a78bfa 80%, #f472b6 100%) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            animation: textGradient 6s ease infinite !important;
+            background-size: 200% 200% !important;
+        }
+
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body:not(.light-theme) header h1,
+        body:not(.light-theme) .header h1 {
+            background: linear-gradient(135deg, #38bdf8 0%, #22d3ee 25%, #3b82f6 50%, #818cf8 75%, #a78bfa 100%) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+        }
+
+        body:not(.light-theme) .category {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(59, 130, 246, 0.12), rgba(139, 92, 246, 0.08)) !important;
+        }
+
+        body:not(.light-theme) .category:hover {
+            border-color: rgba(139, 92, 246, 0.4) !important;
+            box-shadow: 0 25px 50px rgba(6, 182, 212, 0.2), 0 0 100px rgba(139, 92, 246, 0.15) !important;
+        }
+
+        body:not(.light-theme) .nav-icon:hover {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.35), rgba(99, 102, 241, 0.35), rgba(139, 92, 246, 0.35)) !important;
+            border-color: rgba(139, 92, 246, 0.5) !important;
+        }
+
+        body:not(.light-theme) .product-card {
+            border-color: rgba(99, 102, 241, 0.2) !important;
+        }
+
+        body:not(.light-theme) .product-card:hover {
+            border-color: rgba(139, 92, 246, 0.5) !important;
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2), 0 0 60px rgba(139, 92, 246, 0.1) !important;
+        }
+
+        body:not(.light-theme) .price-tag {
+            background: linear-gradient(135deg, #22d3ee, #38bdf8, #60a5fa, #818cf8) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+        }
+
+        body:not(.light-theme) .cart-badge {
+            background: linear-gradient(135deg, #f43f5e, #ec4899, #a855f7) !important;
+        }
+
+        body:not(.light-theme) h2 {
+            background: linear-gradient(135deg, #38bdf8, #60a5fa, #818cf8) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+
+        body:not(.light-theme) .summary-total span:last-child {
+            background: linear-gradient(135deg, #22d3ee, #38bdf8, #818cf8) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        body:not(.light-theme) .nav-btn:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.35), rgba(99, 102, 241, 0.35)) !important;
+            border-color: rgba(129, 140, 248, 0.5) !important;
+        }
+
+        body:not(.light-theme) .logo {
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 25%, #3b82f6 50%, #818cf8 75%, #a78bfa 100%) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+        }
+
+        body:not(.light-theme) .footer-text a {
+            background: linear-gradient(135deg, #22d3ee, #818cf8, #a78bfa) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
         }
     `;
     document.head.appendChild(style);
@@ -998,10 +1433,10 @@ async function checkout() {
 
             // Verify room number
             const roomNumInput = document.getElementById("roomNumber");
-             if (!roomNumInput || !roomNumInput.value.trim()) {
-                 alert("Please enter a Room Number before proceeding.");
-                 return;
-             }
+            if (!roomNumInput || !roomNumInput.value.trim()) {
+                alert("Please enter a Room Number before proceeding.");
+                return;
+            }
 
             if (visaRadio && visaRadio.checked) {
                 // For Visa, redirect to payment page
