@@ -20,20 +20,20 @@
         body {
             display: flex;
             height: 100vh;
-            background-color: #0f172a;
+            background: #0a0f1a;
             color: #e2e8f0;
             overflow: hidden;
         }
 
-            /* Sidebar */
+        /* Sidebar */
         .sidebar {
             width: 280px;
-            background: #1e293b;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
             padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-right: 1px solid #334155;
+            border-right: 1px solid rgba(59, 130, 246, 0.2);
             flex-shrink: 0;
         }
 
@@ -50,13 +50,16 @@
             object-fit: cover;
             border: 4px solid #3b82f6;
             margin-bottom: 1rem;
-            background: #334155;
+            background: #1e293b;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
         }
+
         .provider-name {
             font-size: 1.25rem;
             font-weight: 700;
             color: #fff;
         }
+
         .nav-menu {
             width: 100%;
             display: flex;
@@ -76,10 +79,11 @@
             font-weight: 500;
         }
 
-        .nav-item:hover, .nav-item.active {
-            background: #3b82f6;
+        .nav-item:hover,
+        .nav-item.active {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
             color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
         }
 
         .btn-process:hover {
@@ -91,10 +95,10 @@
             flex: 1;
             padding: 2rem;
             overflow-y: auto;
-            background: #0f172a;
+            background: #0a0f1a;
         }
 
-         .section {
+        .section {
             display: none;
             animation: fadeIn 0.3s ease;
         }
@@ -104,8 +108,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
@@ -115,6 +126,7 @@
             padding-bottom: 1rem;
             font-size: 1.8rem;
         }
+
         /* Forms */
         .add-form {
             background: #1e293b;
@@ -145,7 +157,7 @@
             transition: 0.2s;
         }
 
-          .btn-primary {
+        .btn-primary {
             background: #3b82f6;
             color: white;
         }
@@ -162,7 +174,7 @@
             font-size: 0.85rem;
         }
 
-                .btn-danger {
+        .btn-danger {
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -184,7 +196,8 @@
             border: 1px solid #334155;
         }
 
-        th, td {
+        th,
+        td {
             padding: 16px;
             text-align: left;
             border-bottom: 1px solid #334155;
@@ -219,14 +232,14 @@
             </div>
             <div class="nav-item" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i> Logout
-            </div>        
+            </div>
         </div>
     </div>
     <div class="main-content">
         <!-- Products Section -->
         <div id="products" class="section active">
             <h2>Manage Products</h2>
-            
+
             <div class="add-form">
                 <input type="number" id="newId" placeholder="ID">
                 <input type="text" id="newName" placeholder="Name">
@@ -276,4 +289,5 @@
         }
     </script>
 </body>
+
 </html>
