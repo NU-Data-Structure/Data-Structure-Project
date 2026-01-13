@@ -134,7 +134,7 @@ Before running the project, ensure you have:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/Data-Structure-Project.git
+git clone https://github.com/NU-Data-Structure/Data-Structure-Project
 cd Data-Structure-Project
 ```
 
